@@ -1,0 +1,3 @@
+[run]
+include = commonrepo/*
+omit = *migrations*
