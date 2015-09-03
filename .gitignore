@@ -57,3 +57,6 @@ node_modules/
 
 # database
 */*.sqlite3
+
+# staticfiles
+/staticfiles/
