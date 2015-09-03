@@ -7,7 +7,7 @@ from .models import ELO
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['name', 'fullname']}),
+        (None,               {'fields': ['name', 'fullname', 'author']}),
         ('Date information', {'fields': ['create_date', 'update_date']}),
         ('ELO Type',         {'fields': ['original_type']}),
     ]
