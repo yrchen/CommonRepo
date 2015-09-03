@@ -12,4 +12,9 @@ urlpatterns = [
         view=views.MyELOsListView.as_view(),
         name='myelos-list'
     ),
+    url(
+        regex=r'^view/(?P<pk>[0-9]+)/$',
+        view=views.MyELOsDetailView.as_view(),
+        name='elos-view'
+    ),
 ]

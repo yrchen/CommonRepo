@@ -14,3 +14,8 @@ class MyELOsListView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)    
+
+class MyELOsDetailView(LoginRequiredMixin, DetailView):
+    query_pk_and_slug = True
+    model = ELO
+    template_name = 'elos/elos_detail.html'
