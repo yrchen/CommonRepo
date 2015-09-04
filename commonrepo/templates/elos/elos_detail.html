@@ -1,0 +1,55 @@
+{% extends "starter.html" %}
+
+{% block title %}ELOs - {{object.name}}{% endblock %}
+{% block page_title %}ELOs Detail{% endblock %}
+{% block page_description %}Detail of "{{object.name}}"{% endblock %}
+{% block page_breadcrumb %}ELO Detail{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}}</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="{% url 'elos:elos-view' object.id %}">{{object.id}}</a></td>
+                <td>{{object.name}}</td>
+                <td>{{object.author}}</td>
+                <td>{{object.create_date}}</td>
+                <td>{{object.update_date}}</td>
+                <td>{{object.original_type}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-info btn-flat pull-left">Create ELO</a>
+        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endblock content %}
