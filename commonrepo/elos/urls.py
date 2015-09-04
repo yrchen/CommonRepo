@@ -8,9 +8,14 @@ from . import views
 urlpatterns = [
     # URL pattern for the UserListView
     url(
+        regex=r'^create/$',
+        view=views.MyELOsCreateView.as_view(),
+        name="elos-create"
+    ),
+    url(
         regex=r'^$',
         view=views.MyELOsListView.as_view(),
-        name='myelos-list'
+        name='elos-mylist'
     ),
     url(
         regex=r'^view/(?P<pk>[0-9]+)/$',

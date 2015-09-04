@@ -34,7 +34,7 @@
             <tbody>
               {% for elo in object_list %}
               <tr>
-                <td><a href="view/{{elo.id}}">{{elo.id}}</a></td>
+                <td><a href="{% url 'elos:elos-view' elo.id %}">{{elo.id}}</a></td>
                 <td>{{elo.name}}</td>
                 <td>{{elo.author}}</td>
                 <td>{{elo.create_date}}</td>
@@ -47,7 +47,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="add/" class="btn btn-sm btn-info btn-flat pull-left">Add ELO</a>
+        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-info btn-flat pull-left">Create ELO</a>
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
