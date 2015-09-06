@@ -17,7 +17,7 @@ class ELOForm(ModelForm):
 
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'create_date', 'update_date', 'original_type']
+        fields = ['name', 'author', 'original_type']
 
     def __init__(self, *args, **kwargs):
         super(ELOForm, self).__init__(*args, **kwargs)
