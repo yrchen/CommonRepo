@@ -20,6 +20,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
+    url(r'^api/', include("commonrepo.api.urls", namespace="api")),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -47,7 +47,10 @@ LOCAL_APPS = (
     'commonrepo.users',  # custom users app
     # Your stuff: custom apps go here
     'commonrepo.elos',
+
+    # API endpoints
     'commonrepo.api',
+    'commonrepo.api.snippets',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
