@@ -7,6 +7,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+#from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
+
+from commonrepo.api.routers import DefaultRouter
+from commonrepo.snippets_api.views import SnippetViewSet, UserViewSet
+
+router_api = DefaultRouter()
+router_api.register(r'api/snippets', SnippetViewSet)
+router_api.register(r'api/users', UserViewSet)
+
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
@@ -20,7 +30,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
-    url(r'^api/', include("commonrepo.api.urls", namespace="api")),
+    url(r'^', include(router_api.urls)),
+    url(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

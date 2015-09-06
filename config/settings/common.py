@@ -49,8 +49,7 @@ LOCAL_APPS = (
     'commonrepo.elos',
 
     # API endpoints
-    'commonrepo.api',
-    'commonrepo.api.snippets',
+    'commonrepo.snippets_api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -283,3 +282,12 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ########## END CELERY
 
 # Your common stuff: Below this line define 3rd party library settings
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
