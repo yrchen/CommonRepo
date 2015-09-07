@@ -34,7 +34,7 @@
             <tbody>
               {% for elo in object_list %}
               <tr>
-                <td><a href="{% url 'elos:elos-view' elo.id %}">{{elo.id}}</a></td>
+                <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
                 <td>{{elo.name}}</td>
                 <td>{{elo.author}}</td>
                 <td>{{elo.create_date}}</td>
