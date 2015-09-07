@@ -16,7 +16,7 @@ from commonrepo.users.models import User as User
 
 from .models import Snippet
 from .permissions import IsOwnerOrReadOnly
-from .serializers import SnippetSerializer, UserSerializer
+from .serializers import SnippetSerializer
 
 
 class SnippetViewSet(viewsets.ModelViewSet):
@@ -44,13 +44,3 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-    
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This endpoint presents the users in the system.
-
-    As you can see, the collection of snippet instances owned by a user are
-    serialized using a hyperlinked representation.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer

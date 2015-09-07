@@ -11,7 +11,8 @@ from django.views.generic import TemplateView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
-from commonrepo.snippets_api.views import SnippetViewSet, UserViewSet
+from commonrepo.snippets_api.views import SnippetViewSet
+from commonrepo.users_api.views import UserViewSet
 
 router_api = DefaultRouter()
 router_api.register(r'api/snippets', SnippetViewSet)
@@ -30,6 +31,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
+    
+    # API endpoints
     url(r'^', include(router_api.urls)),
     url(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
 
