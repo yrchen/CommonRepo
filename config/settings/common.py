@@ -50,6 +50,7 @@ LOCAL_APPS = (
 
     # API endpoints
     'commonrepo.snippets_api',
+    'commonrepo.users_api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

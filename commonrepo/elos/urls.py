@@ -18,8 +18,8 @@ urlpatterns = [
         name='elos-mylist'
     ),
     url(
-        regex=r'^view/(?P<pk>[0-9]+)/$',
+        regex=r'^(?P<pk>[0-9]+)/$',
         view=views.MyELOsDetailView.as_view(),
-        name='elos-view'
+        name='elos-detail'
     ),
 ]

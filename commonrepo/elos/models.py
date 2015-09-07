@@ -21,7 +21,7 @@ class ELO(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('elos:elos-view', kwargs={'pk': self.pk})
+        return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
 class ELOType(models.Model):
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
