@@ -13,10 +13,13 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from commonrepo.api.routers import DefaultRouter
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet
+from commonrepo.elos_api.views import ELOViewSet
 
 router_api = DefaultRouter()
 router_api.register(r'api/snippets', SnippetViewSet)
 router_api.register(r'api/users', UserViewSet)
+router_api.register(r'api/elos', ELOViewSet)
+
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
@@ -31,7 +34,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
-    
+
     # API endpoints
     url(r'^', include(router_api.urls)),
     url(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
