@@ -18,7 +18,7 @@ from commonrepo.elos.models import ELO
 from .permissions import IsOwnerOrReadOnly
 from .serializers import ELOSerializer
 
-class ELOViewSet(viewsets.ReadOnlyModelViewSet):
+class ELOViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system.
     """
