@@ -27,3 +27,5 @@ class ELOViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = ELO.objects.all()
     serializer_class = ELOSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
