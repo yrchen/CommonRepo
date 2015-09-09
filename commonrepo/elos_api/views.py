@@ -20,10 +20,7 @@ from .serializers import ELOSerializer
 
 class ELOViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    This endpoint presents the users in the system.
-
-    As you can see, the collection of snippet instances owned by a user are
-    serialized using a hyperlinked representation.
+    This endpoint presents the ELOs in the system.
     """
     queryset = ELO.objects.all()
     serializer_class = ELOSerializer
