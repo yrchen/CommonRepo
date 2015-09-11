@@ -37,7 +37,7 @@ urlpatterns = [
 
     # API endpoints
     url(r'^', include(router_api.urls)),
-    url(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api/auth/v0/', include('rest_framework.urls', namespace='rest_framework'))
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
