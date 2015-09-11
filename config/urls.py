@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 #from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
@@ -16,9 +17,9 @@ from commonrepo.users_api.views import UserViewSet
 from commonrepo.elos_api.views import ELOViewSet
 
 router_api = DefaultRouter()
-router_api.register(r'api/snippets', SnippetViewSet)
-router_api.register(r'api/users', UserViewSet)
-router_api.register(r'api/elos', ELOViewSet)
+router_api.register(r'api/v1/snippets', SnippetViewSet)
+router_api.register(r'api/v1/users', UserViewSet)
+router_api.register(r'api/v1/elos', ELOViewSet)
 
 
 urlpatterns = [
@@ -37,7 +38,9 @@ urlpatterns = [
 
     # API endpoints
     url(r'^', include(router_api.urls)),
-    url(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/auth/', include('djoser.urls')),
+    url(r'^api/v1/auth/token', obtain_auth_token)
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
