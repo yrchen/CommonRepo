@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 #from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
@@ -39,6 +40,7 @@ urlpatterns = [
     url(r'^', include(router_api.urls)),
     url(r'^api/auth/v0/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/auth/v1/', include('djoser.urls')),
+    url(r'^api/auth/v1/token', obtain_auth_token)
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
