@@ -17,9 +17,9 @@ from commonrepo.users_api.views import UserViewSet
 from commonrepo.elos_api.views import ELOViewSet
 
 router_api = DefaultRouter()
-router_api.register(r'api/snippets', SnippetViewSet)
-router_api.register(r'api/users', UserViewSet)
-router_api.register(r'api/elos', ELOViewSet)
+router_api.register(r'api/v1/snippets', SnippetViewSet)
+router_api.register(r'api/v1/users', UserViewSet)
+router_api.register(r'api/v1/elos', ELOViewSet)
 
 
 urlpatterns = [
@@ -38,9 +38,9 @@ urlpatterns = [
 
     # API endpoints
     url(r'^', include(router_api.urls)),
-    url(r'^api/auth/v0/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/auth/v1/', include('djoser.urls')),
-    url(r'^api/auth/v1/token', obtain_auth_token)
+    url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/auth/', include('djoser.urls')),
+    url(r'^api/v1/auth/token', obtain_auth_token)
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
