@@ -14,7 +14,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from commonrepo.api.routers import DefaultRouter
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet
-from commonrepo.elos_api.views import ELOViewSet
+from commonrepo.elos_api.views import ELOViewSet, ELOFileUploadViewSet
 
 router_api = DefaultRouter()
 router_api.register(r'api/v1/snippets', SnippetViewSet)
@@ -40,7 +40,9 @@ urlpatterns = [
     url(r'^', include(router_api.urls)),
     url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/auth/', include('djoser.urls')),
-    url(r'^api/v1/auth/token', obtain_auth_token)
+    url(r'^api/v1/auth/token', obtain_auth_token),
+    
+    url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
