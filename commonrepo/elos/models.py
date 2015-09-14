@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
+from uuid import uuid4
+import os
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from commonrepo.users.models import User as User
+
+def get_random_filename(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (str(uuid4()), ext)
+    return os.path.join('elo-documents/', filename)
 
 @python_2_unicode_compatible
 class ELO(models.Model):
@@ -16,6 +24,7 @@ class ELO(models.Model):
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
     original_type = models.SmallIntegerField()
+    init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
 
     def __str__(self):
         return self.name

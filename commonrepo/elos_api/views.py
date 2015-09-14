@@ -29,6 +29,8 @@ class ELOViewSet(viewsets.ModelViewSet):
     serializer_class = ELOSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+    def perform_create(self, serializer):
+        serializer.save(init_file=self.request.FILES.get('init_file'))    
 
 
 class ELOFileUploadViewSet(viewsets.ModelViewSet):
