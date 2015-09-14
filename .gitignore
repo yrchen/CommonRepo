@@ -56,7 +56,11 @@ node_modules/
 .env
 
 # database
+db/*
 */*.sqlite3
 
-# staticfiles
-/staticfiles/
+# static files
+/staticfiles/*
+
+# media files
+/media/*
