@@ -9,7 +9,7 @@ urlpatterns = [
     # URL pattern for the UserListView
     url(
         regex=r'^create/$',
-        view=views.MyELOsCreateView.as_view(),
+        view=views.ELOsCreateView.as_view(),
         name="elos-create"
     ),
     url(

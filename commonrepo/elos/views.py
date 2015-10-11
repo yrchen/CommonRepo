@@ -10,7 +10,7 @@ from braces.views import LoginRequiredMixin
 from .models import ELO
 from .forms import ELOForm, ELOForkForm
 
-class MyELOsCreateView(LoginRequiredMixin, CreateView):
+class ELOsCreateView(LoginRequiredMixin, CreateView):
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
