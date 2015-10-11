@@ -36,13 +36,16 @@ class ELOForkForm(ModelForm):
         model = ELO
         fields = ['name', 'author', 'original_type']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(ELOForkForm, self).__init__(*args, **kwargs)
+        elo_original = ELO.objects.get(id=pk)
+        self.fields["name"].initial = elo_original.name
         self.fields["name"].widget.attrs['readonly'] = True
         self.fields["author"].queryset = User.objects.filter(username=self.request_user)
         self.fields["author"].empty_label = None
         self.fields["author"].widget.attrs['readonly'] = True
+        self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(

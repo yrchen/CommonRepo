@@ -13,7 +13,7 @@ urlpatterns = [
         name="elos-create"
     ),
     url(
-        regex=r'^fork/$',
+        regex=r'^fork/(?P<pk>[0-9]+)/$',
         view=views.ELOsForkView.as_view(),
         name="elos-fork"
         ),    
