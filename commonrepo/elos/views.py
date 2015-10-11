@@ -8,13 +8,23 @@ from django.shortcuts import render
 from braces.views import LoginRequiredMixin
 
 from .models import ELO
-from .forms import ELOForm
+from .forms import ELOForm, ELOForkForm
 
 class MyELOsCreateView(LoginRequiredMixin, CreateView):
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
+
+class ELOsForkView(LoginRequiredMixin, CreateView):
+    model = ELO
+    form_class = ELOForkForm
+    template_name = "elos/elos_fork.html"
+    
+    def get_form_kwargs(self):
+        kwargs = super(ELOsForkView, self).get_form_kwargs()
+        kwargs.update({'request_user': self.request.user})
+        return kwargs    
 
 class ELOsListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_list.html'

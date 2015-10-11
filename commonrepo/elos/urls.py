@@ -13,6 +13,11 @@ urlpatterns = [
         name="elos-create"
     ),
     url(
+        regex=r'^fork/$',
+        view=views.ELOsForkView.as_view(),
+        name="elos-fork"
+        ),    
+    url(
         regex=r'^all/$',
         view=views.ELOsListView.as_view(),
         name="elos-alllist"
