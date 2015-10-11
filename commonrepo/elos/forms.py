@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField
 from django.utils import timezone
 
 from crispy_forms.helper import FormHelper
@@ -34,7 +34,7 @@ class ELOForm(ModelForm):
 class ELOForkForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'original_type']
+        fields = ['name', 'author', 'original_type', 'parent_elo']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -47,6 +47,9 @@ class ELOForkForm(ModelForm):
         self.fields["author"].widget.attrs['readonly'] = True
         self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
+        self.fields["parent_elo"].queryset = ELO.objects.filter(id=pk)
+        self.fields["parent_elo"].empty_label = None
+        self.fields["parent_elo"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
