@@ -45,4 +45,4 @@ class ELOFileUploadViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user,
-                       datafile=sself.request.FILES.get('file'))
+                       datafile=self.request.FILES.get('file'))
