@@ -25,6 +25,7 @@ class ELO(models.Model):
     update_date = models.DateTimeField('date updated', auto_now=True)
     original_type = models.SmallIntegerField()
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
+    parent_elo = models.ForeignKey('self', blank=True, default=0)
 
     def __str__(self):
         return self.name
