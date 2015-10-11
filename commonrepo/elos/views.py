@@ -39,7 +39,7 @@ class ELOsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ELO.objects.all()
 
-class MyELOsListView(LoginRequiredMixin, ListView):
+class ELOsMyListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
 
     def get_queryset(self):

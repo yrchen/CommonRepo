@@ -24,7 +24,7 @@ urlpatterns = [
         ),    
     url(
         regex=r'^$',
-        view=views.MyELOsListView.as_view(),
+        view=views.ELOsMyListView.as_view(),
         name='elos-mylist'
     ),
     url(
