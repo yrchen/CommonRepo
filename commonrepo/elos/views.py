@@ -16,6 +16,12 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
 
+class ELOsDetailView(LoginRequiredMixin, DetailView):
+    model = ELO
+    query_pk_and_slug = True
+    template_name = 'elos/elos_detail.html'
+
+
 class ELOsForkView(LoginRequiredMixin, CreateView):
     model = ELO
     form_class = ELOForkForm
@@ -39,7 +45,3 @@ class MyELOsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
 
-class MyELOsDetailView(LoginRequiredMixin, DetailView):
-    query_pk_and_slug = True
-    model = ELO
-    template_name = 'elos/elos_detail.html'
