@@ -16,8 +16,14 @@ class MyELOsCreateView(LoginRequiredMixin, CreateView):
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
 
-class MyELOsListView(LoginRequiredMixin, ListView):
+class ELOsListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_list.html'
+
+    def get_queryset(self):
+        return ELO.objects.all()
+
+class MyELOsListView(LoginRequiredMixin, ListView):
+    template_name = 'elos/elos_my_list.html'
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)

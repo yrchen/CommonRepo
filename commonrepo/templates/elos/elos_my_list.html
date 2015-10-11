@@ -1,9 +1,9 @@
 {% extends "starter.html" %}
 
-{% block title %}All ELOs{% endblock %}
-{% block page_title %}All ELOs{% endblock %}
-{% block page_description %}All ELOs on Common Repository{% endblock %}
-{% block page_breadcrumb %}All ELOs{% endblock %}
+{% block title %}My ELOs{% endblock %}
+{% block page_title %}My ELOs{% endblock %}
+{% block page_description %}My own ELOs{% endblock %}
+{% block page_breadcrumb %}My ELOs{% endblock %}
 
 {% block content %}
 
@@ -12,7 +12,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">All ELOs</h3>
+        <h3 class="box-title">My ELOs</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -48,7 +48,7 @@
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
         <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-info btn-flat pull-left">Create ELO</a>
-        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-info btn-flat pull-left">View My ELOs</a>
+        <a href="{% url 'elos:elos-alllist' %}" class="btn btn-sm btn-info btn-flat pull-left">View All ELOs</a>
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->

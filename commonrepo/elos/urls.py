@@ -13,6 +13,11 @@ urlpatterns = [
         name="elos-create"
     ),
     url(
+        regex=r'^all/$',
+        view=views.ELOsListView.as_view(),
+        name="elos-alllist"
+        ),    
+    url(
         regex=r'^$',
         view=views.MyELOsListView.as_view(),
         name='elos-mylist'
