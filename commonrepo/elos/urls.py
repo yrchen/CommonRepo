@@ -32,4 +32,9 @@ urlpatterns = [
         view=views.ELOsDetailView.as_view(),
         name='elos-detail'
     ),
+    url(
+        regex=r'^update/(?P<pk>[0-9]+)/$',
+        view=views.ELOsUpdateView.as_view(),
+        name='elos-update'
+    ),
 ]

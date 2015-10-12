@@ -45,3 +45,17 @@ class ELOsMyListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
 
+class ELOsUpdateView(LoginRequiredMixin, UpdateView):
+    fields = ['name', 'fullname',]
+
+    # we already imported User in the view code above, remember?
+    model = ELO
+
+    # send the user back to their own page after a successful update
+    def get_success_url(self):
+        return reverse("elos:detail",
+                       kwargs={"pk": pk})
+
+    def get_object(self):
+        # Only get the User record for the user making the request
+        return ELO.objects.get(id=pk)
