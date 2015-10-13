@@ -28,7 +28,9 @@
                 <th>Author</th>
                 <th>Create Date</th>
                 <th>Update Date</th>
+                <th>Version</th>
                 <th>Parent ELO</th>
+                <th>Parent ELO version</th>
                 <th>Type</th>
               </tr>
             </thead>
@@ -39,7 +41,9 @@
                 <td>{{object.author}}</td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
+                <td>{{object.version}}</td>
                 <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
+                <td>{{object.parent_elo_version}}</td>
                 <td>{{object.original_type}}</td>
               </tr>
             </tbody>
