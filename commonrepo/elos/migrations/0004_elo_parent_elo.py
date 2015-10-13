@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='elo',
             name='parent_elo',
-            field=models.ForeignKey(default=0, blank=True, to='elos.ELO'),
+            field=models.ForeignKey(default=1, blank=True, to='elos.ELO'),
         ),
     ]
