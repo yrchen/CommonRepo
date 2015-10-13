@@ -1,9 +1,9 @@
 {% extends "starter.html" %}
 
-{% block title %}ELOs - {{object.name}}{% endblock %}
-{% block page_title %}ELOs Detail{% endblock %}
-{% block page_description %}Detail of "{{object.name}}"{% endblock %}
-{% block page_breadcrumb %}ELO Detail{% endblock %}
+{% block title %}My ELOs{% endblock %}
+{% block page_title %}My ELOs{% endblock %}
+{% block page_description %}My own ELOs{% endblock %}
+{% block page_breadcrumb %}My ELOs{% endblock %}
 
 {% block content %}
 
@@ -12,7 +12,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}}</h3>
+        <h3 class="box-title">My ELOs</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -35,26 +35,26 @@
               </tr>
             </thead>
             <tbody>
+              {% for elo in object_list %}
               <tr>
-                <td><a href="{% url 'elos:elos-detail' object.id %}">{{object.id}}</a></td>
-                <td>{{object.name}}</td>
-                <td>{{object.author}}</td>
-                <td>{{object.create_date}}</td>
-                <td>{{object.update_date}}</td>
-                <td>{{object.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a></td>
-                <td>{{object.parent_elo_version}}</td>
-                <td>{{object.original_type}}</td>
+                <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
+                <td>{{elo.name}}</td>
+                <td>{{elo.author}}</td>
+                <td>{{elo.create_date}}</td>
+                <td>{{elo.update_date}}</td>
+                <td>{{elo.version}}</td>
+                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
+                <td>{{elo.parent_elo_version}}</td>
+                <td>{{elo.original_type}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>        
-        <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
-        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new ELO</a>
-        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
+        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create ELO</a>
+        <a href="{% url 'elos:elos-alllist' %}" class="btn btn-sm btn-info btn-flat pull-left">View All ELOs</a>
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->

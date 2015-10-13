@@ -7,8 +7,9 @@ from .models import ELO
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['name', 'fullname', 'author']}),
+        ('ELO Info',         {'fields': ['name', 'fullname', 'author']}),
         ('ELO Type',         {'fields': ['original_type']}),
+        ('ELO Relationship', {'fields': ['parent_elo']}),
     ]
     
 admin.site.register(ELO, ELOAdmin)
