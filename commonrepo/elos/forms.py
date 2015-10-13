@@ -69,8 +69,8 @@ class ELOUpdateForm(ModelForm):
         model = ELO
         fields = ['name', 'original_type']
 
-    def __init__(self, *args, **kwargs):
-        super(ELOUpdateForm, self).__init__(*args, **kwargs)
+    def __init__(self, pk=None, *args, **kwargs):
+        super(ELOUpdateForm, self).__init__(*args, **kwargs)      
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
@@ -78,3 +78,4 @@ class ELOUpdateForm(ModelForm):
                         href="{% url 'elos:elos-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
         ))
+            
