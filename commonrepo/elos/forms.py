@@ -57,3 +57,20 @@ class ELOForkForm(ModelForm):
                         href="{% url 'elos:elos-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
         ))
+
+class ELOUpdateForm(ModelForm):
+    update_date = timezone.now()
+
+    class Meta:
+        model = ELO
+        fields = ['name', 'original_type']
+
+    def __init__(self, *args, **kwargs):
+        super(ELOUpdateForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout.append(
+            FormActions(
+                HTML("""<a role="button" class="btn btn-default"
+                        href="{% url 'elos:elos-mylist' %}">Cancel</a>"""),
+                Submit('save', 'Submit'),
+        ))

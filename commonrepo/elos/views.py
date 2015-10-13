@@ -8,7 +8,7 @@ from django.shortcuts import render
 from braces.views import LoginRequiredMixin
 
 from .models import ELO
-from .forms import ELOForm, ELOForkForm
+from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 class ELOsCreateView(LoginRequiredMixin, CreateView):
     model = ELO
@@ -47,7 +47,7 @@ class ELOsMyListView(LoginRequiredMixin, ListView):
 
 class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     model = ELO
-    form_class = ELOForm
+    form_class = ELOUpdateForm
     query_pk_and_slug = True
     template_name = 'elos/elos_update.html'
 
