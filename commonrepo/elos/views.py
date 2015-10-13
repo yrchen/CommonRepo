@@ -8,21 +8,58 @@ from django.shortcuts import render
 from braces.views import LoginRequiredMixin
 
 from .models import ELO
-from .forms import ELOForm
+from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
-class MyELOsCreateView(LoginRequiredMixin, CreateView):
+class ELOsCreateView(LoginRequiredMixin, CreateView):
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
 
-class MyELOsListView(LoginRequiredMixin, ListView):
+class ELOsDetailView(LoginRequiredMixin, DetailView):
+    model = ELO
+    query_pk_and_slug = True
+    template_name = 'elos/elos_detail.html'
+
+
+class ELOsForkView(LoginRequiredMixin, CreateView):
+    model = ELO
+    form_class = ELOForkForm
+    template_name = "elos/elos_fork.html"
+    
+    def get_form_kwargs(self):
+        kwargs = super(ELOsForkView, self).get_form_kwargs()
+        kwargs.update({'request_user': self.request.user})
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs    
+
+class ELOsListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_list.html'
+
+    def get_queryset(self):
+        return ELO.objects.all()
+
+class ELOsMyListView(LoginRequiredMixin, ListView):
+    template_name = 'elos/elos_my_list.html'
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
 
-class MyELOsDetailView(LoginRequiredMixin, DetailView):
-    query_pk_and_slug = True
+class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     model = ELO
-    template_name = 'elos/elos_detail.html'
+    form_class = ELOUpdateForm
+    query_pk_and_slug = True
+    template_name = 'elos/elos_update.html'
+    
+    def form_valid(self, form):
+        self.object.version += 1
+        return super(ELOsUpdateView, self).form_valid(form)     
+
+    def get_form_kwargs(self):
+        kwargs = super(ELOsUpdateView, self).get_form_kwargs()
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+    
+    def get_success_url(self):
+        return reverse("elos:elos-detail",
+                       kwargs={'pk': self.kwargs['pk']})

@@ -18,13 +18,19 @@ def get_random_filename(instance, filename):
 
 @python_2_unicode_compatible
 class ELO(models.Model):
+    # basic infor    
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
+    # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
     original_type = models.SmallIntegerField()
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
+    # version control
+    version = models.PositiveIntegerField(blank=True, default=0)
+    parent_elo = models.ForeignKey('self', blank=True, default=0)
+    parent_elo_version = models.PositiveIntegerField(blank=True, default=0)
 
     def __str__(self):
         return self.name

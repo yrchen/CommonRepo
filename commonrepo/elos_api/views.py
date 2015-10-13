@@ -30,7 +30,10 @@ class ELOViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))    
+        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        
+    def perform_update(self, serializer):
+        instance = serializer.save()    
 
 
 class ELOFileUploadViewSet(viewsets.ModelViewSet):
@@ -42,4 +45,4 @@ class ELOFileUploadViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user,
-                       datafile=sself.request.FILES.get('file'))
+                       datafile=self.request.FILES.get('file'))
