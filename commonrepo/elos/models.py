@@ -29,7 +29,7 @@ class ELO(models.Model):
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
     # version control
     version = models.PositiveIntegerField(blank=True, default=0)
-    parent_elo = models.ForeignKey('self', blank=True, default=0)
+    parent_elo = models.ForeignKey('self', blank=True, default=1)
     parent_elo_version = models.PositiveIntegerField(blank=True, default=0)
 
     def __str__(self):

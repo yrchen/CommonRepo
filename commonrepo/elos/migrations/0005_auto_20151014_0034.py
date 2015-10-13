@@ -21,9 +21,4 @@ class Migration(migrations.Migration):
             name='version',
             field=models.PositiveIntegerField(default=0, blank=True),
         ),
-        migrations.AlterField(
-            model_name='elo',
-            name='parent_elo',
-            field=models.ForeignKey(default=0, blank=True, to='elos.ELO'),
-        ),
     ]
