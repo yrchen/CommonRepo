@@ -40,7 +40,7 @@ class ELOForkForm(ModelForm):
         self.request_user = kwargs.pop("request_user")
         super(ELOForkForm, self).__init__(*args, **kwargs)
         elo_original = ELO.objects.get(id=pk)
-        self.fields["name"].initial = elo_original.name
+        self.fields["name"].initial = elo_original.name + " (Fork from author " + elo_original.author.username + ")"
         self.fields["name"].widget.attrs['readonly'] = True
         self.fields["author"].queryset = User.objects.filter(username=self.request_user)
         self.fields["author"].empty_label = None
