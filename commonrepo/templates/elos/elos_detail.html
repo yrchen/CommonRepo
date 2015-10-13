@@ -42,7 +42,7 @@
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td>{{object.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
+                <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a></td>
                 <td>{{object.parent_elo_version}}</td>
                 <td>{{object.original_type}}</td>
               </tr>
