@@ -13,10 +13,6 @@ from commonrepo.users.models import User as User
 from .models import ELO
 
 class ELOForm(ModelForm):
-    #author = self.request.user.username
-    create_date = timezone.now()
-    update_date = timezone.now()
-
     class Meta:
         model = ELO
         fields = ['name', 'author', 'original_type']
@@ -63,8 +59,6 @@ class ELOForkForm(ModelForm):
         ))
 
 class ELOUpdateForm(ModelForm):
-    update_date = timezone.now()
-
     class Meta:
         model = ELO
         fields = ['name', 'original_type']
