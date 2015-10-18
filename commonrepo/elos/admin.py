@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.contrib import admin
 
-from .models import ELO
+from .models import ELO, ELOType
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -13,3 +13,11 @@ class ELOAdmin(admin.ModelAdmin):
     ]
     
 admin.site.register(ELO, ELOAdmin)
+
+class ELOTypeAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Type Name',         {'fields': ['name']}),
+        ('Type ID',           {'fields': ['type_id']}),
+    ]
+    
+admin.site.register(ELOType, ELOTypeAdmin)
