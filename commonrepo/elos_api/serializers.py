@@ -11,7 +11,7 @@ from .models import ELOFileUpload
 class ELOSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ELO
-        fields = ('url', 'name', 'fullname', 'author', 'create_date', 'update_date', 'original_type', 'init_file' )
+        fields = ('url', 'name', 'fullname', 'author', 'create_date', 'update_date', 'original_type', 'is_public', 'init_file' )
 
 class ELOFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.SlugRelatedField(
