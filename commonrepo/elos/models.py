@@ -26,6 +26,7 @@ class ELO(models.Model):
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
     original_type = models.SmallIntegerField()
+    is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
     # version control
     version = models.PositiveIntegerField(blank=True, default=0)
