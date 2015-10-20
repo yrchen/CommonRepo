@@ -32,6 +32,7 @@ class ELO(models.Model):
     # version control
     version = models.PositiveIntegerField(blank=True, default=0)
     parent_elo = models.ForeignKey('self', blank=True, default=1)
+    parent_elo_uuid = models.UUIDField(blank=True, default=uuid4)
     parent_elo_version = models.PositiveIntegerField(blank=True, default=0)
 
     def __str__(self):
