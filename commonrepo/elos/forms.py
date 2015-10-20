@@ -30,7 +30,7 @@ class ELOForm(ModelForm):
 class ELOForkForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'original_type', 'version', 'parent_elo', 'parent_elo_version']
+        fields = ['name', 'author', 'original_type', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -48,8 +48,10 @@ class ELOForkForm(ModelForm):
         self.fields["parent_elo"].queryset = ELO.objects.filter(id=pk)
         self.fields["parent_elo"].empty_label = None
         self.fields["parent_elo"].widget.attrs['readonly'] = True
+        self.fields["parent_elo_uuid"].initial = elo_original.uuid
+        self.fields["parent_elo_uuid"].widget.attrs['readonly'] = True
         self.fields["parent_elo_version"].initial = elo_original.version
-        self.fields["parent_elo_version"].widget.attrs['readonly'] = True        
+        self.fields["parent_elo_version"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
@@ -64,7 +66,7 @@ class ELOUpdateForm(ModelForm):
         fields = ['name', 'original_type', 'is_public']
 
     def __init__(self, pk=None, *args, **kwargs):
-        super(ELOUpdateForm, self).__init__(*args, **kwargs)      
+        super(ELOUpdateForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
@@ -72,4 +74,3 @@ class ELOUpdateForm(ModelForm):
                         href="{% url 'elos:elos-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
         ))
-            
