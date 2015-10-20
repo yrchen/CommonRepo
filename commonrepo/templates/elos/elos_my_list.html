@@ -32,6 +32,7 @@
                 <th>Parent ELO</th>
                 <th>Parent ELO version</th>
                 <th>Type</th>
+                <th>Public</th>
               </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                 <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
                 <td>{{elo.parent_elo_version}}</td>
                 <td>{{elo.original_type}}</td>
+                <td>{{elo.is_public}}</td>
               </tr>
               {% endfor %}
             </tbody>
