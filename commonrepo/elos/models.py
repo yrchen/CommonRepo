@@ -22,7 +22,7 @@ class ELO(models.Model):
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
-    uuid = models.UUIDField(default=uuid4)
+    uuid = models.UUIDField(_("UUID"), default=uuid4)
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
@@ -30,10 +30,10 @@ class ELO(models.Model):
     is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
     # version control
-    version = models.PositiveIntegerField(blank=True, default=0)
+    version = models.PositiveIntegerField(_("ELO version"), blank=True, default=0)
     parent_elo = models.ForeignKey('self', blank=True, default=1)
-    parent_elo_uuid = models.UUIDField(blank=True, default=uuid4)
-    parent_elo_version = models.PositiveIntegerField(blank=True, default=0)
+    parent_elo_uuid = models.UUIDField(_("Parent ELO UUID"), blank=True, default=uuid4)
+    parent_elo_version = models.PositiveIntegerField(_("Parent ELO version"), blank=True, default=0)
 
     def __str__(self):
         return self.name
