@@ -22,6 +22,7 @@ class ELO(models.Model):
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
+    uuid = models.UUIDField(default=uuid4, editable=False)
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
