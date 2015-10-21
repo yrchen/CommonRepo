@@ -13,12 +13,18 @@ class User(AbstractUser):
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
+    
+    # Basic User Information
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
     organization = models.CharField(_("Organization/School"), blank=True, max_length=255)
     phone = models.CharField(_("Phone nubmer"), blank=True, max_length=255)
     address = models.CharField(_("Address"), blank=True, max_length=255)
     language =  models.CharField(_("Language"), blank=True, max_length=255)
     area = models.CharField(_("Area/Nation"), blank=True, max_length=255)
+    
+    # User Pedagogical Information
+    teaching_category = models.CharField(_("Teaching Category"), blank=True, max_length=255)
+    teaching_subject_area = models.CharField(_("Teaching Subject Area"), blank=True, max_length=255)
 
     def __str__(self):
         return self.username
