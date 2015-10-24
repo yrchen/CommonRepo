@@ -21,6 +21,11 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ELOsDetailView, self).get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+        return context
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
     model = ELO
