@@ -43,7 +43,7 @@
                 <td>{{object.author}}</td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
-                <td>{{fork_count}}</td>
+                <td><a href="{% url 'elos:elos-network' object.id %}">{{fork_count}}</a></td>
                 <td>{{object.version}}</td>
                 <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a></td>
                 <td>{{object.parent_elo_version}}</td>
