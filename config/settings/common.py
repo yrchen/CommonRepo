@@ -49,6 +49,7 @@ LOCAL_APPS = (
     'commonrepo.users',  # custom users app
     # Your stuff: custom apps go here
     'commonrepo.elos',
+    'commonrepo.groups',
 
     # API endpoints
     'commonrepo.snippets_api',
