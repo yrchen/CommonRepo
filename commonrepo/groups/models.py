@@ -16,7 +16,7 @@ class Group(models.Model):
     # basic infor    
     name = models.CharField(_("Name of Group"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of Group"), blank=True, max_length=255)
-    creator = models.ForeignKey(User, related_name='groups')
+    creator = models.ForeignKey(User, related_name='commonrepo_groups')
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
