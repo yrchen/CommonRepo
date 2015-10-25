@@ -16,6 +16,11 @@ urlpatterns = [
         regex=r'^fork/(?P<pk>[0-9]+)/$',
         view=views.ELOsForkView.as_view(),
         name="elos-fork"
+        ),
+    url(
+        regex=r'^netork/(?P<pk>[0-9]+)/$',
+        view=views.ELOsNetworkView.as_view(),
+        name="elos-network"
         ),    
     url(
         regex=r'^all/$',
