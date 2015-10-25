@@ -35,6 +35,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
+    url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),
 
     # API endpoints
     url(r'^', include(router_api.urls)),
