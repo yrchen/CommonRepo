@@ -1,0 +1,31 @@
+{% extends "starter.html" %}
+
+{% block title %}ELOs - Fork{% endblock %}
+{% block page_title %}ELOs Fork{% endblock %}
+{% block page_description %}Fork an ELO to your own repository{% endblock %}
+{% block page_breadcrumb %}ELO Fork{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Fork ELO</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% crispy form %}
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+
+{% endblock %}
