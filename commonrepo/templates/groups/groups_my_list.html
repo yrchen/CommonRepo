@@ -25,29 +25,21 @@
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Author</th>
+                <th>Creator</th>
                 <th>Create Date</th>
                 <th>Update Date</th>
-                <th>Version</th>
-                <th>Parent Group</th>
-                <th>Parent Group version</th>
-                <th>Type</th>
                 <th>Public</th>
               </tr>
             </thead>
             <tbody>
-              {% for elo in object_list %}
+              {% for group in object_list %}
               <tr>
-                <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
-                <td>{{elo.name}}</td>
-                <td>{{elo.author}}</td>
-                <td>{{elo.create_date}}</td>
-                <td>{{elo.update_date}}</td>
-                <td>{{elo.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
-                <td>{{elo.parent_elo_version}}</td>
-                <td>{{elo.original_type}}</td>
-                <td>{{elo.is_public}}</td>
+                <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                <td>{{group.name}}</td>
+                <td>{{group.creator}}</td>
+                <td>{{group.create_date}}</td>
+                <td>{{group.update_date}}</td>
+                <td>{{group.is_public}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -55,8 +47,8 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create Group</a>
-        <a href="{% url 'elos:elos-alllist' %}" class="btn btn-sm btn-info btn-flat pull-left">View All Groups</a>
+        <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create Group</a>
+        <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-info btn-flat pull-left">View All Groups</a>
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
