@@ -31,7 +31,7 @@ class GroupsMyListView(LoginRequiredMixin, ListView):
     template_name = 'groups/groups_my_list.html'
 
     def get_queryset(self):
-        return Group.objects.filter(author=self.request.user)
+        return Group.objects.filter(creator=self.request.user)
 
 class GroupsUpdateView(LoginRequiredMixin, UpdateView):
     model = Group
