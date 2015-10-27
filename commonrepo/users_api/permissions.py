@@ -1,5 +1,7 @@
-from rest_framework import permissions
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, unicode_literals
 
+from rest_framework import permissions
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -12,4 +14,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Write permissions are only allowed to the owner of the snippet
-        return obj.owner == request.user
+        return obj == request.user
