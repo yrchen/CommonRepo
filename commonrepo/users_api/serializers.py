@@ -30,18 +30,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         if request and hasattr(request, "user"):
             user = request.user
         
-        elo_count = ELO.objects.filter(
-                author=user
-            ).filter(
-                is_public=1
-            ).count() - ELO.objects.filter(
-                author=user
-            ).filter(
-                is_public=1
-            ).filter(
-                parent_elo=1
-            ).count()
-        return elo_count
+        my_elo_count = ELO.objects.filter(
+                author=user).filter(
+                is_public=1).count()
+        my_original_elo_count = ELO.objects.filter(
+                author=user).filter(
+                is_public=1).filter(
+                parent_elo=1).count()
+        return my_elo_count - my_original_elo_count
 
     class Meta:
         model = User
