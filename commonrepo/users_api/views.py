@@ -17,8 +17,8 @@ from commonrepo.users.models import User as User
 #from .models import Snippet
 from .permissions import IsOwnerOrReadOnly
 from .serializers import UserSerializer
-    
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+
+class UserViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents the users in the system.
 
@@ -27,3 +27,4 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsOwnerOrReadOnly]
