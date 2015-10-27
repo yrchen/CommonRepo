@@ -10,8 +10,50 @@ from commonrepo.snippets_api.models import Snippet
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     elos = serializers.HyperlinkedRelatedField(queryset=ELO.objects.all(), view_name='elos:elos-detail', many=True)
+    elos_published = serializers.SerializerMethodField()
+    elos_forks = serializers.SerializerMethodField()
+    elos_from_others = serializers.SerializerMethodField()
     snippets = serializers.HyperlinkedRelatedField(queryset=Snippet.objects.all(), view_name='snippet-detail', many=True)
+    
+    def get_elos_published(self, obj):
+        user = None
+        request = self.context.get("request")
+        
+        if request and hasattr(request, "user"):
+            user = request.user
+        
+        return ELO.objects.filter(author=user).filter(is_public=1).count()
+    
+    def get_elos_forks(self, obj):
+        user = None
+        request = self.context.get("request")
+        total_forks = 0
+        
+        if request and hasattr(request, "user"):
+            user = request.user
+        
+        my_elo_sets = ELO.objects.filter(author=user)
+        for elo in my_elo_sets:
+            total_forks += ELO.objects.filter(parent_elo=elo.id).count()
+
+        return total_forks
+    
+    def get_elos_from_others(self, obj):
+        user = None
+        request = self.context.get("request")
+        
+        if request and hasattr(request, "user"):
+            user = request.user
+        
+        my_elo_count = ELO.objects.filter(
+                author=user).filter(
+                is_public=1).count()
+        my_original_elo_count = ELO.objects.filter(
+                author=user).filter(
+                is_public=1).filter(
+                parent_elo=1).count()
+        return my_elo_count - my_original_elo_count
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elos', 'snippets', )
+        fields = ('url', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elos', 'elos_published', 'elos_forks', 'elos_from_others', 'snippets', )
