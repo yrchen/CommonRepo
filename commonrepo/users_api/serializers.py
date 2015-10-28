@@ -16,43 +16,43 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     snippets = serializers.HyperlinkedRelatedField(queryset=Snippet.objects.all(), view_name='snippet-detail', many=True)
     
     def get_elos_published(self, obj):
-        user = None
         request = self.context.get("request")
         
-        if request and hasattr(request, "user"):
-            user = request.user
-        
-        return ELO.objects.filter(author=user).filter(is_public=1).count()
+        if request and hasattr(request, "user") and request.user.is_authenticated():
+            return ELO.objects.filter(author=request.user).filter(is_public=1).count()
+        else:
+            return -1
     
     def get_elos_forks(self, obj):
-        user = None
         request = self.context.get("request")
         total_forks = 0
         
-        if request and hasattr(request, "user"):
-            user = request.user
+        if request and hasattr(request, "user") and request.user.is_authenticated():
+            my_elo_sets = ELO.objects.filter(author=request.user)
+            
+            for elo in my_elo_sets:
+                total_forks += ELO.objects.filter(parent_elo=elo.id).count()
+            
+            return total_forks
         
-        my_elo_sets = ELO.objects.filter(author=user)
-        for elo in my_elo_sets:
-            total_forks += ELO.objects.filter(parent_elo=elo.id).count()
-
-        return total_forks
+        else:
+            return -1
     
     def get_elos_from_others(self, obj):
-        user = None
         request = self.context.get("request")
         
-        if request and hasattr(request, "user"):
-            user = request.user
+        if request and hasattr(request, "user") and request.user.is_authenticated():
+            my_elo_count = ELO.objects.filter(
+                    author=request.user).filter(
+                    is_public=1).count()
+            my_original_elo_count = ELO.objects.filter(
+                    author=request.user).filter(
+                    is_public=1).filter(
+                    parent_elo=1).count()
+            return my_elo_count - my_original_elo_count
         
-        my_elo_count = ELO.objects.filter(
-                author=user).filter(
-                is_public=1).count()
-        my_original_elo_count = ELO.objects.filter(
-                author=user).filter(
-                is_public=1).filter(
-                parent_elo=1).count()
-        return my_elo_count - my_original_elo_count
+        else:
+            return -1
 
     class Meta:
         model = User
