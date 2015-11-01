@@ -39,12 +39,21 @@
     </li>
     <!-- Menu Footer-->
     <li class="user-footer">
+      {% if request.user.is_authenticated %}
       <div class="pull-left">
-        <a href="#" class="btn btn-default btn-flat">Profile</a>
+        <a href="{% url 'users:detail' request.user.username  %}" class="btn btn-default btn-flat">Profile</a>
       </div>
       <div class="pull-right">
-        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+        <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">Sign out</a>
       </div>
+      {% else %}
+      <div class="pull-left">
+        <a href="{% url 'account_login' %}" class="btn btn-default btn-flat">Log In</a>
+      </div>
+      <div class="pull-right">
+        <a href="{% url 'account_signup' %}" class="btn btn-default btn-flat">Sign up</a>
+      </div>
+      {% endif %}
     </li>
   </ul>
 </li>
