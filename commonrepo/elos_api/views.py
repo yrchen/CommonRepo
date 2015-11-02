@@ -25,7 +25,7 @@ class ELOViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system.
     """
-    queryset = ELO.objects.filter(is_public=1)
+    queryset = ELO.objects.all()
     serializer_class = ELOSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
