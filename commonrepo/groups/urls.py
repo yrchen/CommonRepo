@@ -16,11 +16,16 @@ urlpatterns = [
         regex=r'^all/$',
         view=views.GroupsListView.as_view(),
         name="groups-alllist"
-        ),    
+        ),
     url(
         regex=r'^$',
         view=views.GroupsMyListView.as_view(),
         name='groups-mylist'
+    ),
+    url(
+        regex=r'^add/(?P<pk>[0-9]+)/$',
+        view=views.GroupsAddView.as_view(),
+        name="groups-add"
     ),
     url(
         regex=r'^(?P<pk>[0-9]+)/$',
