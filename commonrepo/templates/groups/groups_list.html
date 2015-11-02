@@ -42,8 +42,8 @@
                 <td>{{group.update_date}}</td>
                 <td>{{group.is_public}}</td>
                 <td>
-                {% for members in group.members.all %}
-                   {{members.username}}
+                {% for member in group.members.all %}
+                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a> 
                 {% endfor %}
               </td>
               </tr>
