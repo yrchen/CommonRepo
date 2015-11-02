@@ -43,6 +43,7 @@ class GroupAddForm(ModelForm):
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Confirm</a>"""),
+#                Submit('save', 'Submit'),
         ))
 
 class GroupUpdateForm(ModelForm):
@@ -52,10 +53,10 @@ class GroupUpdateForm(ModelForm):
 
     def __init__(self, pk=None, *args, **kwargs):
         super(GroupUpdateForm, self).__init__(*args, **kwargs)
-        group_original = Group.objects.get(id=pk)
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Confirm</a>"""),
+#                Submit('save', 'Submit'),
         ))

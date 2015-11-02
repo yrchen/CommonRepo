@@ -55,6 +55,8 @@ LOCAL_APPS = (
     'commonrepo.snippets_api',
     'commonrepo.users_api',
     'commonrepo.elos_api',
+    'commonrepo.groups_api',
+
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -289,7 +291,7 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 # Your common stuff: Below this line define 3rd party library settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',        
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
