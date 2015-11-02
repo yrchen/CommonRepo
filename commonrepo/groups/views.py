@@ -34,8 +34,6 @@ class GroupsMyListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Group.objects.filter(creator=self.request.user)
 
-#        return Group.objects.filter(Q(members=self.request.user) | Q(creator=self.request.user))
-
 class GroupsAddView(LoginRequiredMixin, UpdateView):
     model = Group
     form_class = GroupAddForm
@@ -63,12 +61,10 @@ class GroupsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'groups/groups_update.html'
 
     def form_valid(self, form):
-    #    self.object.version += 1
         return super(GroupsUpdateView, self).form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super(GroupsUpdateView, self).get_form_kwargs()
-#        kwargs.update({'request_user': self.request.user})
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs
 

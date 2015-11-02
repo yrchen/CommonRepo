@@ -29,6 +29,7 @@
                 <th>Create Date</th>
                 <th>Update Date</th>
                 <th>Public</th>
+                <th>Members</th>
               </tr>
             </thead>
             <tbody>
@@ -40,6 +41,11 @@
                 <td>{{group.create_date}}</td>
                 <td>{{group.update_date}}</td>
                 <td>{{group.is_public}}</td>
+                <td>
+                {% for members in group.members.all %}
+                   {{members.username}}
+                {% endfor %}
+              </td>
               </tr>
               {% endfor %}
             </tbody>
