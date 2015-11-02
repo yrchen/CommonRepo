@@ -1,0 +1,31 @@
+{% extends "starter.html" %}
+
+{% block title %}Groups - Add{% endblock %}
+{% block page_title %}Groups Add{% endblock %}
+{% block page_description %}Add into a exist Group{% endblock %}
+{% block page_breadcrumb %}Group Add{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Add Group</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% crispy form %}
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Groups List</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+
+{% endblock %}
