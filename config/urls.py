@@ -15,12 +15,13 @@ from commonrepo.api.routers import DefaultRouter
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet
 from commonrepo.elos_api.views import ELOViewSet, ELOFileUploadViewSet
+from commonrepo.groups_api.views import GroupViewSet
 
 router_api = DefaultRouter()
 router_api.register(r'api/v1/snippets', SnippetViewSet)
 router_api.register(r'api/v1/users', UserViewSet)
 router_api.register(r'api/v1/elos', ELOViewSet)
-
+router_api.register(r'api/v1/groups', GroupViewSet)
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
@@ -42,7 +43,7 @@ urlpatterns = [
     url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/auth/', include('djoser.urls')),
     url(r'^api/v1/auth/token', obtain_auth_token),
-    
+
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
 
 

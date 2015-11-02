@@ -40,7 +40,11 @@
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td>{{object.is_public}}</td>
-                <td>{{object.members.all}}</td>
+                <td>
+                {% for members in object.members.all %}
+                   {{members.username}}
+                {% endfor %}
+              </td>
               </tr>
             </tbody>
           </table>
