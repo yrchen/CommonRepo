@@ -39,7 +39,13 @@
                 <td>{{group.creator}}</td>
                 <td>{{group.create_date}}</td>
                 <td>{{group.update_date}}</td>
-                <td>{{group.is_public}}</td>
+                <td>                
+                  {% if group.is_public %}
+                  Yes
+                  {% else %}
+                  No
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>
