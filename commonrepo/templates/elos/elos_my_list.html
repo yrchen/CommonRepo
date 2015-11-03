@@ -47,11 +47,13 @@
                 <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
                 <td>{{elo.parent_elo_version}}</td>
                 <td>{{elo.original_type}}</td>
-                {% if elo.is_public %}
-                <td>Yes</td>
-                {% else %}
-                <td>No</td>
-                {% endif %}
+                <td>                
+                  {% if elo.is_public %}
+                  Yes
+                  {% else %}
+                  No
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>
