@@ -41,8 +41,8 @@
                 <td>{{object.update_date}}</td>
                 <td>{{object.is_public}}</td>
                 <td>
-                {% for members in object.members.all %}
-                   {{members.username}}
+                {% for member in group.members.all %}
+                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a> 
                 {% endfor %}
               </td>
               </tr>
