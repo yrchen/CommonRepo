@@ -46,7 +46,11 @@
                 <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a></td>
                 <td>{{object.parent_elo_version}}</td>
                 <td>{{object.original_type}}</td>
-                <td>{{object.is_public}}</td>
+                {% if object.is_public %}
+                <td>Yes</td>
+                {% else %}
+                <td>No</td>
+                {% endif %}
               </tr>
             </tbody>
           </table>
