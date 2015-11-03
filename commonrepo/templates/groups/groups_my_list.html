@@ -29,6 +29,8 @@
                 <th>Create Date</th>
                 <th>Update Date</th>
                 <th>Public</th>
+                <th>Description</th>
+                <th>Members</th>
               </tr>
             </thead>
             <tbody>
@@ -39,12 +41,18 @@
                 <td>{{group.creator}}</td>
                 <td>{{group.create_date}}</td>
                 <td>{{group.update_date}}</td>
-                <td>                
+                <td>
                   {% if group.is_public %}
                   Yes
                   {% else %}
                   No
                   {% endif %}
+                </td>
+                <td>{{group.description}}</td>
+                <td>
+                {% for member in group.members.all %}
+                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                {% endfor %}
                 </td>
               </tr>
               {% endfor %}

@@ -16,6 +16,11 @@ class GroupsCreateView(LoginRequiredMixin, CreateView):
     form_class = GroupForm
     template_name = "groups/groups_create.html"
     #success_url = "/groups"
+    def get_form_kwargs(self):
+        kwargs = super(GroupsCreateView, self).get_form_kwargs()
+        kwargs.update({'request_user': self.request.user})
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
 
 class GroupsDetailView(LoginRequiredMixin, DetailView):
     model = Group

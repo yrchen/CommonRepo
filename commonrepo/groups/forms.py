@@ -15,10 +15,13 @@ from .models import Group
 class GroupForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'creator']
+        fields = ['name', 'creator','description']
 
     def __init__(self, *args, **kwargs):
+        self.request_user = kwargs.pop("request_user")
         super(GroupForm, self).__init__(*args, **kwargs)
+        self.fields["creator"].initial = self.request_user
+        self.fields["creator"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
