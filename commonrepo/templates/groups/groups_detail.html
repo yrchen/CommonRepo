@@ -46,10 +46,11 @@
                   No
                   {% endif %}
                 </td>
+                <td>
                 {% for member in group.members.all %}
                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a> 
                 {% endfor %}
-              </td>
+                </td>
               </tr>
             </tbody>
           </table>
