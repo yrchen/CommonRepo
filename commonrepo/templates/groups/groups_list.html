@@ -40,11 +40,13 @@
                 <td>{{group.creator}}</td>
                 <td>{{group.create_date}}</td>
                 <td>{{group.update_date}}</td>
-                {% if group.is_public %}
-                <td>Yes</td>
-                {% else %}
-                <td>No</td>
-                {% endif %}
+                <td>                
+                  {% if group.is_public %}
+                  Yes
+                  {% else %}
+                  No
+                  {% endif %}
+                </td>
                 <td>
                 {% for member in group.members.all %}
                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a> 
