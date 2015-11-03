@@ -39,7 +39,11 @@
                 <td>{{object.creator}}</td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
-                <td>{{object.is_public}}</td>
+                {% if object.is_public %}
+                <td>Yes</td>
+                {% else %}
+                <td>No</td>
+                {% endif %}
                 <td>
                 {% for member in group.members.all %}
                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a> 
