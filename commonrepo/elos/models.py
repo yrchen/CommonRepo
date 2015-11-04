@@ -34,6 +34,9 @@ class ELO(models.Model):
     parent_elo = models.ForeignKey('self', blank=True, default=1)
     parent_elo_uuid = models.UUIDField(_("Parent ELO UUID"), blank=True, default=uuid4)
     parent_elo_version = models.PositiveIntegerField(_("Parent ELO version"), blank=True, default=0)
+    parent_elo2 = models.ForeignKey('self', blank=True, default=1, related_name='elos_parent2')
+    parent_elo2_uuid = models.UUIDField(_("Parent ELO2 UUID"), blank=True, default=uuid4)
+    parent_elo2_version = models.PositiveIntegerField(_("Parent ELO2 version"), blank=True, default=0)    
 
     def __str__(self):
         return self.name

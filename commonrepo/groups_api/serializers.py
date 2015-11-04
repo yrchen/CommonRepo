@@ -11,7 +11,7 @@ from .models import GroupFileUpload
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'name', 'creator', 'create_date', 'create_date','members')
+        fields = ('url', 'name', 'creator', 'create_date', 'create_date','members','description')
 
 class GroupFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.SlugRelatedField(

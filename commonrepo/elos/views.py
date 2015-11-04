@@ -21,6 +21,11 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ELOsDetailView, self).get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+        return context
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
     model = ELO
@@ -44,6 +49,18 @@ class ELOsMyListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
+
+class ELOsNetworkView(LoginRequiredMixin, DetailView):
+    model = ELO
+    query_pk_and_slug = True
+    template_name = 'elos/elos_network.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ELOsNetworkView, self).get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        elo = ELO.objects.get(id=self.kwargs['pk'])
+        context['parent_elo'] = ELO.objects.get(id=elo.parent_elo_id)
+        return context
 
 class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     model = ELO
