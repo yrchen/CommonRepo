@@ -8,7 +8,7 @@ from django.shortcuts import render
 from braces.views import LoginRequiredMixin
 
 from .models import Group
-from .forms import GroupForm, GroupUpdateForm, GroupAddForm
+from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
 from django.db.models import Q
 
 class GroupsCreateView(LoginRequiredMixin, CreateView):
@@ -71,6 +71,25 @@ class GroupsUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super(GroupsUpdateView, self).get_form_kwargs()
+        kwargs.update({'request_user': self.request.user})
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+
+    def get_success_url(self):
+        return reverse("groups:groups-detail",
+                       kwargs={'pk': self.kwargs['pk']})
+
+class GroupsLeaveView(LoginRequiredMixin, UpdateView):
+    model = Group
+    form_class = GroupLeaveForm
+    query_pk_and_slug = True
+    template_name = 'groups/groups_leave.html'
+
+    def form_valid(self, form):
+        return super(GroupsLeaveView, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(GroupsLeaveView, self).get_form_kwargs()
         kwargs.update({'request_user': self.request.user})
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs

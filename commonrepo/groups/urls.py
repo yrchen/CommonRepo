@@ -28,6 +28,11 @@ urlpatterns = [
         name="groups-add"
     ),
     url(
+        regex=r'^leave/(?P<pk>[0-9]+)/$',
+        view=views.GroupsLeaveView.as_view(),
+        name="groups-leave"
+    ),
+    url(
         regex=r'^(?P<pk>[0-9]+)/$',
         view=views.GroupsDetailView.as_view(),
         name='groups-detail'
