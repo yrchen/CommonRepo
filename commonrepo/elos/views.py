@@ -59,7 +59,15 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         elo = ELO.objects.get(id=self.kwargs['pk'])
-        context['parent_elo'] = ELO.objects.get(id=elo.parent_elo_id)
+        parent_elos = []
+        
+        if elo.parent_elo_id != 1:
+            while elo.parent_elo_id != 1:
+                parent_elo = ELO.objects.get(id=elo.parent_elo_id)
+                parent_elos.insert(0, parent_elo)
+                elo = parent_elo
+
+        context['parent_elos'] = parent_elos        
         return context
 
 class ELOsUpdateView(LoginRequiredMixin, UpdateView):

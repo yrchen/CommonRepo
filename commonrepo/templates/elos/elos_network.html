@@ -37,6 +37,7 @@
               </tr>
             </thead>
             <tbody>
+              {% for parent_elo in parent_elos %}
               <tr>
                 <td><a href="{% url 'elos:elos-detail' parent_elo.id %}">{{parent_elo.id}}</a></td>
                 <td>{{parent_elo.name}}</td>
@@ -49,6 +50,7 @@
                 <td>{{parent_elo.original_type}}</td>
                 <td>{{parent_elo.is_public}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div><!-- /.table-responsive -->
