@@ -11,14 +11,16 @@ from commonrepo.snippets_api.models import Snippet
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     # ELOs information
-    elos = serializers.HyperlinkedRelatedField(queryset=ELO.objects.all(), view_name='elos:elos-detail', many=True)
+    # elos = ForeignKey relationship from model ELO.author
     elos_published = serializers.SerializerMethodField()
     elos_forks = serializers.SerializerMethodField()
     elos_from_others = serializers.SerializerMethodField()
+
     # Groups
     # commonrepo_groups = ForeignKey relationship from model Group.creator
+
     # Misc
-    snippets = serializers.HyperlinkedRelatedField(queryset=Snippet.objects.all(), view_name='snippet-detail', many=True)
+    # snippets = ForeignKey relationship from model snippets.owner
     
     def get_elos_published(self, obj):
         request = self.context.get("request")
