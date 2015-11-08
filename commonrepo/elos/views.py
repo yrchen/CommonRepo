@@ -67,7 +67,8 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
                 parent_elos.insert(0, parent_elo)
                 elo = parent_elo
 
-        context['parent_elos'] = parent_elos        
+        context['parent_elos'] = parent_elos
+        context['child_elos'] = ELO.objects.filter(parent_elo=self.kwargs['pk'])
         return context
 
 class ELOsUpdateView(LoginRequiredMixin, UpdateView):
