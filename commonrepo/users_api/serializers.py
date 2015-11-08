@@ -9,10 +9,12 @@ from commonrepo.elos.models import ELO
 from commonrepo.snippets_api.models import Snippet
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    # ELOs information
     elos = serializers.HyperlinkedRelatedField(queryset=ELO.objects.all(), view_name='elos:elos-detail', many=True)
     elos_published = serializers.SerializerMethodField()
     elos_forks = serializers.SerializerMethodField()
     elos_from_others = serializers.SerializerMethodField()
+    # Misc
     snippets = serializers.HyperlinkedRelatedField(queryset=Snippet.objects.all(), view_name='snippet-detail', many=True)
     
     def get_elos_published(self, obj):
