@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from rest_framework import serializers
 
+from commonrepo.groups.models import Group as Group
 from commonrepo.users.models import User as User
 
 from commonrepo.elos.models import ELO
@@ -14,6 +15,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     elos_published = serializers.SerializerMethodField()
     elos_forks = serializers.SerializerMethodField()
     elos_from_others = serializers.SerializerMethodField()
+    # Groups
+    # commonrepo_groups = ForeignKey relationship from model Group.creator
     # Misc
     snippets = serializers.HyperlinkedRelatedField(queryset=Snippet.objects.all(), view_name='snippet-detail', many=True)
     
@@ -58,4 +61,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elos', 'elos_published', 'elos_forks', 'elos_from_others', 'snippets', )
+        fields = ('url', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elos', 'elos_published', 'elos_forks', 'elos_from_others', 'commonrepo_groups', 'snippets', )
