@@ -11,7 +11,12 @@ from .models import ELOFileUpload
 class ELOSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ELO
-        fields = ('url', 'name', 'fullname', 'author', 'create_date', 'update_date', 'original_type', 'is_public', 'init_file', 'version', 'parent_elo', 'parent_elo_version' )
+        fields = ('url', 'id', 'name', 'fullname', 'author', 'create_date', 'update_date', 'original_type', 'is_public', 'init_file', 'version', 'parent_elo', 'parent_elo_version' )
+
+class ELOSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = ELO
+        fields = ('url', 'id', 'name', 'fullname', 'author', 'create_date', 'update_date', 'original_type', 'is_public', 'init_file', 'version', 'parent_elo', 'parent_elo_version' )
 
 class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
