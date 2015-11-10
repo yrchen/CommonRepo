@@ -33,7 +33,7 @@ class ELO(models.Model):
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
-    original_type = models.SmallIntegerField(default=0)
+    original_type = models.ForeignKey(ELOType, to_field='type_id', related_name='elos')
     is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)
     # version control
