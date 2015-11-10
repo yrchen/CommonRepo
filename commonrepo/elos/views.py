@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from braces.views import LoginRequiredMixin
 
-from .models import ELO
+from .models import ELO, ELOType
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 class ELOsCreateView(LoginRequiredMixin, CreateView):
@@ -89,3 +89,14 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
+
+class ELOTypesDetailView(LoginRequiredMixin, DetailView):
+    model = ELOType
+    query_pk_and_slug = True
+    template_name = 'elos/elotypes_detail.html'
+
+    #def get_context_data(self, **kwargs):
+        #context = super(ELOsDetailView, self).get_context_data(**kwargs)
+        ## Add in a QuerySet of all the books
+        #context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+        #return context
