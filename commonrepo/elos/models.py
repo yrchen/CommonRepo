@@ -17,8 +17,15 @@ def get_random_filename(instance, filename):
     return os.path.join('elo-documents/', filename)
 
 @python_2_unicode_compatible
+class ELOType(models.Model):
+    name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
+    type_id = models.SmallIntegerField()
+
+    def __str__(self):
+        return self.name   
+
 class ELO(models.Model):
-    # basic infor    
+    # basic infor
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
@@ -36,17 +43,10 @@ class ELO(models.Model):
     parent_elo_version = models.PositiveIntegerField(_("Parent ELO version"), blank=True, default=0)
     parent_elo2 = models.ForeignKey('self', blank=True, default=1, related_name='elos_parent2')
     parent_elo2_uuid = models.UUIDField(_("Parent ELO2 UUID"), blank=True, default=uuid4)
-    parent_elo2_version = models.PositiveIntegerField(_("Parent ELO2 version"), blank=True, default=0)    
+    parent_elo2_version = models.PositiveIntegerField(_("Parent ELO2 version"), blank=True, default=0)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
-
-class ELOType(models.Model):
-    name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
-    type_id = models.SmallIntegerField()
-    
-    def __str__(self):
-        return self.name    
