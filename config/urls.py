@@ -13,7 +13,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
 from commonrepo.snippets_api.views import SnippetViewSet
-from commonrepo.users_api.views import UserViewSet
+from commonrepo.users_api.views import UserViewSet, UserViewSetV2
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
 from commonrepo.groups_api.views import GroupViewSet
 
@@ -26,6 +26,7 @@ router_api.register(r'api/v1/elotypes', ELOTypeViewSet)
 router_api.register(r'api/v1/groups', GroupViewSet)
 # API v2
 router_api.register(r'api/v2/elos', ELOViewSetV2)
+router_api.register(r'api/v2/users', UserViewSetV2)
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
