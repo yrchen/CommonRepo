@@ -15,7 +15,7 @@ from commonrepo.api.routers import DefaultRouter
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet, UserViewSetV2
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
-from commonrepo.groups_api.views import GroupViewSet
+from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
 
 router_api = DefaultRouter()
 # API v1
@@ -26,6 +26,7 @@ router_api.register(r'api/v1/elotypes', ELOTypeViewSet)
 router_api.register(r'api/v1/groups', GroupViewSet)
 # API v2
 router_api.register(r'api/v2/elos', ELOViewSetV2)
+router_api.register(r'api/v2/groups', GroupViewSetV2)
 router_api.register(r'api/v2/users', UserViewSetV2)
 
 urlpatterns = [
