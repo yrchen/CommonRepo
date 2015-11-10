@@ -19,7 +19,7 @@ from commonrepo.elos.models import ELO, ELOType
 
 from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly
-from .serializers import ELOSerializer, ELOTypeSerializer, ELOFileUploadSerializer
+from .serializers import ELOSerializer, ELOSerializerV2, ELOTypeSerializer, ELOFileUploadSerializer
 
 class ELOViewSet(viewsets.ModelViewSet):
     """
@@ -33,7 +33,21 @@ class ELOViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
         
     def perform_update(self, serializer):
-        instance = serializer.save()    
+        instance = serializer.save()
+
+class ELOViewSetV2(viewsets.ModelViewSet):
+    """
+    This endpoint presents the ELOs in the system.
+    """
+    queryset = ELO.objects.all()
+    serializer_class = ELOSerializerV2
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        
+    def perform_update(self, serializer):
+        instance = serializer.save() 
 
 class ELOTypeViewSet(viewsets.ModelViewSet):
     """
