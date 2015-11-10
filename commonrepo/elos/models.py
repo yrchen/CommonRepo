@@ -19,7 +19,7 @@ def get_random_filename(instance, filename):
 @python_2_unicode_compatible
 class ELOType(models.Model):
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
-    type_id = models.SmallIntegerField(unique=True)
+    type_id = models.SmallIntegerField(_("ELO Type ID"), unique=True)
 
     def __str__(self):
         return self.name
