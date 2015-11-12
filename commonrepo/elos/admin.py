@@ -3,7 +3,9 @@ from __future__ import absolute_import, unicode_literals
 
 from django.contrib import admin
 
-from .models import ELO, ELOType
+from mptt.admin import MPTTModelAdmin
+
+from .models import ELO, ELOType, ReusabilityTree
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -21,3 +23,4 @@ class ELOTypeAdmin(admin.ModelAdmin):
     ]
     
 admin.site.register(ELOType, ELOTypeAdmin)
+admin.site.register(ReusabilityTree, MPTTModelAdmin)
