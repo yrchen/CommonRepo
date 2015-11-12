@@ -9,7 +9,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from mptt.models import MPTTModel, TreeForeignKey
+from mptt import models as MPTTmodels
 
 from commonrepo.users.models import User as User
 
@@ -57,10 +57,10 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
-class ReusabilityTreeNode(MPTTModel):
+class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
-
+    parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+    
     def __str__(self):
         return self.name    
 
