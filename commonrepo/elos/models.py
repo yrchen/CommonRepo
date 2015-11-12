@@ -60,9 +60,18 @@ class ELO(models.Model):
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+    elo = models.ForeignKey(ELO, blank=True, default=1)
     
     def __str__(self):
         return self.name    
 
     class MPTTMeta:
         order_insertion_by = ['name']    
+
+class ReusabilityTree(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree')
+    root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
+    
+    def __str__(self):
+        return self.name    
