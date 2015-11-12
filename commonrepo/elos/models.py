@@ -9,6 +9,8 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from mptt.models import MPTTModel, TreeForeignKey
+
 from commonrepo.users.models import User as User
 
 def get_random_filename(instance, filename):
@@ -17,6 +19,16 @@ def get_random_filename(instance, filename):
     return os.path.join('elo-documents/', filename)
 
 @python_2_unicode_compatible
+class ReusabilityTree(MPTTModel):
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+
+    def __str__(self):
+        return self.name    
+
+    class MPTTMeta:
+        order_insertion_by = ['name']    
+
 class ELOType(models.Model):
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
     type_id = models.SmallIntegerField(_("ELO Type ID"), unique=True)
