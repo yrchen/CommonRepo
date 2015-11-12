@@ -12,7 +12,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">My Groups</h3>
+        <h3 class="box-title">Created Groups</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -35,26 +35,83 @@
             </thead>
             <tbody>
               {% for group in object_list %}
+                {% if group.creator == request.user %}
+                 <tr>
+                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                   <td>{{group.name}}</td>
+                   <td>{{group.creator}}</td>
+                   <td>{{group.create_date}}</td>
+                   <td>{{group.update_date}}</td>
+                   <td>
+                     {% if group.is_public %}
+                     Yes
+                     {% else %}
+                     No
+                     {% endif %}
+                   </td>
+                   <td>{{group.description}}</td>
+                   <td>
+                   {% for member in group.members.all %}
+                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                   {% endfor %}
+                   </td>
+                 </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Joined Groups</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
               <tr>
-                <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                <td>{{group.name}}</td>
-                <td>{{group.creator}}</td>
-                <td>{{group.create_date}}</td>
-                <td>{{group.update_date}}</td>
-                <td>
-                  {% if group.is_public %}
-                  Yes
-                  {% else %}
-                  No
-                  {% endif %}
-                </td>
-                <td>{{group.description}}</td>
-                <td>
-                {% for member in group.members.all %}
-                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
-                {% endfor %}
-                </td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Creator</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
+                <th>Public</th>
+                <th>Description</th>
+                <th>Members</th>
               </tr>
+            </thead>
+            <tbody>
+              {% for group in object_list %}
+                {% for EE in group.members.all %}
+                {% if EE == request.user %}
+                 <tr>
+                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                   <td>{{group.name}}</td>
+                   <td>{{group.creator}}</td>
+                   <td>{{group.create_date}}</td>
+                   <td>{{group.update_date}}</td>
+                   <td>
+                     {% if group.is_public %}
+                     Yes
+                     {% else %}
+                     No
+                     {% endif %}
+                   </td>
+                   <td>{{group.description}}</td>
+                   <td>
+                   {% for member in group.members.all %}
+                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                   {% endfor %}
+                   </td>
+                 </tr>
+                {% endif %}
+                {% endfor %}
               {% endfor %}
             </tbody>
           </table>
