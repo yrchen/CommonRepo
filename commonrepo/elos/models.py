@@ -19,7 +19,7 @@ def get_random_filename(instance, filename):
     return os.path.join('elo-documents/', filename)
 
 @python_2_unicode_compatible
-class ReusabilityTree(MPTTModel):
+class ReusabilityTreeNode(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
 

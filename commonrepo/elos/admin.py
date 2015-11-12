@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from mptt.admin import MPTTModelAdmin
 
-from .models import ELO, ELOType, ReusabilityTree
+from .models import ELO, ELOType, ReusabilityTreeNode
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -23,4 +23,4 @@ class ELOTypeAdmin(admin.ModelAdmin):
     ]
     
 admin.site.register(ELOType, ELOTypeAdmin)
-admin.site.register(ReusabilityTree, MPTTModelAdmin)
+admin.site.register(ReusabilityTreeNode, MPTTModelAdmin)
