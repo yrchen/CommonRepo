@@ -15,7 +15,7 @@ from .models import Group
 class GroupForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'creator', ]
+        fields = ['name', 'creator', 'description']
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -52,7 +52,7 @@ class GroupAddForm(ModelForm):
 class GroupUpdateForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'description', 'members' ]
+        fields = ['name', 'description', 'is_public']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -61,8 +61,8 @@ class GroupUpdateForm(ModelForm):
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
-                        href="{% url 'groups:groups-mylist' %}">Confirm</a>"""),
-#                Submit('save', 'Submit'),
+                        href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
+                Submit('save', 'Confirm'),
         ))
 
 class GroupLeaveForm(ModelForm):
