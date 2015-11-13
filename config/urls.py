@@ -12,16 +12,22 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
+from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
+from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
 from commonrepo.snippets_api.views import SnippetViewSet
-from commonrepo.users_api.views import UserViewSet
-from commonrepo.elos_api.views import ELOViewSet, ELOFileUploadViewSet
-from commonrepo.groups_api.views import GroupViewSet
+from commonrepo.users_api.views import UserViewSet, UserViewSetV2
 
 router_api = DefaultRouter()
+# API v1
+router_api.register(r'api/v1/elos', ELOViewSet)
+router_api.register(r'api/v1/elotypes', ELOTypeViewSet)
+router_api.register(r'api/v1/groups', GroupViewSet)
 router_api.register(r'api/v1/snippets', SnippetViewSet)
 router_api.register(r'api/v1/users', UserViewSet)
-router_api.register(r'api/v1/elos', ELOViewSet)
-router_api.register(r'api/v1/groups', GroupViewSet)
+# API v2
+router_api.register(r'api/v2/elos', ELOViewSetV2)
+router_api.register(r'api/v2/groups', GroupViewSetV2)
+router_api.register(r'api/v2/users', UserViewSetV2)
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),

@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from braces.views import LoginRequiredMixin
 
-from .models import ELO
+from .models import ELO, ELOType
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 class ELOsCreateView(LoginRequiredMixin, CreateView):
@@ -89,3 +89,8 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
+
+class ELOTypesDetailView(LoginRequiredMixin, DetailView):
+    model = ELOType
+    query_pk_and_slug = True
+    template_name = 'elos/elotypes_detail.html'

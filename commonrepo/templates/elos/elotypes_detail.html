@@ -1,0 +1,47 @@
+{% extends "starter.html" %}
+
+{% block title %}ELO Types - {{object.name}}{% endblock %}
+{% block page_title %}ELO Types Detail{% endblock %}
+{% block page_description %}Detail of "{{object.name}}"{% endblock %}
+{% block page_breadcrumb %}ELO Types Detail{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELO Types - {{object.name}}</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="{% url 'elos:elotypes-detail' object.id %}">{{object.id}}</a></td>
+                <td>{{object.name}}</td>
+                <td>{{object.type_id}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endblock content %}
