@@ -42,6 +42,7 @@ THIRD_PARTY_APPS = (
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
     'djoser', # authentication
+    'mptt', # django-mptt
 )
 
 # Apps specific for this project go here.

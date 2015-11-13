@@ -9,6 +9,8 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from mptt import models as MPTTmodels
+
 from commonrepo.users.models import User as User
 
 def get_random_filename(instance, filename):
@@ -54,3 +56,22 @@ class ELO(models.Model):
 
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
+
+class ReusabilityTreeNode(MPTTmodels.MPTTModel):
+    name = models.CharField(max_length=50, unique=True)
+    parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+    elo = models.ForeignKey(ELO, blank=True, default=1)
+    
+    def __str__(self):
+        return self.name    
+
+    class MPTTMeta:
+        order_insertion_by = ['name']    
+
+class ReusabilityTree(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree')
+    root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
+    
+    def __str__(self):
+        return self.name    
