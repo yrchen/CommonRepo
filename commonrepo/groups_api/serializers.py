@@ -17,12 +17,3 @@ class GroupSerializerV2(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('url', 'id', 'name', 'creator', 'create_date', 'create_date','members','description')
-
-class GroupFileUploadSerializer(serializers.HyperlinkedModelSerializer):
-    owner = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='id'
-    )
-    class Meta:
-        model = GroupFileUpload
-        read_only_fields = ('created', 'datafile', 'owner')
