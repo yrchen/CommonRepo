@@ -85,7 +85,10 @@ def elos_fork(request, pk):
                                      version = 1,
                                      parent_elo = elo_original,
                                      parent_elo_uuid = elo_original.uuid,
-                                     parent_elo_version = elo_original.version)
+                                     parent_elo_version = elo_original.version,
+                                     parent_elo2 = elo_original,
+                                     parent_elo2_uuid = elo_original.uuid,
+                                     parent_elo2_version = elo_original.version)
         return Response({"id": elo_new.id }, status=status.HTTP_201_CREATED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
