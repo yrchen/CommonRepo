@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^api/v1/auth/token', obtain_auth_token),
 
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
+    url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_add_member'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
