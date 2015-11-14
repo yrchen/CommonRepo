@@ -19,7 +19,7 @@ from commonrepo.groups.models import Group
 
 from .models import GroupFileUpload
 from .permissions import IsOwnerOrReadOnly
-from .serializers import GroupSerializer, GroupSerializerV2, GroupFileUploadSerializer
+from .serializers import GroupSerializer, GroupSerializerV2
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -48,14 +48,3 @@ class GroupViewSetV2(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-
-class GroupFileUploadViewSet(viewsets.ModelViewSet):
-    authentication_classes = (authentication.TokenAuthentication,)
-    queryset = GroupFileUpload.objects.all()
-    serializer_class = GroupFileUploadSerializer
-    parser_classes = (MultiPartParser, FormParser,)
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user,
-                       datafile=self.request.FILES.get('file'))
