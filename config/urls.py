@@ -51,8 +51,8 @@ urlpatterns = [
     url(r'^api/v1/auth/token', obtain_auth_token),
 
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
-    url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_add_member'),
-    url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_leave_member'),
+    url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_add'),
+    url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_leave'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
