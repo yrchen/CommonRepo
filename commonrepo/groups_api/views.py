@@ -58,3 +58,12 @@ def groups_add_member(request, pk):
         return Response(status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+def groups_leave_member(request, pk):
+    if request.method == 'POST':
+        group = Group.objects.get(id=pk)
+        group.members.remove(request.user)
+        group.save()
+        return Response(status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
