@@ -82,6 +82,7 @@ def elos_fork(request, pk):
         elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
                                      author = request.user,
                                      original_type = elo_original.original_type,
+                                     init_file = elo_original.init_file,
                                      version = 1,
                                      parent_elo = elo_original,
                                      parent_elo_uuid = elo_original.uuid,
