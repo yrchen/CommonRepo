@@ -30,7 +30,7 @@ class ELOForm(ModelForm):
 class ELOForkForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'original_type', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
+        fields = ['name', 'author', 'original_type', 'init_file', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -43,6 +43,8 @@ class ELOForkForm(ModelForm):
         self.fields["author"].widget.attrs['readonly'] = True
         self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
+        self.fields["init_file"].initial = elo_original.init_file
+        self.fields["init_file"].widget.attrs['readonly'] = True        
         self.fields["version"].initial = 1
         self.fields["version"].widget.attrs['readonly'] = True
         self.fields["parent_elo"].queryset = ELO.objects.filter(id=pk)
