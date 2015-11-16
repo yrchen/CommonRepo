@@ -88,8 +88,8 @@
             </thead>
             <tbody>
               {% for group in object_list %}
-                {% for EE in group.members.all %}
-                {% if EE == request.user %}
+                {% for member in group.members.all %}
+                {% if group.creator != request.user and member == request.user %}
                  <tr>
                    <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
                    <td>{{group.name}}</td>
