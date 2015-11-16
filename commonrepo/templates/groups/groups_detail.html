@@ -60,8 +60,8 @@
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
         <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
-        <a href="{% url 'groups:groups-leave' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Leave this Group</a>
-        <a href="{% url 'groups:groups-add' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
+        <a href="{% url 'groups:groups-abort' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Abort this Group</a>
+        <a href="{% url 'groups:groups-join' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
         <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new Group</a>
         <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Groups List</a>
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
