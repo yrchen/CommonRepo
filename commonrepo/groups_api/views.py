@@ -50,7 +50,7 @@ class GroupViewSetV2(viewsets.ModelViewSet):
         instance = serializer.save()
 
 @api_view(['POST'])
-def groups_member_add(request, pk):
+def groups_member_join(request, pk):
     if request.method == 'POST':
         group = Group.objects.get(id=pk)
         group.members.add(request.user)
@@ -59,7 +59,7 @@ def groups_member_add(request, pk):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def groups_member_leave(request, pk):
+def groups_member_abort(request, pk):
     if request.method == 'POST':
         group = Group.objects.get(id=pk)
         group.members.remove(request.user)

@@ -58,8 +58,8 @@ urlpatterns = [
     url(r'^api/v2/infor/elos-total/$', 'commonrepo.infor_api.views.elos_total_count'),
     url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'), 
     # API - Groups
-    url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_add'),
-    url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_leave'),
+    url(r'^api/v2/groups/abort/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_abort'),
+    url(r'^api/v2/groups/join/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_join'),
     # API - Users
 
 
