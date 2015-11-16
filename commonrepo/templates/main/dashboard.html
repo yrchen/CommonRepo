@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load static %}
+
 {% block title %}Dashboard{% endblock %}
 {% block page_title %}Dashboard{% endblock %}
 {% block page_description %}Dashboard of Common Repository{% endblock %}
@@ -63,7 +65,15 @@
         </div><!-- /.box-header -->
         <div class="box-body no-padding">
             <div id="localELO">
-                <script>ELO_List("localELO");</script>
+                <ul class="users-list clearfix">
+                {% for elo in elos_my_list %}
+                    <li>
+                        <img src="{% static "ELOs/img/book-64.png" %}" alt="ELOs Image"/>
+                        <a class="users-list-name" href="#">{{elo.name}}</a>
+                        <span class="users-list-date">{{elo.author.username}}</span>
+                    </li>
+                {% endfor %}
+                </ul>
             </div>
         </div><!-- /.box-body -->
         <div class="box-footer text-center">
@@ -86,7 +96,15 @@
         </div><!-- /.box-header -->
         <div class="box-body no-padding">
             <div id="remoteELO">
-                <script>ELO_List("remoteELO");</script>
+                <ul class="users-list clearfix">
+                {% for elo in elos_all_list %}
+                    <li>
+                        <img src="{% static "ELOs/img/book-64.png" %}" alt="ELOs Image"/>
+                        <a class="users-list-name" href="#">{{elo.name}}</a>
+                        <span class="users-list-date">{{elo.author.username}}</span>
+                    </li>
+                {% endfor %}
+                </ul>
             </div>
         </div><!-- /.box-body -->
         <div class="box-footer text-center">

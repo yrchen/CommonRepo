@@ -20,7 +20,13 @@ class DashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
+        # information
         context['elos_total_count'] = ELO.objects.all().count()
         context['elos_my_total_count'] = ELO.objects.filter(author=self.request.user).count()
         context['users_total_count'] = User.objects.all().count()
+
+        # ELOs
+        context['elos_my_list'] = ELO.objects.filter(author=self.request.user)[:8]
+        context['elos_all_list'] = ELO.objects.all()[:8]
+
         return context
