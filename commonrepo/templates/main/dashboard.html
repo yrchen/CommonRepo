@@ -1,0 +1,99 @@
+{% extends "starter.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_description %}Dashboard of Common Repository{% endblock %}
+{% block page_breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">My ELOs</span>
+                <span class="info-box-number">{{elos_my_total_count}}</span>
+            </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+    </div><!-- /.col -->
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">All ELOs</span>
+                <span class="info-box-number">{{elos_total_count}}</span>
+            </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+    </div><!-- /.col -->
+    
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Likes</span>
+                <span class="info-box-number"></span>
+            </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+    </div><!-- /.col -->
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Members</span>
+                <span class="info-box-number">{{users_total_count}}</span>
+            </div><!-- /.info-box-content -->
+        </div><!-- /.info-box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<div class="row">
+    <div class="col-md-6">
+      <!-- My ELO List -->
+      <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">My ELOs</h3>
+            <div class="box-tools pull-right">
+                <span class="label label-info">{{elos_my_total_count}} ELOs</span>
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div id="localELO">
+                <script>ELO_List("localELO");</script>
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="repo-local.html" class="uppercase">View All My ELOs</a>
+        </div><!-- /.box-footer -->
+      </div><!--/.box -->
+    </div><!-- /.col -->
+    <!-- local ELOs -->
+    
+    <div class="col-md-6">
+      <!-- All ELO List -->
+      <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">All ELOs</h3>
+            <div class="box-tools pull-right">
+                <span class="label label-danger">{{elos_total_count}} ELOs</span>
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div id="remoteELO">
+                <script>ELO_List("remoteELO");</script>
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="javascript::" class="uppercase">View All ELOs</a>
+        </div><!-- /.box-footer -->
+      </div><!--/.box -->
+    </div><!-- /.col -->
+    <!-- remote ELOs -->
+</div><!-- /.row -->
+{% endblock content %}
