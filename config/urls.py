@@ -44,16 +44,23 @@ urlpatterns = [
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
     url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),
 
+    #
     # API endpoints
     url(r'^', include(router_api.urls)),
+    # API - Auth
     url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/auth/', include('djoser.urls')),
     url(r'^api/v1/auth/token', obtain_auth_token),
-
+    # API - ELOs
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
     url(r'^api/v2/elos/fork/(?P<pk>[0-9]+)/$', 'commonrepo.elos_api.views.elos_fork'),
+    # API - Information
+    url(r'^api/v2/infor/elos-total/$', 'commonrepo.infor_api.views.elos_total_count'),
+    url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'), 
+    # API - Groups
     url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_add'),
     url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_leave'),
+    # API - Users
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
