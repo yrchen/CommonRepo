@@ -54,6 +54,7 @@ urlpatterns = [
     # API - ELOs
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
     url(r'^api/v2/elos/fork/(?P<pk>[0-9]+)/$', 'commonrepo.elos_api.views.elos_fork'),
+    url(r'^api/v2/elos-total/$', 'commonrepo.elos_api.views.elos_total_count'),    
     # API - Groups
     url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_add'),
     url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_leave'),

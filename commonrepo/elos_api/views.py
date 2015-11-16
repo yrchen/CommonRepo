@@ -75,6 +75,13 @@ class ELOFileUploadViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user,
                        datafile=self.request.FILES.get('file'))
 
+@api_view(['GET'])
+def elos_total_count(request):
+    if request.method == 'GET':
+        return Response({"total_elos": ELO.objects.all().count() }, status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)    
+
 @api_view(['POST'])
 def elos_fork(request, pk):
     if request.method == 'POST':
