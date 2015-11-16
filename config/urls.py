@@ -14,6 +14,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from commonrepo.api.routers import DefaultRouter
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
 from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
+from commonrepo.main import views as MainViews
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet, UserViewSetV2
 
@@ -32,6 +33,7 @@ router_api.register(r'api/v2/users', UserViewSetV2)
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
+    url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin
     url(r'^admin/', include(admin.site.urls)),
