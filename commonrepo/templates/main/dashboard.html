@@ -69,7 +69,7 @@
                 {% for elo in elos_my_list %}
                     <li>
                         <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
-                        <a class="users-list-name" href="#">{{elo.name}}</a>
+                        <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name}}</a>
                         <span class="users-list-date">{{elo.author.username}}</span>
                     </li>
                 {% endfor %}
@@ -100,7 +100,7 @@
                 {% for elo in elos_all_list %}
                     <li>
                         <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
-                        <a class="users-list-name" href="#">{{elo.name}}</a>
+                        <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name}}</a>
                         <span class="users-list-date">{{elo.author.username}}</span>
                     </li>
                 {% endfor %}
