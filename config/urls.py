@@ -58,6 +58,8 @@ urlpatterns = [
     # API - Groups
     url(r'^api/v2/groups/add/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_add'),
     url(r'^api/v2/groups/leave/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_leave'),
+    # API - Users
+    url(r'^api/v2/users-total/$', 'commonrepo.users_api.views.users_total_count'), 
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

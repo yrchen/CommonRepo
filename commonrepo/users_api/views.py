@@ -6,8 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import permissions
 from rest_framework import renderers
+from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import api_view, detail_route
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -39,3 +40,10 @@ class UserViewSetV2(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializerV2
     permission_classes = [IsOwnerOrReadOnly]
+
+@api_view(['GET'])
+def users_total_count(request):
+    if request.method == 'GET':
+        return Response({"total_users": User.objects.all().count() }, status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)  
