@@ -121,6 +121,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
 DATABASES['default'] = env.db("DATABASE_URL")
+DATABASES['mongodb'] = env.db("MONGOLAB_URI")
 
 # CACHING
 # ------------------------------------------------------------------------------
