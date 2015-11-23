@@ -47,3 +47,4 @@ django-mptt
 # MongoDB
 pymongo
 djangotoolbox
+mongoengine
