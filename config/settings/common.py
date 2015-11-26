@@ -131,6 +131,7 @@ DATABASES = {
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+MONGODB_DATABASES['default'] = env.db("MONGOLAB_URI")
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
