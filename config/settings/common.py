@@ -128,8 +128,17 @@ DATABASES = {
         #'TEST_CHARSET': 'utf8',
         #'TEST_COLLATION': 'utf8_general_ci',
     },
+    'mongodb': {
+        'ENGINE': '',
+    },
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
+
+MONGODB_DATABASES = {
+    'default': {
+        'ENGINE': '',
+    },
+}
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
