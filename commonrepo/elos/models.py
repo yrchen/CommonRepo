@@ -73,6 +73,25 @@ class ELOMetadata(models.Model):
     Classification_taxonPath = models.CharField(_("Classification-taxonPath"), blank=True, max_length=255)
     Classification_description = models.CharField(_("Classification-description"), blank=True, max_length=255)
     Classification_keyword = models.CharField(_("Classification-keyword"), blank=True, max_length=255)
+    
+    def compare(self, obj):
+        excluded_keys = 'id', '_state'
+        return self._compare(self, obj, excluded_keys)
+    
+    def _compare(self, obj1, obj2, excluded_keys):
+        d1, d2 = obj1.__dict__, obj2.__dict__
+        old, new = {}, {}
+        for k,v in d1.items():
+            if k in excluded_keys:
+                continue
+            try:
+                if v != d2[k]:
+                    old.update({k: v})
+                    new.update({k: d2[k]})
+            except KeyError:
+                old.update({k: v})
+
+        return old, new
 
 @python_2_unicode_compatible
 class ELOType(models.Model):
