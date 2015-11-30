@@ -31,7 +31,10 @@ class ELOMetadata(models.Model):
     # LifeCycle
     LifeCycle_version = models.CharField(_("LifeCycle-version"), blank=True, max_length=255)
     LifeCycle_status = models.CharField(_("LifeCycle-status"), blank=True, max_length=255)
-    LifeCycle_contribute = models.CharField(_("LifeCycle-contribute"), blank=True, max_length=255)
+    LifeCycle_contribute_role = models.CharField(_("LifeCycle-contribute-role"), blank=True, max_length=255)
+    LifeCycle_contribute_entity = models.CharField(_("LifeCycle-contribute-entity"), blank=True, max_length=255)
+    LifeCycle_contribute_date_dateTime = models.CharField(_("LifeCycle-contribute-date-dateTime"), blank=True, max_length=255)
+    LifeCycle_contribute_date_description = models.CharField(_("LifeCycle-contribute-date-description"), blank=True, max_length=255)
     # Meta-metadata
     Meta_metadata_identifier = models.CharField(_("Meta-metadata-identifier"), blank=True, max_length=255)
     Meta_metadata_contribute = models.CharField(_("Meta-metadata-contribute"), blank=True, max_length=255)
