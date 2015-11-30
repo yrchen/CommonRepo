@@ -236,8 +236,12 @@
                   <td>{{object.metadata.Relation_kind}}</td>
                 </tr>
                 <tr>
-                  <td>Relation-resource</td>
-                  <td>{{object.metadata.Relation_resource}}</td>
+                  <td>Relation-resource-identifier-catalog</td>
+                  <td>{{object.metadata.Relation_resource_identifier_catalog}}</td>
+                </tr>
+                <tr>
+                  <td>Relation-resource-identifier-entry</td>
+                  <td>{{object.metadata.Relation_resource_identifier_entry}}</td>
                 </tr>
                 <tr>
                   <td>Annotation-entity</td>
@@ -266,6 +270,99 @@
                 <tr>
                   <td>Classification-keyword</td>
                   <td>{{object.metadata.Classification_keyword}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+  
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata (listed by types)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Precise criteria (mandatory)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+              {% if object.metadata %}
+                <!-- 1.2 Title -->
+                <tr>
+                  <td>General-title</td>
+                  <td>{{object.metadata.General_title}}</td>
+                </tr>
+                <!-- 2.1 Version -->
+                <tr>
+                  <td>LifeCycle-version</td>
+                  <td>{{object.metadata.LifeCycle_version}}</td>
+                </tr>
+                <!-- 3.4 Language -->
+                <tr>
+                  <td>Meta-metadata-language</td>
+                  <td>{{object.metadata.Meta_metadata_language}}</td>
+                </tr>
+                <!-- 4.5 Installation Remarks -->
+                <tr>
+                  <td>Technical-installationRemarks</td>
+                  <td>{{object.metadata.Technical_installationRemarks}}</td>
+                </tr>
+                <!-- 4.6 Other Platform Requirments -->
+                <tr>
+                  <td>Technical-otherPlatformRequirements</td>
+                  <td>{{object.metadata.Technical_otherPlatformRequirements}}</td>
+                </tr>
+                <!-- 6.3 Description -->
+                <tr>
+                  <td>Rights-description</td>
+                  <td>{{object.metadata.Rights_description}}</td>
+                </tr>
+                <!-- 7.2.1.1 Catalog -->
+                <tr>
+                  <td>Relation-resource-identifier-catalog</td>
+                  <td>{{object.metadata.Relation_resource_identifier_catalog}}</td>
+                </tr>
+                <!-- 7.2.1.2 Entry -->
+                <tr>
+                  <td>Relation-resource-identifier-entry</td>
+                  <td>{{object.metadata.Relation_resource_identifier_entry}}</td>
+                </tr>
+                <!-- 8.1 Entity -->
+                <tr>
+                  <td>Annotation-entity</td>
+                  <td>{{object.metadata.Annotation_entity}}</td>
+                </tr>
+                <!-- 8.3 Description -->
+                <tr>
+                  <td>Annotation-description</td>
+                  <td>{{object.metadata.Annotation_description}}</td>
+                </tr>
+                <!-- 9.3 Description -->
+                <tr>
+                  <td>Classification-description</td>
+                  <td>{{object.metadata.Classification_description}}</td>
                 </tr>
               {% else %}
                 <tr>
