@@ -289,7 +289,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata (listed by types)</h3>
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Precise criteria (mandatory)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -300,14 +300,11 @@
           <table class="table no-margin">
             <thead>
               <tr>
-                <th>Precise criteria (mandatory)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
                 <th>Element</th>
                 <th>Data</th>
               </tr>
+            </thead>
+            <tbody>
               {% if object.metadata %}
                 <!-- 1.2 Title -->
                 <tr>
@@ -358,6 +355,11 @@
                 <tr>
                   <td>Annotation-description</td>
                   <td>{{object.metadata.Annotation_description}}</td>
+                </tr>
+                <!-- 9.2.1 Source -->
+                <tr>
+                  <td>Classification-taxonPath-source</td>
+                  <td>{{object.metadata.Classification_taxonPath_source}}</td>
                 </tr>
                 <!-- 9.3 Description -->
                 <tr>
