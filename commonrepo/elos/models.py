@@ -71,7 +71,8 @@ class ELOMetadata(models.Model):
     Annotation_description = models.CharField(_("Annotation-description"), blank=True, max_length=255)
     # Classification
     Classification_purpose = models.CharField(_("Classification-purpose"), blank=True, max_length=255)
-    Classification_taxonPath = models.CharField(_("Classification-taxonPath"), blank=True, max_length=255)
+    Classification_taxonPath_source = models.CharField(_("Classification-taxonPath-source"), blank=True, max_length=255)
+    Classification_taxonPath_taxon = models.CharField(_("Classification-taxonPath-taxon"), blank=True, max_length=255)
     Classification_description = models.CharField(_("Classification-description"), blank=True, max_length=255)
     Classification_keyword = models.CharField(_("Classification-keyword"), blank=True, max_length=255)
     
