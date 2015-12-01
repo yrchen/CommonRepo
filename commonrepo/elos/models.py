@@ -101,6 +101,27 @@ class ELOMetadata(models.Model):
 
         return old, new
 
+    def match(self, obj):
+        included_keys = ''
+        excluded_keys = 'id', '_state'
+        return self._match(self, obj, included_keys, excluded_keys)
+
+    def _match(self, obj1, obj2, included_keys, excluded_keys):
+        d1, d2 = obj1.__dict__, obj2.__dict__
+        old, new = {}, {}
+
+        for k,v in d1.items():
+            if k in excluded_keys or k not in included_keys:
+                continue
+            try:
+                if v != d2[k]:
+                    old.update({k: v})
+                    new.update({k: d2[k]})
+            except KeyError:
+                old.update({k: v})
+
+        return old, new
+
 @python_2_unicode_compatible
 class ELOType(models.Model):
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
