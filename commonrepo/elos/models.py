@@ -117,9 +117,14 @@ class ELOMetadata(models.Model):
     # 5.11 language
     Educational_language = models.CharField(_("Educational-language"), blank=True, max_length=255)
 
+    #
     # 6. Rights
+
+    # 6.1 cost
     Rights_cost = models.CharField(_("Rights-cost"), blank=True, max_length=255)
+    # 6.2 copyrightAndOtherRestrictions
     Rights_copyrightAndOtherRestrictions = models.CharField(_("Rights-copyrightAndOtherRestrictions"), blank=True, max_length=255)
+    # 6.3 description
     Rights_description = models.CharField(_("Rights-description"), blank=True, max_length=255)
 
     #
