@@ -211,7 +211,7 @@ class ELOMetadata(models.Model):
         # Precedence criteria (rewritable)
         #
         # 4.2 Size, 4.4.1.3 Minimum Version, 4.4.1.4 Maximum Version, and 5.7 Typical Age Range
-        keys_precedence_criteria = ''
+        keys_precedence_criteria = ('Technical_size', 'Technical_requirement_orComposite_minimumVersion', 'Technical_requirement_orComposite_maximumVersion', 'Educational_typicalAgeRange')
 
         #
         # Time/duration criteria (rewritable)
