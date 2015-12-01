@@ -12,7 +12,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}}</h3>
+        <h3 class="box-title">ELOs - {{object.name}} - Info</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -70,5 +70,814 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
+
+  <!-- Metadata -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1. General -->
+                <tr>
+                  <td>General-identifier</td>
+                  <td>{{object.metadata.General_identifier}}</td>
+                </tr>
+                <tr>
+                  <td>General-title</td>
+                  <td>{{object.metadata.General_title}}</td>
+                </tr>
+                <tr>
+                  <td>General-language</td>
+                  <td>{{object.metadata.General_language}}</td>
+                </tr>
+                <tr>
+                  <td>General-description</td>
+                  <td>{{object.metadata.General_description}}</td>
+                </tr>
+                <tr>
+                  <td>General-keyword</td>
+                  <td>{{object.metadata.General_keyword}}</td>
+                </tr>
+                <tr>
+                  <td>General-coverage</td>
+                  <td>{{object.metadata.General_coverage}}</td>
+                </tr>
+                <tr>
+                  <td>General-structure</td>
+                  <td>{{object.metadata.General_structure}}</td>
+                </tr>
+                <tr>
+                  <td>General-aggregationLevel</td>
+                  <td>{{object.metadata.General_aggregationLevel}}</td>
+                </tr>
+                <!-- /.1. General -->
+                <!-- 2. LifeCycle -->
+                <tr>
+                  <td>LifeCycle-version</td>
+                  <td>{{object.metadata.LifeCycle_version}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-status</td>
+                  <td>{{object.metadata.LifeCycle_status}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-role</td>
+                  <td>{{object.metadata.LifeCycle_contribute_role}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-entity</td>
+                  <td>{{object.metadata.LifeCycle_contribute_entity}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-date_dateTime</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-date_description</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_description}}</td>
+                </tr>
+                <!-- /.2. LifeCycle -->
+                <!-- 3. metaMetadata -->
+                <tr>
+                  <td>Meta-metadata-identifier-catalog</td>
+                  <td>{{object.metadata.Meta_metadata_identifier_catalog}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-identifier-entry</td>
+                  <td>{{object.metadata.Meta_metadata_identifier_entry}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-role</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_role}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-entity</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_entity}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dateTime</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dascription</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_description}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-metadataSchema</td>
+                  <td>{{object.metadata.Meta_metadata_metadataSchema}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-language</td>
+                  <td>{{object.metadata.Meta_metadata_language}}</td>
+                </tr>
+                <!-- /.3. metaMetadata -->
+                <!-- 4. Technical -->
+                <tr>
+                  <td>Technical-format</td>
+                  <td>{{object.metadata.Technical_format}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-size</td>
+                  <td>{{object.metadata.Technical_size}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-location</td>
+                  <td>{{object.metadata.Technical_location}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-type</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_type}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-name</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_name}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-minimumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_minimumVersion}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-maximumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_maximumVersion}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-installationRemarks</td>
+                  <td>{{object.metadata.Technical_installationRemarks}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-otherPlatformRequirements</td>
+                  <td>{{object.metadata.Technical_otherPlatformRequirements}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-duration-duration</td>
+                  <td>{{object.metadata.Technical_duration_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-duration-description</td>
+                  <td>{{object.metadata.Technical_duration_description}}</td>
+                </tr>
+                <!-- /.4. Technical -->
+                <!-- 5. Educational -->
+                <tr>
+                  <td>Educational-interactivityType</td>
+                  <td>{{object.metadata.Educational_interactivityType}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-learningResourceType</td>
+                  <td>{{object.metadata.Educational_learningResourceType}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-interactivityLevel</td>
+                  <td>{{object.metadata.Educational_interactivityLevel}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-semanticDensity</td>
+                  <td>{{object.metadata.Educational_semanticDensity}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-intendedEndUserRole</td>
+                  <td>{{object.metadata.Educational_intendedEndUserRole}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-context</td>
+                  <td>{{object.metadata.Educational_context}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalAgeRange</td>
+                  <td>{{object.metadata.Educational_typicalAgeRange}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-difficulty</td>
+                  <td>{{object.metadata.Educational_difficulty}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalLearningTime-duration</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalLearningTime-description</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_description}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-description</td>
+                  <td>{{object.metadata.Educational_description}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-language</td>
+                  <td>{{object.metadata.Educational_language}}</td>
+                </tr>
+                <!-- /.5. Educational -->
+                <!-- 6. Rights -->
+                <tr>
+                  <td>Rights-cost</td>
+                  <td>{{object.metadata.Rights_cost}}</td>
+                </tr>
+                <tr>
+                  <td>Rights-copyrightAndOtherRestrictions</td>
+                  <td>{{object.metadata.Rights_copyrightAndOtherRestrictions}}</td>
+                </tr>
+                <tr>
+                  <td>Rights-description</td>
+                  <td>{{object.metadata.Rights_description}}</td>
+                </tr>
+                <!-- /.6. Rights -->
+                <!-- 7. Relation -->
+                <tr>
+                  <td>Relation-kind</td>
+                  <td>{{object.metadata.Relation_kind}}</td>
+                </tr>
+                <tr>
+                  <td>Relation-resource-identifier-catalog</td>
+                  <td>{{object.metadata.Relation_resource_identifier_catalog}}</td>
+                </tr>
+                <tr>
+                  <td>Relation-resource-identifier-entry</td>
+                  <td>{{object.metadata.Relation_resource_identifier_entry}}</td>
+                </tr>
+                <tr>
+                  <td>Relation-resource-description</td>
+                  <td>{{object.metadata.Relation_resource_identifier_description}}</td>
+                </tr>
+                <!-- /.7. Relation -->
+                <!-- 8. Annotation -->
+                <tr>
+                  <td>Annotation-entity</td>
+                  <td>{{object.metadata.Annotation_entity}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-date-dateTime</td>
+                  <td>{{object.metadata.Annotation_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-date-description</td>
+                  <td>{{object.metadata.Annotation_date_description}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-description</td>
+                  <td>{{object.metadata.Annotation_description}}</td>
+                </tr>
+                <!-- /.8. Annotation -->
+                <!-- 9. Classification -->
+                <tr>
+                  <td>Classification-purpose</td>
+                  <td>{{object.metadata.Classification_purpose}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-source</td>
+                  <td>{{object.metadata.Classification_taxonPath_source}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon-id</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_id}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon_entry</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_entry}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-description</td>
+                  <td>{{object.metadata.Classification_description}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-keyword</td>
+                  <td>{{object.metadata.Classification_keyword}}</td>
+                </tr>
+                <!-- /.9. Classification -->
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata -->
+
+  <!-- Metadata - Precise criteria (mandatory) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Precise criteria (mandatory)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1.2 Title -->
+                <tr>
+                  <td>General-title</td>
+                  <td>{{object.metadata.General_title}}</td>
+                </tr>
+                <!-- 2.1 Version -->
+                <tr>
+                  <td>LifeCycle-version</td>
+                  <td>{{object.metadata.LifeCycle_version}}</td>
+                </tr>
+                <!-- 3.4 Language -->
+                <tr>
+                  <td>Meta-metadata-language</td>
+                  <td>{{object.metadata.Meta_metadata_language}}</td>
+                </tr>
+                <!-- 4.5 Installation Remarks -->
+                <tr>
+                  <td>Technical-installationRemarks</td>
+                  <td>{{object.metadata.Technical_installationRemarks}}</td>
+                </tr>
+                <!-- 4.6 Other Platform Requirments -->
+                <tr>
+                  <td>Technical-otherPlatformRequirements</td>
+                  <td>{{object.metadata.Technical_otherPlatformRequirements}}</td>
+                </tr>
+                <!-- 6.3 Description -->
+                <tr>
+                  <td>Rights-description</td>
+                  <td>{{object.metadata.Rights_description}}</td>
+                </tr>
+                <!-- 7.2.1.1 Catalog -->
+                <tr>
+                  <td>Relation-resource-identifier-catalog</td>
+                  <td>{{object.metadata.Relation_resource_identifier_catalog}}</td>
+                </tr>
+                <!-- 7.2.1.2 Entry -->
+                <tr>
+                  <td>Relation-resource-identifier-entry</td>
+                  <td>{{object.metadata.Relation_resource_identifier_entry}}</td>
+                </tr>
+                <!-- 8.1 Entity -->
+                <tr>
+                  <td>Annotation-entity</td>
+                  <td>{{object.metadata.Annotation_entity}}</td>
+                </tr>
+                <!-- 8.3 Description -->
+                <tr>
+                  <td>Annotation-description</td>
+                  <td>{{object.metadata.Annotation_description}}</td>
+                </tr>
+                <!-- 9.2.1 Source -->
+                <tr>
+                  <td>Classification-taxonPath-source</td>
+                  <td>{{object.metadata.Classification_taxonPath_source}}</td>
+                </tr>
+                <!-- 9.2.2.1 Id -->
+                <tr>
+                  <td>Classification-taxonPath-taxon-id</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_id}}</td>
+                </tr>
+                <!-- 9.2.2.2 Entry -->
+                <tr>
+                  <td>Classification-taxonPath-taxon_entry</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_entry}}</td>
+                </tr>
+                <tr>
+                <!-- 9.3 Description -->
+                <tr>
+                  <td>Classification-description</td>
+                  <td>{{object.metadata.Classification_description}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Precise criteria (mandatory) -->
+
+  <!-- Metadata - Incremental criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Incremental criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1.3 Language -->
+                <tr>
+                  <td>General-language</td>
+                  <td>{{object.metadata.General_language}}</td>
+                </tr>
+                <!-- 1.4 Description -->
+                <tr>
+                  <td>General-description</td>
+                  <td>{{object.metadata.General_description}}</td>
+                </tr>
+                <!-- 1.5 Keyword -->
+                <tr>
+                  <td>General-keyword</td>
+                  <td>{{object.metadata.General_keyword}}</td>
+                </tr>
+                <!-- 1.6 Coverage -->
+                <tr>
+                  <td>General-coverage</td>
+                  <td>{{object.metadata.General_coverage}}</td>
+                </tr>
+                <!-- 2.3.2 Entity -->
+                <tr>
+                  <td>LifeCycle-contribute-entity</td>
+                  <td>{{object.metadata.LifeCycle_contribute_entity}}</td>
+                </tr>
+                <!-- 3.2.2 Entity -->
+                <tr>
+                  <td>Meta-metadata-contribute-entity</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_entity}}</td>
+                </tr>
+                <!-- 4.1 Format -->
+                <tr>
+                  <td>Technical-format</td>
+                  <td>{{object.metadata.Technical_format}}</td>
+                </tr>
+                <!-- 4.3 Location -->
+                <tr>
+                  <td>Technical-location</td>
+                  <td>{{object.metadata.Technical_location}}</td>
+                </tr>
+                <!-- 5.10 Description -->
+                <tr>
+                  <td>Educational-description</td>
+                  <td>{{object.metadata.Educational_description}}</td>
+                </tr>
+                <!-- 7.2.2 Description -->
+                <tr>
+                  <td>Relation-resource-description</td>
+                  <td>{{object.metadata.Relation_resource_identifier_description}}</td>
+                </tr>
+                <!-- 9.4 Keyword -->
+                <tr>
+                  <td>Classification-keyword</td>
+                  <td>{{object.metadata.Classification_keyword}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Incremental criteria (rewritable) -->
+
+  <!-- Metadata Precedence criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Precedence criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 4.2 Size -->
+                <tr>
+                  <td>Technical-size</td>
+                  <td>{{object.metadata.Technical_size}}</td>
+                </tr>
+                <!-- 4.4.1.3 Minimum Version -->
+                <tr>
+                  <td>Technical-requirement-orComposite-minimumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_minimumVersion}}</td>
+                </tr>
+                <!-- 4.4.1.3 Maximum Version -->
+                <tr>
+                  <td>Technical-requirement-orComposite-maximumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_maximumVersion}}</td>
+                </tr>
+                <!-- 5.7 Typical Age Range -->
+                <tr>
+                  <td>Educational-typicalAgeRange</td>
+                  <td>{{object.metadata.Educational_typicalAgeRange}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata Precedence criteria (rewritable) -->
+
+  <!-- Metadata Time/duration criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Time/duration criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 2.3.3 Date -->
+                <tr>
+                  <td>LifeCycle-contribute-date_dateTime</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-date_description</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_description}}</td>
+                </tr>
+                <!-- 3.2.3 Date -->
+                <tr>
+                  <td>Meta-metadata-contribute-date-dateTime</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dascription</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_description}}</td>
+                </tr>
+                <!-- 4.7 Duration -->
+                <tr>
+                  <td>Technical-duration-duration</td>
+                  <td>{{object.metadata.Technical_duration_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-duration-description</td>
+                  <td>{{object.metadata.Technical_duration_description}}</td>
+                </tr>
+                <!-- 5.9 Typical Learning -->
+                <tr>
+                  <td>Educational-typicalLearningTime-duration</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalLearningTime-description</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_description}}</td>
+                </tr>
+                <!-- 8.2 Date -->
+                <tr>
+                  <td>Annotation-date-dateTime</td>
+                  <td>{{object.metadata.Annotation_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-date-description</td>
+                  <td>{{object.metadata.Annotation_date_description}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata Time/duration criteria (rewritable) -->
+
+  <!-- Metadata - Single-choice criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Single-choice criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1.7 Structure -->
+                <tr>
+                  <td>General-structure</td>
+                  <td>{{object.metadata.General_structure}}</td>
+                </tr>
+                <!-- 1.8 Aggrregation Level -->
+                <tr>
+                  <td>General-aggregationLevel</td>
+                  <td>{{object.metadata.General_aggregationLevel}}</td>
+                </tr>
+                <!-- 2.2 Status -->
+                <tr>
+                  <td>LifeCycle-status</td>
+                  <td>{{object.metadata.LifeCycle_status}}</td>
+                </tr>
+                <!-- 2.3.1 Role -->
+                <tr>
+                  <td>LifeCycle-contribute-role</td>
+                  <td>{{object.metadata.LifeCycle_contribute_role}}</td>
+                </tr>
+                <!-- 3.2.1 Role -->
+                <tr>
+                  <td>Meta-metadata-contribute-role</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_role}}</td>
+                </tr>
+                <!-- 4.4.1.1 Type-->
+                <tr>
+                  <td>Technical-requirement-orComposite-type</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_type}}</td>
+                </tr>
+                <!-- 4.4.1.2 Name -->
+                <tr>
+                  <td>Technical-requirement-orComposite-name</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_name}}</td>
+                </tr>
+                <!-- 5.1 Interactivity Type -->
+                <tr>
+                  <td>Educational-interactivityType</td>
+                  <td>{{object.metadata.Educational_interactivityType}}</td>
+                </tr>
+                <!-- 5.3 Interactivity Level -->
+                <tr>
+                  <td>Educational-interactivityLevel</td>
+                  <td>{{object.metadata.Educational_interactivityLevel}}</td>
+                </tr>
+                <!-- 5.4 Semantic Density -->
+                <tr>
+                  <td>Educational-semanticDensity</td>
+                  <td>{{object.metadata.Educational_semanticDensity}}</td>
+                </tr>
+                <!-- 5.8 Defficulty -->
+                <tr>
+                  <td>Educational-difficulty</td>
+                  <td>{{object.metadata.Educational_difficulty}}</td>
+                </tr>
+                <!-- 6.1 Cost -->
+                <tr>
+                  <td>Rights-cost</td>
+                  <td>{{object.metadata.Rights_cost}}</td>
+                </tr>
+                <!-- 6.2 Copyright and Other Restrictions -->
+                <tr>
+                  <td>Rights-copyrightAndOtherRestrictions</td>
+                  <td>{{object.metadata.Rights_copyrightAndOtherRestrictions}}</td>
+                </tr>
+                <!-- 7.1 Kind -->
+                <tr>
+                  <td>Relation-kind</td>
+                  <td>{{object.metadata.Relation_kind}}</td>
+                </tr>
+                <!-- 9.1 Purpose -->
+                <tr>
+                  <td>Classification-purpose</td>
+                  <td>{{object.metadata.Classification_purpose}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Single-choice criteria (rewritable) -->
+
+  <!-- Metadata - Many-choice criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Many-choice criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 3.3 Metadata Schema -->
+                <tr>
+                  <td>Meta-metadata-metadataSchema</td>
+                  <td>{{object.metadata.Meta_metadata_metadataSchema}}</td>
+                </tr>
+                <!-- 5.2 Learning Resource Type -->
+                <tr>
+                  <td>Educational-learningResourceType</td>
+                  <td>{{object.metadata.Educational_learningResourceType}}</td>
+                </tr>
+                <!-- 5.5 Intended End User Role -->
+                <tr>
+                  <td>Educational-intendedEndUserRole</td>
+                  <td>{{object.metadata.Educational_intendedEndUserRole}}</td>
+                </tr>
+                <!-- 5.6 Context -->
+                <tr>
+                  <td>Educational-context</td>
+                  <td>{{object.metadata.Educational_context}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Many-choice criteria (rewritable)-->
+
 </div><!-- /.row -->
 {% endblock content %}
