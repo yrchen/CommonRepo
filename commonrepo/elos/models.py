@@ -19,14 +19,24 @@ def get_random_filename(instance, filename):
     return os.path.join('elo-documents/', filename)
 
 class ELOMetadata(models.Model):
+    #
     # 1. General
+
+    # 1.1 identifier
     General_identifier = models.CharField(_("General-identifier"), blank=True, max_length=255)
+    # 1.2 title
     General_title = models.CharField(_("General-title"), blank=True, max_length=255)
+    # 1.3 language
     General_language = models.CharField(_("General-language"), blank=True, max_length=255)
+    # 1.4 description
     General_description = models.CharField(_("General-description"), blank=True, max_length=255)
+    # 1.5 keyword
     General_keyword = models.CharField(_("General-keyword"), blank=True, max_length=255)
+    # 1.6 coverage
     General_coverage = models.CharField(_("General-coverage"), blank=True, max_length=255)
+    # 1.7 structure
     General_structure = models.CharField(_("General-structure"), blank=True, max_length=255)
+    # 1.8 aggregationLevel
     General_aggregationLevel = models.CharField(_("General-aggregationLevel"), blank=True, max_length=255)
 
     #
