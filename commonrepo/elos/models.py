@@ -28,9 +28,15 @@ class ELOMetadata(models.Model):
     General_coverage = models.CharField(_("General-coverage"), blank=True, max_length=255)
     General_structure = models.CharField(_("General-structure"), blank=True, max_length=255)
     General_aggregationLevel = models.CharField(_("General-aggregationLevel"), blank=True, max_length=255)
+
+    #
     # 2. LifeCycle
+    
+    # 2.1 version
     LifeCycle_version = models.CharField(_("LifeCycle-version"), blank=True, max_length=255)
+    # 2.2 status
     LifeCycle_status = models.CharField(_("LifeCycle-status"), blank=True, max_length=255)
+    # 2.3 contribute
     LifeCycle_contribute_role = models.CharField(_("LifeCycle-contribute-role"), blank=True, max_length=255)
     LifeCycle_contribute_entity = models.CharField(_("LifeCycle-contribute-entity"), blank=True, max_length=255)
     LifeCycle_contribute_date_dateTime = models.CharField(_("LifeCycle-contribute-date-dateTime"), blank=True, max_length=255)
