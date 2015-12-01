@@ -237,7 +237,7 @@ class ELOMetadata(models.Model):
         # Many-choice criteria (rewritable)
         #
         # 3.3 Metadata Schema, 5.2 Learning Resource Type, 5.5 Intended End User Role, and 5.6 Context
-        keys_many_choise_criteria = ''
+        keys_many_choise_criteria = ('Meta_metadata_metadataSchema', 'Educational_learningResourceType', 'Educational_intendedEndUserRole', 'Educational_context')
 
         # V1: precise / single-choice criteria
         # V2: incremental criteria
