@@ -106,10 +106,17 @@ class ELOMetadata(models.Model):
     Relation_resource_identifier_entry = models.CharField(_("Relation-resource-identifier-entry"), blank=True, max_length=255)
     Relation_resource_description = models.CharField(_("Relation-resource-description"), blank=True, max_length=255)
 
+    #
     # 8. Annotation
+
+    # 8.1 entity
     Annotation_entity = models.CharField(_("Annotation-entity"), blank=True, max_length=255)
-    Annotation_date = models.CharField(_("Annotation-date"), blank=True, max_length=255)
+    # 8.2 date
+    Annotation_date_dateTime = models.CharField(_("Annotation-date_dateTime"), blank=True, max_length=255)
+    Annotation_date_description = models.CharField(_("Annotation-date-description"), blank=True, max_length=255)    
+    # 8.3 description
     Annotation_description = models.CharField(_("Annotation-description"), blank=True, max_length=255)
+
     # 9. Classification
     Classification_purpose = models.CharField(_("Classification-purpose"), blank=True, max_length=255)
     Classification_taxonPath_source = models.CharField(_("Classification-taxonPath-source"), blank=True, max_length=255)
