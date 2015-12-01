@@ -102,6 +102,22 @@ class ELOMetadata(models.Model):
         return old, new
 
     def match(self, obj):
+        # Precise criteria (mandatory)
+        keys_precise_criteria = ''
+        # Incremental criteria (rewritable)
+        keys_incremental_criteria = ''
+        # Precedence criteria (rewritable)
+        keys_precedence_criteria = ''
+        # Time/duration criteria (rewritable)
+        keys_time_duration_criteria = ''
+        # Single-choice criteria (rewritable)
+        keys_single_choise_criteria = ''
+        # Many-choice criteria (rewritable)
+        keys_many_choise_criteria = ''
+        # V1: precise / single-choice criteria
+        # V2: incremental criteria
+        # V3: precedence / time/duration criteria
+        # V4: many-choice critera
         included_keys = ''
         excluded_keys = 'id', '_state'
         return self._match(self, obj, included_keys, excluded_keys)
