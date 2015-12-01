@@ -482,7 +482,7 @@
   </div><!-- /.col -->
   <!-- /.Metadata - Precise criteria (mandatory) -->
 
-  <!-- Metadata - Incremental criteria (mandatory) -->
+  <!-- Metadata - Incremental criteria (rewritable) -->
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
@@ -572,7 +572,7 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
-  <!-- /.Metadata - Incremental criteria (mandatory) -->
+  <!-- /.Metadata - Incremental criteria (rewritable) -->
 
   <!-- Metadata Precedence criteria (rewritable) -->
   <div class="col-md-12">
@@ -629,7 +629,89 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
-  <!-- /.Metadata -->
+  <!-- /.Metadata Precedence criteria (rewritable) -->
+
+  <!-- Metadata Time/duration criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Time/duration criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 2.3.3 Date -->
+                <tr>
+                  <td>LifeCycle-contribute-date_dateTime</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-date_description</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_description}}</td>
+                </tr>
+                <!-- 3.2.3 Date -->
+                <tr>
+                  <td>Meta-metadata-contribute-date-dateTime</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dascription</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_description}}</td>
+                </tr>
+                <!-- 4.7 Duration -->
+                <tr>
+                  <td>Technical-duration-duration</td>
+                  <td>{{object.metadata.Technical_duration_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-duration-description</td>
+                  <td>{{object.metadata.Technical_duration_description}}</td>
+                </tr>
+                <!-- 5.9 Typical Learning -->
+                <tr>
+                  <td>Educational-typicalLearningTime-duration</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalLearningTime-description</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_description}}</td>
+                </tr>
+                <!-- 8.2 Date -->
+                <tr>
+                  <td>Annotation-date-dateTime</td>
+                  <td>{{object.metadata.Annotation_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-date-description</td>
+                  <td>{{object.metadata.Annotation_date_description}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+  <!-- /.Metadata Time/duration criteria (rewritable) -->
 
 </div><!-- /.row -->
 {% endblock content %}
