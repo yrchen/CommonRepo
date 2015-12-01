@@ -823,5 +823,61 @@
     </div><!-- /.box -->
   </div><!-- /.Metadata - Single-choice criteria (rewritable) -->
 
+  <!-- Metadata - Many-choice criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Many-choice criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 3.3 Metadata Schema -->
+                <tr>
+                  <td>Meta-metadata-metadataSchema</td>
+                  <td>{{object.metadata.Meta_metadata_metadataSchema}}</td>
+                </tr>
+                <!-- 5.2 Learning Resource Type -->
+                <tr>
+                  <td>Educational-learningResourceType</td>
+                  <td>{{object.metadata.Educational_learningResourceType}}</td>
+                </tr>
+                <!-- 5.5 Intended End User Role -->
+                <tr>
+                  <td>Educational-intendedEndUserRole</td>
+                  <td>{{object.metadata.Educational_intendedEndUserRole}}</td>
+                </tr>
+                <!-- 5.6 Context -->
+                <tr>
+                  <td>Educational-context</td>
+                  <td>{{object.metadata.Educational_context}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Many-choice criteria (rewritable)-->
+
 </div><!-- /.row -->
 {% endblock content %}
