@@ -51,7 +51,8 @@ class ELOMetadata(models.Model):
     # 3.2 Meta_metadata-contribute
     Meta_metadata_contribute_role = models.CharField(_("Meta-metadata-contribute-role"), blank=True, max_length=255)
     Meta_metadata_contribute_entity = models.CharField(_("Meta-metadata-contribute-entity"), blank=True, max_length=255)
-    Meta_metadata_contribute_date = models.CharField(_("Meta-metadata-contribute-date"), blank=True, max_length=255)
+    Meta_metadata_contribute_date_dateTime = models.CharField(_("Meta-metadata-contribute-date-dateTime"), blank=True, max_length=255)
+    Meta_metadata_contribute_date_description = models.CharField(_("Meta-metadata-contribute-date-description"), blank=True, max_length=255)
     # 3.3 Meta_metadata-metadataSchema
     Meta_metadata_metadataSchema = models.CharField(_("Meta-metadata-metadataSchema"), blank=True, max_length=255)
     # 3.4 Meta_metadata-language
