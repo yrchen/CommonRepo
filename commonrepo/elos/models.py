@@ -75,7 +75,10 @@ class ELOMetadata(models.Model):
     # 9. Classification
     Classification_purpose = models.CharField(_("Classification-purpose"), blank=True, max_length=255)
     Classification_taxonPath_source = models.CharField(_("Classification-taxonPath-source"), blank=True, max_length=255)
+    # 9.2.2 Classification-taxonPath-taxon
     Classification_taxonPath_taxon = models.CharField(_("Classification-taxonPath-taxon"), blank=True, max_length=255)
+    Classification_taxonPath_taxon_id = models.CharField(_("Classification-taxonPath-taxon-id"), blank=True, max_length=255)
+    Classification_taxonPath_taxon_entry = models.CharField(_("Classification-taxonPath-taxon-entry"), blank=True, max_length=255)
     Classification_description = models.CharField(_("Classification-description"), blank=True, max_length=255)
     Classification_keyword = models.CharField(_("Classification-keyword"), blank=True, max_length=255)
     
