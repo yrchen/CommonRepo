@@ -216,8 +216,10 @@ class ELOMetadata(models.Model):
         #
         # Time/duration criteria (rewritable)
         #
-        # 2.3.3 Date, 3.2.3 Date, 4.7 Duration, 5.9 Typical Learning Time, and 8.2 Date
-        keys_time_duration_criteria = ''
+        # 2.3.3 Date, 3.2.3 Date, 
+        # 4.7 Duration, 5.9 Typical Learning Time, and 8.2 Date
+        keys_time_duration_criteria = ('LifeCycle_contribute_date_dateTime', 'LifeCycle_contribute_date_description', 'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description',
+                                       'Technical_duration_duration', 'Educational_typicalLearningTime_duration', 'Educational_typicalLearningTime_description', 'Annotation_date_dateTime', 'Annotation_date_description')
 
         #
         # Single-choice criteria (rewritable)
