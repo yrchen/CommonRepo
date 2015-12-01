@@ -192,7 +192,10 @@ class ELOMetadata(models.Model):
         # 4.6 Other Platform Requirements, 6.3 Description, 7.2.1.1 Catalog, 7.2.1.2 Entry,
         # 8.1 Entity, 8.3 Description, 9.2.1 Source, 9.2.2.1 Id,
         # 9.2.2.2 Entry, and 9.3 Description
-        keys_precise_criteria = ''
+        keys_precise_criteria = ('General_title', 'LifeCycle_version', 'Meta_metadata_language', 'Technical_installationRemarks',
+                                 'Technical_otherPlatformRequirements', 'Rights_description', 'Relation_resource_identifier_catalog', 'Relation_resource_identifier_entry',
+                                 'Annotation_entity', 'Annotation_description', 'Classification_taxonPath_source', 'Classification_taxonPath_taxon_id',
+                                 'Classification_taxonPath_taxon_entry', 'Classification_description')
 
         #
         # Incremental criteria (rewritable)
