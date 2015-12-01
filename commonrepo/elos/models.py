@@ -75,10 +75,17 @@ class ELOMetadata(models.Model):
     Rights_cost = models.CharField(_("Rights-cost"), blank=True, max_length=255)
     Rights_copyrightAndOtherRestrictions = models.CharField(_("Rights-copyrightAndOtherRestrictions"), blank=True, max_length=255)
     Rights_description = models.CharField(_("Rights-description"), blank=True, max_length=255)
+
+    #
     # 7. Relation
+
+    # 7.1 Kind
     Relation_kind = models.CharField(_("Relation-kind"), blank=True, max_length=255)
+    # 7.2 Resource
     Relation_resource_identifier_catalog = models.CharField(_("Relation-resource-identifier-catalog"), blank=True, max_length=255)
     Relation_resource_identifier_entry = models.CharField(_("Relation-resource-identifier-entry"), blank=True, max_length=255)
+    Relation_resource_description = models.CharField(_("Relation-resource-description"), blank=True, max_length=255)
+
     # 8. Annotation
     Annotation_entity = models.CharField(_("Annotation-entity"), blank=True, max_length=255)
     Annotation_date = models.CharField(_("Annotation-date"), blank=True, max_length=255)
