@@ -51,14 +51,27 @@ class ELOMetadata(models.Model):
     # 3.4 Meta_metadata-language
     Meta_metadata_language = models.CharField(_("Meta-metadata-language"), blank=True, max_length=255)
 
+    #
     # 4. Technical
+
+    # 4.1 format
     Technical_format = models.CharField(_("Technical-format"), blank=True, max_length=255)
+    # 4.2 size
     Technical_size = models.CharField(_("Technical-size"), blank=True, max_length=255)
+    # 4.3 location
     Technical_location = models.CharField(_("Technical-location"), blank=True, max_length=255)
-    Technical_requirement = models.CharField(_("Technical-requirement"), blank=True, max_length=255)
+    # 4.4 requirement
+    Technical_requirement_orComposite_type = models.CharField(_("Technical-requirement-orComposite-type"), blank=True, max_length=255)
+    Technical_requirement_orComposite_name = models.CharField(_("Technical-requirement-orComposite-name"), blank=True, max_length=255)
+    Technical_requirement_orComposite_minimumVersion = models.CharField(_("Technical-requirement-orComposite-minimumVersion"), blank=True, max_length=255)
+    Technical_requirement_orComposite_maximumVersion = models.CharField(_("Technical-requirement-orComposite-maximumVersion"), blank=True, max_length=255)
+    # 4.5 installationRemarks
     Technical_installationRemarks = models.CharField(_("Technical-installationRemarks"), blank=True, max_length=255)
+    # 4.6 otherPlatformRequirements
     Technical_otherPlatformRequirements = models.CharField(_("Technical-otherPlatformRequirements"), blank=True, max_length=255)
+    # 4.7 duration
     Technical_duration = models.CharField(_("Technical-duration"), blank=True, max_length=255)
+
     # 5. Educational
     Educational_interactivityType = models.CharField(_("Educational-interactivityType"), blank=True, max_length=255)
     Educational_learningResourceType = models.CharField(_("Educational-learningResourceType"), blank=True, max_length=255)
