@@ -35,11 +35,22 @@ class ELOMetadata(models.Model):
     LifeCycle_contribute_entity = models.CharField(_("LifeCycle-contribute-entity"), blank=True, max_length=255)
     LifeCycle_contribute_date_dateTime = models.CharField(_("LifeCycle-contribute-date-dateTime"), blank=True, max_length=255)
     LifeCycle_contribute_date_description = models.CharField(_("LifeCycle-contribute-date-description"), blank=True, max_length=255)
+
+    #
     # 3. Meta-metadata
-    Meta_metadata_identifier = models.CharField(_("Meta-metadata-identifier"), blank=True, max_length=255)
-    Meta_metadata_contribute = models.CharField(_("Meta-metadata-contribute"), blank=True, max_length=255)
+
+    # 3.1 Meta_metadata-identifier
+    Meta_metadata_identifier_catalog = models.CharField(_("Meta_metadata-identifier-catalog"), blank=True, max_length=255)
+    Meta_metadata_identifier_entry = models.CharField(_("Meta_metadata-identifier-entry"), blank=True, max_length=255)    
+    # 3.2 Meta_metadata-contribute
+    Meta_metadata_contribute_role = models.CharField(_("Meta-metadata-contribute-role"), blank=True, max_length=255)
+    Meta_metadata_contribute_entity = models.CharField(_("Meta-metadata-contribute-entity"), blank=True, max_length=255)
+    Meta_metadata_contribute_date = models.CharField(_("Meta-metadata-contribute-date"), blank=True, max_length=255)
+    # 3.3 Meta_metadata-metadataSchema
     Meta_metadata_metadataSchema = models.CharField(_("Meta-metadata-metadataSchema"), blank=True, max_length=255)
+    # 3.4 Meta_metadata-language
     Meta_metadata_language = models.CharField(_("Meta-metadata-language"), blank=True, max_length=255)
+
     # 4. Technical
     Technical_format = models.CharField(_("Technical-format"), blank=True, max_length=255)
     Technical_size = models.CharField(_("Technical-size"), blank=True, max_length=255)
