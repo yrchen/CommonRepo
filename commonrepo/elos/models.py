@@ -89,18 +89,33 @@ class ELOMetadata(models.Model):
     # 4.7 duration
     Technical_duration = models.CharField(_("Technical-duration"), blank=True, max_length=255)
 
+    #
     # 5. Educational
+
+    # 5.1 interactivityTyp
     Educational_interactivityType = models.CharField(_("Educational-interactivityType"), blank=True, max_length=255)
+    # 5.2 learningResourceType
     Educational_learningResourceType = models.CharField(_("Educational-learningResourceType"), blank=True, max_length=255)
+    # 5.3 interactivityLevel
     Educational_interactivityLevel = models.CharField(_("Educational-interactivityLevel"), blank=True, max_length=255)
+    # 5.4 semanticDensity
     Educational_semanticDensity = models.CharField(_("Educational-semanticDensity"), blank=True, max_length=255)
+    # 5.5 intendedEndUserRole
     Educational_intendedEndUserRole = models.CharField(_("Educational-intendedEndUserRole"), blank=True, max_length=255)
+    # 5.6 context
     Educational_context = models.CharField(_("Educational-context"), blank=True, max_length=255)
+    # 5.7 typicalAgeRange
     Educational_typicalAgeRange = models.CharField(_("Educational-typicalAgeRange"), blank=True, max_length=255)
+    # 5.8 difficulty
     Educational_difficulty = models.CharField(_("Educational-difficulty"), blank=True, max_length=255)
-    Educational_typicalLearningTime = models.CharField(_("Educational-typicalLearningTime"), blank=True, max_length=255)
+    # 5.9 typicalLearningTime
+    Educational_typicalLearningTime_duration = models.CharField(_("Educational-typicalLearningTime-duration"), blank=True, max_length=255)
+    Educational_typicalLearningTime_description = models.CharField(_("Educational-typicalLearningTime-description"), blank=True, max_length=255)
+    # 5.10 description
     Educational_description = models.CharField(_("Educational-description"), blank=True, max_length=255)
+    # 5.11 language
     Educational_language = models.CharField(_("Educational-language"), blank=True, max_length=255)
+
     # 6. Rights
     Rights_cost = models.CharField(_("Rights-cost"), blank=True, max_length=255)
     Rights_copyrightAndOtherRestrictions = models.CharField(_("Rights-copyrightAndOtherRestrictions"), blank=True, max_length=255)
