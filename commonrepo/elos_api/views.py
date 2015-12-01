@@ -46,9 +46,6 @@ class ELOViewSetV2(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
-        
-    def perform_update(self, serializer):
-        instance = serializer.save() 
 
 class ELOTypeViewSet(viewsets.ModelViewSet):
     """
