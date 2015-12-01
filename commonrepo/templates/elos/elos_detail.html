@@ -91,6 +91,7 @@
             </thead>
             <tbody>
               {% if object.metadata %}
+                <!-- 1. General -->
                 <tr>
                   <td>General-identifier</td>
                   <td>{{object.metadata.General_identifier}}</td>
@@ -123,6 +124,8 @@
                   <td>General-aggregationLevel</td>
                   <td>{{object.metadata.General_aggregationLevel}}</td>
                 </tr>
+                <!-- /.1. General -->
+                <!-- 2. LifeCycle -->
                 <tr>
                   <td>LifeCycle-version</td>
                   <td>{{object.metadata.LifeCycle_version}}</td>
@@ -132,16 +135,46 @@
                   <td>{{object.metadata.LifeCycle_status}}</td>
                 </tr>
                 <tr>
-                  <td>LifeCycle-contribute</td>
-                  <td>{{object.metadata.LifeCycle_contribute}}</td>
+                  <td>LifeCycle-contribute-role</td>
+                  <td>{{object.metadata.LifeCycle_contribute_role}}</td>
                 </tr>
                 <tr>
-                  <td>Meta-metadata-identifier</td>
-                  <td>{{object.metadata.Meta_metadata_identifier}}</td>
+                  <td>LifeCycle-contribute-entity</td>
+                  <td>{{object.metadata.LifeCycle_contribute_entity}}</td>
                 </tr>
                 <tr>
-                  <td>Meta-metadata-contribute</td>
-                  <td>{{object.metadata.Meta_metadata_contribute}}</td>
+                  <td>LifeCycle-contribute-date_dateTime</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>LifeCycle-contribute-date_description</td>
+                  <td>{{object.metadata.LifeCycle_contribute_date_description}}</td>
+                </tr>
+                <!-- /.2. LifeCycle -->
+                <!-- 3. metaMetadata -->
+                <tr>
+                  <td>Meta-metadata-identifier-catalog</td>
+                  <td>{{object.metadata.Meta_metadata_identifier_catalog}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-identifier-entry</td>
+                  <td>{{object.metadata.Meta_metadata_identifier_entry}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-role</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_role}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-entity</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_entity}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dateTime</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Meta-metadata-contribute-date-dascription</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_date_description}}</td>
                 </tr>
                 <tr>
                   <td>Meta-metadata-metadataSchema</td>
@@ -151,6 +184,8 @@
                   <td>Meta-metadata-language</td>
                   <td>{{object.metadata.Meta_metadata_language}}</td>
                 </tr>
+                <!-- /.3. metaMetadata -->
+                <!-- 4. Technical -->
                 <tr>
                   <td>Technical-format</td>
                   <td>{{object.metadata.Technical_format}}</td>
@@ -164,8 +199,20 @@
                   <td>{{object.metadata.Technical_location}}</td>
                 </tr>
                 <tr>
-                  <td>Technical-requirement</td>
-                  <td>{{object.metadata.Technical_requirement}}</td>
+                  <td>Technical-requirement-orComposite-type</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_type}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-name</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_name}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-minimumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_minimumVersion}}</td>
+                </tr>
+                <tr>
+                  <td>Technical-requirement-orComposite-maximumVersion</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_maximumVersion}}</td>
                 </tr>
                 <tr>
                   <td>Technical-installationRemarks</td>
@@ -176,9 +223,15 @@
                   <td>{{object.metadata.Technical_otherPlatformRequirements}}</td>
                 </tr>
                 <tr>
-                  <td>Technical-duration</td>
-                  <td>{{object.metadata.Technical_duration}}</td>
+                  <td>Technical-duration-duration</td>
+                  <td>{{object.metadata.Technical_duration_duration}}</td>
                 </tr>
+                <tr>
+                  <td>Technical-duration-description</td>
+                  <td>{{object.metadata.Technical_duration_description}}</td>
+                </tr>
+                <!-- /.4. Technical -->
+                <!-- 5. Educational -->
                 <tr>
                   <td>Educational-interactivityType</td>
                   <td>{{object.metadata.Educational_interactivityType}}</td>
@@ -208,8 +261,12 @@
                   <td>{{object.metadata.Educational_difficulty}}</td>
                 </tr>
                 <tr>
-                  <td>Educational-typicalLearningTime</td>
-                  <td>{{object.metadata.Educational_typicalLearningTime}}</td>
+                  <td>Educational-typicalLearningTime-duration</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_duration}}</td>
+                </tr>
+                <tr>
+                  <td>Educational-typicalLearningTime-description</td>
+                  <td>{{object.metadata.Educational_typicalLearningTime_description}}</td>
                 </tr>
                 <tr>
                   <td>Educational-description</td>
@@ -219,6 +276,8 @@
                   <td>Educational-language</td>
                   <td>{{object.metadata.Educational_language}}</td>
                 </tr>
+                <!-- /.5. Educational -->
+                <!-- 6. Rights -->
                 <tr>
                   <td>Rights-cost</td>
                   <td>{{object.metadata.Rights_cost}}</td>
@@ -231,6 +290,8 @@
                   <td>Rights-description</td>
                   <td>{{object.metadata.Rights_description}}</td>
                 </tr>
+                <!-- /.6. Rights -->
+                <!-- 7. Relation -->
                 <tr>
                   <td>Relation-kind</td>
                   <td>{{object.metadata.Relation_kind}}</td>
@@ -244,24 +305,48 @@
                   <td>{{object.metadata.Relation_resource_identifier_entry}}</td>
                 </tr>
                 <tr>
+                  <td>Relation-resource-description</td>
+                  <td>{{object.metadata.Relation_resource_identifier_description}}</td>
+                </tr>
+                <!-- /.7. Relation -->
+                <!-- 8. Annotation -->
+                <tr>
                   <td>Annotation-entity</td>
                   <td>{{object.metadata.Annotation_entity}}</td>
                 </tr>
                 <tr>
-                  <td>Annotation-date</td>
-                  <td>{{object.metadata.Annotation_date}}</td>
+                  <td>Annotation-date-dateTime</td>
+                  <td>{{object.metadata.Annotation_date_dateTime}}</td>
+                </tr>
+                <tr>
+                  <td>Annotation-date-description</td>
+                  <td>{{object.metadata.Annotation_date_description}}</td>
                 </tr>
                 <tr>
                   <td>Annotation-description</td>
                   <td>{{object.metadata.Annotation_description}}</td>
                 </tr>
+                <!-- /.8. Annotation -->
+                <!-- 9. Classification -->
                 <tr>
                   <td>Classification-purpose</td>
                   <td>{{object.metadata.Classification_purpose}}</td>
                 </tr>
                 <tr>
-                  <td>Classification-taxonPath</td>
-                  <td>{{object.metadata.Classification_taxonPath}}</td>
+                  <td>Classification-taxonPath-source</td>
+                  <td>{{object.metadata.Classification_taxonPath_source}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon-id</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_id}}</td>
+                </tr>
+                <tr>
+                  <td>Classification-taxonPath-taxon_entry</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_entry}}</td>
                 </tr>
                 <tr>
                   <td>Classification-description</td>
@@ -271,6 +356,7 @@
                   <td>Classification-keyword</td>
                   <td>{{object.metadata.Classification_keyword}}</td>
                 </tr>
+                <!-- /.9. Classification -->
               {% else %}
                 <tr>
                   <td>Metadata is not exist</td>
@@ -361,6 +447,17 @@
                   <td>Classification-taxonPath-source</td>
                   <td>{{object.metadata.Classification_taxonPath_source}}</td>
                 </tr>
+                <!-- 9.2.2.1 Id -->
+                <tr>
+                  <td>Classification-taxonPath-taxon-id</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_id}}</td>
+                </tr>
+                <!-- 9.2.2.2 Entry -->
+                <tr>
+                  <td>Classification-taxonPath-taxon_entry</td>
+                  <td>{{object.metadata.Classification_taxonPath_taxon_entry}}</td>
+                </tr>
+                <tr>
                 <!-- 9.3 Description -->
                 <tr>
                   <td>Classification-description</td>
@@ -380,5 +477,96 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
+  
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Incremental criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1.3 Language -->
+                <tr>
+                  <td>General-language</td>
+                  <td>{{object.metadata.General_language}}</td>
+                </tr>
+                <!-- 1.4 Description -->
+                <tr>
+                  <td>General-description</td>
+                  <td>{{object.metadata.General_description}}</td>
+                </tr>
+                <!-- 1.5 Keyword -->
+                <tr>
+                  <td>General-keyword</td>
+                  <td>{{object.metadata.General_keyword}}</td>
+                </tr>
+                <!-- 1.6 Coverage -->
+                <tr>
+                  <td>General-coverage</td>
+                  <td>{{object.metadata.General_coverage}}</td>
+                </tr>
+                <!-- 2.3.2 Entity -->
+                <tr>
+                  <td>LifeCycle-contribute-entity</td>
+                  <td>{{object.metadata.LifeCycle_contribute_entity}}</td>
+                </tr>
+                <!-- 3.2.2 Entity -->
+                <tr>
+                  <td>Meta-metadata-contribute-entity</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_entity}}</td>
+                </tr>
+                <!-- 4.1 Format -->
+                <tr>
+                  <td>Technical-format</td>
+                  <td>{{object.metadata.Technical_format}}</td>
+                </tr>
+                <!-- 4.3 Location -->
+                <tr>
+                  <td>Technical-location</td>
+                  <td>{{object.metadata.Technical_location}}</td>
+                </tr>
+                <!-- 5.10 Description -->
+                <tr>
+                  <td>Educational-description</td>
+                  <td>{{object.metadata.Educational_description}}</td>
+                </tr>
+                <!-- 7.2.2 Description -->
+                <tr>
+                  <td>Relation-resource-description</td>
+                  <td>{{object.metadata.Relation_resource_identifier_description}}</td>
+                </tr>
+                <!-- 9.4 Keyword -->
+                <tr>
+                  <td>Classification-keyword</td>
+                  <td>{{object.metadata.Classification_keyword}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+  
 </div><!-- /.row -->
 {% endblock content %}
