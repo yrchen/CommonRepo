@@ -203,7 +203,9 @@ class ELOMetadata(models.Model):
         # 1.3 Language, 1.4 Description, 1.5 Keyword, 1.6 Coverage,
         # 2.3.2 Entity, 3.2.2 Entity, 4.1 Format, 4.3 Location,
         # 5.10 Description, 5.11 Language, 7.2.2 Description, and 9.4 Keyword
-        keys_incremental_criteria = ''
+        keys_incremental_criteria = ('General_language', 'General_description', 'General_keyword', 'General_coverage',
+                                     'LifeCycle_contribute_entity', 'Meta_metadata_contribute_entity', 'Technical_format', 'Technical_location',
+                                     'Educational_description', 'Educational_language', 'Relation_resource_description', 'Classification_keyword')
 
         #
         # Precedence criteria (rewritable)
