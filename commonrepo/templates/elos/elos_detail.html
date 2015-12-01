@@ -708,5 +708,116 @@
     </div><!-- /.box -->
   </div><!-- /.Metadata Time/duration criteria (rewritable) -->
 
+  <!-- Metadata - Single-choice criteria (rewritable) -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Single-choice criteria (rewritable)</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>Element</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if object.metadata %}
+                <!-- 1.7 Structure -->
+                <tr>
+                  <td>General-structure</td>
+                  <td>{{object.metadata.General_structure}}</td>
+                </tr>
+                <!-- 1.8 Aggrregation Level -->
+                <tr>
+                  <td>General-aggregationLevel</td>
+                  <td>{{object.metadata.General_aggregationLevel}}</td>
+                </tr>
+                <!-- 2.2 Status -->
+                <tr>
+                  <td>LifeCycle-status</td>
+                  <td>{{object.metadata.LifeCycle_status}}</td>
+                </tr>
+                <!-- 2.3.1 Role -->
+                <tr>
+                  <td>LifeCycle-contribute-role</td>
+                  <td>{{object.metadata.LifeCycle_contribute_role}}</td>
+                </tr>
+                <!-- 3.2.1 Role -->
+                <tr>
+                  <td>Meta-metadata-contribute-role</td>
+                  <td>{{object.metadata.Meta_metadata_contribute_role}}</td>
+                </tr>
+                <!-- 4.4.1.1 Type-->
+                <tr>
+                  <td>Technical-requirement-orComposite-type</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_type}}</td>
+                </tr>
+                <!-- 4.4.1.2 Name -->
+                <tr>
+                  <td>Technical-requirement-orComposite-name</td>
+                  <td>{{object.metadata.Technical_requirement_orComposite_name}}</td>
+                </tr>
+                <!-- 5.1 Interactivity Type -->
+                <tr>
+                  <td>Educational-interactivityType</td>
+                  <td>{{object.metadata.Educational_interactivityType}}</td>
+                </tr>
+                <!-- 5.3 Interactivity Level -->
+                <tr>
+                  <td>Educational-interactivityLevel</td>
+                  <td>{{object.metadata.Educational_interactivityLevel}}</td>
+                </tr>
+                <!-- 5.4 Semantic Density -->
+                <tr>
+                  <td>Educational-semanticDensity</td>
+                  <td>{{object.metadata.Educational_semanticDensity}}</td>
+                </tr>
+                <!-- 5.8 Defficulty -->
+                <tr>
+                  <td>Educational-difficulty</td>
+                  <td>{{object.metadata.Educational_difficulty}}</td>
+                </tr>
+                <!-- 6.1 Cost -->
+                <tr>
+                  <td>Rights-cost</td>
+                  <td>{{object.metadata.Rights_cost}}</td>
+                </tr>
+                <!-- 6.2 Copyright and Other Restrictions -->
+                <tr>
+                  <td>Rights-copyrightAndOtherRestrictions</td>
+                  <td>{{object.metadata.Rights_copyrightAndOtherRestrictions}}</td>
+                </tr>
+                <!-- 7.1 Kind -->
+                <tr>
+                  <td>Relation-kind</td>
+                  <td>{{object.metadata.Relation_kind}}</td>
+                </tr>
+                <!-- 9.1 Purpose -->
+                <tr>
+                  <td>Classification-purpose</td>
+                  <td>{{object.metadata.Classification_purpose}}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>Metadata is not exist</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Metadata - Single-choice criteria (rewritable) -->
+
 </div><!-- /.row -->
 {% endblock content %}
