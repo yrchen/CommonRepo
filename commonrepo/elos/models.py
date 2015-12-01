@@ -87,7 +87,8 @@ class ELOMetadata(models.Model):
     # 4.6 otherPlatformRequirements
     Technical_otherPlatformRequirements = models.CharField(_("Technical-otherPlatformRequirements"), blank=True, max_length=255)
     # 4.7 duration
-    Technical_duration = models.CharField(_("Technical-duration"), blank=True, max_length=255)
+    Technical_duration_duration = models.CharField(_("Technical-duration-duration"), blank=True, max_length=255)
+    Technical_duration_description = models.CharField(_("Technical-duration-description"), blank=True, max_length=255)
 
     #
     # 5. Educational
