@@ -228,7 +228,10 @@ class ELOMetadata(models.Model):
         # 3.2.1 Role, 4.4.1.1 Type, 4.4.1.2 Name, 5.1 Interactivity Type,
         # 5.3 Interactivity Level, 5.4 Semantic Density, 5.8 Difficulty, 6.1 Cost,
         # 6.2 Copyright and Other Restrictions, 7.1 Kind, and 9.1 Purpose
-        keys_single_choise_criteria = ''
+        keys_single_choise_criteria = ('General_structure', 'General_aggregationLevel', 'LifeCycle_status', 'LifeCycle_contribute_role',
+                                       'Meta_metadata_contribute_role', 'Technical_requirement_orComposite_type', 'Technical_requirement_orComposite_name', 'Educational_interactivityType',
+                                       'Educational_interactivityLevel', 'Educational_semanticDensity', 'Educational_difficulty', 'Rights_cost',
+                                       'Rights_copyrightAndOtherRestrictions', 'Relation_kind', 'Classification_purpose')
 
         #
         # Many-choice criteria (rewritable)
