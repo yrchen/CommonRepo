@@ -45,7 +45,7 @@ class ELOMetadataAdmin(admin.ModelAdmin):
             'Meta-metadata', {
                 'fields': ['Meta_metadata_identifier_catalog', 'Meta_metadata_identifier_entry',
                            'Meta_metadata_contribute_role', 'Meta_metadata_contribute_entity',
-                           'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description'
+                           'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description',
                            'Meta_metadata_metadataSchema', 'Meta_metadata_language']
             },
         ),
