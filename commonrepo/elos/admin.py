@@ -37,21 +37,26 @@ class ELOMetadataAdmin(admin.ModelAdmin):
         (
             'LifeCycle', {
                 'fields': ['LifeCycle_version', 'LifeCycle_status', 
-                           'LifeCycle_contribute']
+                           'LifeCycle_contribute_role', 'LifeCycle_contribute_entity',
+                           'LifeCycle_contribute_date_dateTime', 'LifeCycle_contribute_date_description']
             }
         ),
         (
             'Meta-metadata', {
-                'fields': ['Meta_metadata_identifier', 'Meta_metadata_contribute', 
+                'fields': ['Meta_metadata_identifier_catalog', 'Meta_metadata_identifier_entry',
+                           'Meta_metadata_contribute_role', 'Meta_metadata_contribute_entity',
+                           'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description'
                            'Meta_metadata_metadataSchema', 'Meta_metadata_language']
             },
         ),
         (
             'Technical', {
                 'fields': ['Technical_format', 'Technical_size', 
-                           'Technical_location', 'Technical_requirement', 
-                           'Technical_installationRemarks', 'Technical_otherPlatformRequirements',
-                           'Technical_duration']
+                           'Technical_location', 'Technical_requirement_orComposite_type', 
+                           'Technical_requirement_orComposite_name', 'Technical_requirement_orComposite_minimumVersion',
+                           'Technical_requirement_orComposite_maximumVersion', 'Technical_installationRemarks',
+                           'Technical_otherPlatformRequirements', 'Technical_duration_duration',
+                           'Technical_duration_description']
             },
         ),
         (
@@ -60,8 +65,8 @@ class ELOMetadataAdmin(admin.ModelAdmin):
                            'Educational_interactivityLevel', 'Educational_semanticDensity',
                            'Educational_intendedEndUserRole', 'Educational_context',
                            'Educational_typicalAgeRange', 'Educational_difficulty',
-                           'Educational_typicalLearningTime', 'Educational_description',
-                           'Educational_language']
+                           'Educational_typicalLearningTime_duration', 'Educational_typicalLearningTime_description',
+                           'Educational_description', 'Educational_language']
             },
         ),
         (
@@ -72,19 +77,22 @@ class ELOMetadataAdmin(admin.ModelAdmin):
         ),
         (
             'Relation', {
-                'fields': ['Relation_kind', 'Relation_resource']
+                'fields': ['Relation_kind', 'Relation_resource_identifier_catalog',
+                           'Relation_resource_identifier_entry', 'Relation_resource_description']
             },
         ),
         (
             'Annotation', {
-                'fields': ['Annotation_entity', 'Annotation_date',
-                           'Annotation_description']
+                'fields': ['Annotation_entity', 'Annotation_date_dateTime',
+                           'Annotation_date_description', 'Annotation_description']
             },
         ),
         (
             'Classification', {
-                'fields': ['Classification_purpose', 'Classification_taxonPath',
-                           'Classification_description', 'Classification_keyword']
+                'fields': ['Classification_purpose', 'Classification_taxonPath_source',
+                           'Classification_taxonPath_taxon', 'Classification_taxonPath_taxon_id',
+                           'Classification_taxonPath_taxon_entry', 'Classification_description',
+                           'Classification_keyword']
             },
         ),
     ]
