@@ -18,6 +18,7 @@ def get_random_filename(instance, filename):
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('elo-documents/', filename)
 
+@python_2_unicode_compatible
 class ELOMetadata(models.Model):
     #
     # 1. General
@@ -252,6 +253,9 @@ class ELOMetadata(models.Model):
 
         return old, new
 
+    def __str__(self):
+            return str(self.elo.id) + ' - ' + self.elo.name
+
 @python_2_unicode_compatible
 class ELOType(models.Model):
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
@@ -262,8 +266,8 @@ class ELOType(models.Model):
     
     def get_absolute_url(self):
         return reverse('elos:elotypes-detail', kwargs={'pk': self.pk})
-    
 
+@python_2_unicode_compatible
 class ELO(models.Model):
     # basic infor
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
@@ -292,21 +296,23 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
+@python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=True)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
     
     def __str__(self):
-        return self.name    
+        return self.name
 
     class MPTTMeta:
-        order_insertion_by = ['name']    
+        order_insertion_by = ['name']
 
+@python_2_unicode_compatible
 class ReusabilityTree(models.Model):
     name = models.CharField(max_length=50, unique=True)
     base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree')
     root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
     
     def __str__(self):
-        return self.name    
+        return self.name
