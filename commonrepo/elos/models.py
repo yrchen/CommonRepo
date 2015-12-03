@@ -192,7 +192,7 @@ class ELOMetadata(models.Model):
         # 4.6 Other Platform Requirements, 6.3 Description, 7.2.1.1 Catalog, 7.2.1.2 Entry,
         # 8.1 Entity, 8.3 Description, 9.2.1 Source, 9.2.2.1 Id,
         # 9.2.2.2 Entry, and 9.3 Description
-        keys_precise_criteria = ('General_title', 'LifeCycle_version', 'Meta_metadata_language', 'Technical_installationRemarks',
+        fields_precise_criteria = ('General_title', 'LifeCycle_version', 'Meta_metadata_language', 'Technical_installationRemarks',
                                  'Technical_otherPlatformRequirements', 'Rights_description', 'Relation_resource_identifier_catalog', 'Relation_resource_identifier_entry',
                                  'Annotation_entity', 'Annotation_description', 'Classification_taxonPath_source', 'Classification_taxonPath_taxon_id',
                                  'Classification_taxonPath_taxon_entry', 'Classification_description')
@@ -203,7 +203,7 @@ class ELOMetadata(models.Model):
         # 1.3 Language, 1.4 Description, 1.5 Keyword, 1.6 Coverage,
         # 2.3.2 Entity, 3.2.2 Entity, 4.1 Format, 4.3 Location,
         # 5.10 Description, 5.11 Language, 7.2.2 Description, and 9.4 Keyword
-        keys_incremental_criteria = ('General_language', 'General_description', 'General_keyword', 'General_coverage',
+        fields_incremental_criteria = ('General_language', 'General_description', 'General_keyword', 'General_coverage',
                                      'LifeCycle_contribute_entity', 'Meta_metadata_contribute_entity', 'Technical_format', 'Technical_location',
                                      'Educational_description', 'Educational_language', 'Relation_resource_description', 'Classification_keyword')
 
@@ -211,14 +211,14 @@ class ELOMetadata(models.Model):
         # Precedence criteria (rewritable)
         #
         # 4.2 Size, 4.4.1.3 Minimum Version, 4.4.1.4 Maximum Version, and 5.7 Typical Age Range
-        keys_precedence_criteria = ('Technical_size', 'Technical_requirement_orComposite_minimumVersion', 'Technical_requirement_orComposite_maximumVersion', 'Educational_typicalAgeRange')
+        fields_precedence_criteria = ('Technical_size', 'Technical_requirement_orComposite_minimumVersion', 'Technical_requirement_orComposite_maximumVersion', 'Educational_typicalAgeRange')
 
         #
         # Time/duration criteria (rewritable)
         #
         # 2.3.3 Date, 3.2.3 Date, 
         # 4.7 Duration, 5.9 Typical Learning Time, and 8.2 Date
-        keys_time_duration_criteria = ('LifeCycle_contribute_date_dateTime', 'LifeCycle_contribute_date_description', 'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description',
+        fields_time_duration_criteria = ('LifeCycle_contribute_date_dateTime', 'LifeCycle_contribute_date_description', 'Meta_metadata_contribute_date_dateTime', 'Meta_metadata_contribute_date_description',
                                        'Technical_duration_duration', 'Educational_typicalLearningTime_duration', 'Educational_typicalLearningTime_description', 'Annotation_date_dateTime', 'Annotation_date_description')
 
         #
@@ -228,7 +228,7 @@ class ELOMetadata(models.Model):
         # 3.2.1 Role, 4.4.1.1 Type, 4.4.1.2 Name, 5.1 Interactivity Type,
         # 5.3 Interactivity Level, 5.4 Semantic Density, 5.8 Difficulty, 6.1 Cost,
         # 6.2 Copyright and Other Restrictions, 7.1 Kind, and 9.1 Purpose
-        keys_single_choise_criteria = ('General_structure', 'General_aggregationLevel', 'LifeCycle_status', 'LifeCycle_contribute_role',
+        fields_single_choise_criteria = ('General_structure', 'General_aggregationLevel', 'LifeCycle_status', 'LifeCycle_contribute_role',
                                        'Meta_metadata_contribute_role', 'Technical_requirement_orComposite_type', 'Technical_requirement_orComposite_name', 'Educational_interactivityType',
                                        'Educational_interactivityLevel', 'Educational_semanticDensity', 'Educational_difficulty', 'Rights_cost',
                                        'Rights_copyrightAndOtherRestrictions', 'Relation_kind', 'Classification_purpose')
@@ -237,24 +237,24 @@ class ELOMetadata(models.Model):
         # Many-choice criteria (rewritable)
         #
         # 3.3 Metadata Schema, 5.2 Learning Resource Type, 5.5 Intended End User Role, and 5.6 Context
-        keys_many_choise_criteria = ('Meta_metadata_metadataSchema', 'Educational_learningResourceType', 'Educational_intendedEndUserRole', 'Educational_context')
+        fields_many_choise_criteria = ('Meta_metadata_metadataSchema', 'Educational_learningResourceType', 'Educational_intendedEndUserRole', 'Educational_context')
 
         # V1: precise / single-choice criteria
         # V2: incremental criteria
         # V3: precedence / time/duration criteria
         # V4: many-choice critera
-        keys_all = self._meta.get_all_field_names()
-        included_keys = keys_all
-        excluded_keys = 'id', '_state', '_elo_cache'
-        return self._match(self, obj, included_keys, excluded_keys)
+        fields_all = self._meta.get_all_field_names()
+        fields_included = fields_all
+        fields_excluded = 'id', '_state', '_elo_cache'
+        return self._match(self, obj, fields_included, fields_excluded)
 
-    def _match(self, obj_source, obj_target, included_keys, excluded_keys):
+    def _match(self, obj_source, obj_target, fields_included, fields_excluded):
         dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
         counter_total = 0
         counter_match = 0
 
         for field, attribute in dict_source.items():
-            if field in excluded_keys or field not in included_keys:
+            if field in fields_excluded or field not in fields_included:
                 continue
 
             try:
