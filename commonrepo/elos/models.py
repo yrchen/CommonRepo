@@ -243,25 +243,31 @@ class ELOMetadata(models.Model):
         # V2: incremental criteria
         # V3: precedence / time/duration criteria
         # V4: many-choice critera
-        included_keys = ''
-        excluded_keys = 'id', '_state'
+        keys_all = self._meta.get_all_field_names()
+        included_keys = keys_all
+        excluded_keys = 'id', '_state', '_elo_cache'
         return self._match(self, obj, included_keys, excluded_keys)
 
-    def _match(self, obj1, obj2, included_keys, excluded_keys):
-        d1, d2 = obj1.__dict__, obj2.__dict__
-        old, new = {}, {}
+    def _match(self, obj_source, obj_target, included_keys, excluded_keys):
+        dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
+        counter_total = 0
+        counter_match = 0
 
-        for k,v in d1.items():
-            if k in excluded_keys or k not in included_keys:
+        for field, attribute in dict_source.items():
+            if field in excluded_keys or field not in included_keys:
                 continue
-            try:
-                if v != d2[k]:
-                    old.update({k: v})
-                    new.update({k: d2[k]})
-            except KeyError:
-                old.update({k: v})
 
-        return old, new
+            try:
+                # check target object has value
+                if bool(dict_target[field]):
+                    counter_total += 1
+                    if attribute == dict_target[field]:
+                        counter_match += 1
+
+            except KeyError:
+                old.update({field: attribute})
+
+        return counter_total, counter_match
 
     def __str__(self):
             return str(self.elo.id) + ' - ' + self.elo.name
