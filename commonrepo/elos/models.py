@@ -315,7 +315,11 @@ class ELO(models.Model):
     def similarity(self, obj_target):
         if self.metadata and obj_target.metadata:
             counter_all, counter_matched = self.metadata.match(obj_target.metadata)
-            return float(counter_matched) / float(counter_all)
+
+            if counter_all and counter_matched:
+                return float(counter_matched) / float(counter_all)
+            else:
+                return 0
         else:
             return 0
 
