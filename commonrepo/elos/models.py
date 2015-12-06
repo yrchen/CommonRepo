@@ -211,6 +211,11 @@ class ELOMetadata(models.Model):
 
         return counter_total, counter_matched
 
+    def match2(self, obj):
+        fields_included = self._meta.get_all_field_names()
+        fields_excluded = 'id', '_state', '_elo_cache'
+        return self._match2(self, obj, fields_included, fields_excluded)
+
     def _match2(self, obj_source, obj_target, fields_included, fields_excluded):
         #
         # Precise criteria (mandatory)
