@@ -312,8 +312,11 @@ class ELO(models.Model):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
     def similarity(self, obj_target):
-        counter_all, counter_matched = self.metadata.match(obj_target.metadata)
-        return float(counter_matched) / float(counter_all)
+        if self.metadata and obj_target.metadata:
+            counter_all, counter_matched = self.metadata.match(obj_target.metadata)
+            return float(counter_matched) / float(counter_all)
+        else:
+            return 0
 
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
