@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from uuid import uuid4
+import math
 import os
 
 from django.core.urlresolvers import reverse
@@ -315,6 +316,12 @@ class ELO(models.Model):
         if self.metadata and obj_target.metadata:
             counter_all, counter_matched = self.metadata.match(obj_target.metadata)
             return float(counter_matched) / float(counter_all)
+        else:
+            return 0
+
+    def diversity(self, obj_target):
+        if self.similarity(obj_target):
+            return math.log(1 / self.similarity(obj_target))
         else:
             return 0
 
