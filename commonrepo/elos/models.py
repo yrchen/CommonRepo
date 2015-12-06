@@ -311,6 +311,10 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
+    def similarity(self, obj_target):
+        counter_all, counter_matched = self.metadata.match(obj_target.metadata)
+        return float(counter_matched) / float(counter_all)
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=True)
