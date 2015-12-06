@@ -250,8 +250,7 @@ class ELOMetadata(models.Model):
 
     def _match(self, obj_source, obj_target, fields_included, fields_excluded):
         dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
-        counter_total = 0
-        counter_match = 0
+        counter_total, counter_matched = 0, 0
 
         for field, attribute in dict_source.items():
             if field in fields_excluded or field not in fields_included:
@@ -262,12 +261,12 @@ class ELOMetadata(models.Model):
                 if bool(dict_target[field]):
                     counter_total += 1
                     if attribute == dict_target[field]:
-                        counter_match += 1
+                        counter_matched += 1
 
             except KeyError:
                 old.update({field: attribute})
 
-        return counter_total, counter_match
+        return counter_total, counter_matched
 
     def __str__(self):
             return str(self.elo.id) + ' - ' + self.elo.name
