@@ -331,7 +331,7 @@ class ELO(models.Model):
 
     def diversity(self, obj_target):
         if self.similarity(obj_target):
-            return math.log(1 / self.similarity(obj_target))
+            return (math.log(1 / self.similarity(obj_target)) + math.log(1 / self.similarity_reverse(obj_target))) / 2
         else:
             return 0
 
