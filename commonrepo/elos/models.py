@@ -313,8 +313,14 @@ class ELO(models.Model):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
     def similarity(self, obj_target):
-        if self.metadata and obj_target.metadata:
-            counter_all, counter_matched = self.metadata.match(obj_target.metadata)
+        return self._similarity(self, obj_target)
+
+    def similarity_reverse(self, obj_target):
+        return self._similarity(obj_target, self)
+
+    def _similarity(self, obj_source, obj_target):
+        if obj_source.metadata and obj_target.metadata:
+            counter_all, counter_matched = obj_source.metadata.match(obj_target.metadata)
 
             if counter_all and counter_matched:
                 return float(counter_matched) / float(counter_all)
