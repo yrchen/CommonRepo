@@ -186,6 +186,32 @@ class ELOMetadata(models.Model):
         return old, new
 
     def match(self, obj):
+        fields_all = self._meta.get_all_field_names()
+        fields_included = fields_all
+        fields_excluded = 'id', '_state', '_elo_cache'
+        return self._match(self, obj, fields_included, fields_excluded)
+
+    def _match(self, obj_source, obj_target, fields_included, fields_excluded):
+        dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
+        counter_total, counter_matched = 0, 0
+
+        for field, attribute in dict_source.items():
+            if field in fields_excluded or field not in fields_included:
+                continue
+
+            try:
+                # check target object has value
+                if bool(dict_target[field]):
+                    counter_total += 1
+                    if attribute == dict_target[field]:
+                        counter_matched += 1
+
+            except KeyError:
+                old.update({field: attribute})
+
+        return counter_total, counter_matched
+
+    def _match2(self, obj_source, obj_target, fields_included, fields_excluded):
         #
         # Precise criteria (mandatory)
         #
@@ -244,12 +270,7 @@ class ELOMetadata(models.Model):
         # V2: incremental criteria
         # V3: precedence / time/duration criteria
         # V4: many-choice critera
-        fields_all = self._meta.get_all_field_names()
-        fields_included = fields_all
-        fields_excluded = 'id', '_state', '_elo_cache'
-        return self._match(self, obj, fields_included, fields_excluded)
 
-    def _match(self, obj_source, obj_target, fields_included, fields_excluded):
         dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
         counter_total, counter_matched = 0, 0
 
@@ -261,8 +282,29 @@ class ELOMetadata(models.Model):
                 # check target object has value
                 if bool(dict_target[field]):
                     counter_total += 1
-                    if attribute == dict_target[field]:
-                        counter_matched += 1
+
+                    # V1: precise / single-choice criteria
+                    if field in fields_precise_criteria or field in fields_single_choise_criteria:
+                        if attribute == dict_target[field]:
+                            counter_matched += 1
+
+                    # V2: incremental criteria
+                    # f(Mi, Mj)
+                    elif field in fields_incremental_criteria:
+                        if attribute == dict_target[field]:
+                            counter_matched += 1
+
+                    # V3: precedence / time/duration criteria
+                    # compare(Mi, Mj)
+                    elif field in fields_precedence_criteria or field in fields_time_duration_criteria:
+                        if attribute == dict_target[field]:
+                            counter_matched += 1
+
+                    # V4: many-choice critera
+                    # disjunction(Mi, Mj)
+                    elif field in fields_many_choise_criteria:
+                        if attribute == dict_target[field]:
+                            counter_matched += 1
 
             except KeyError:
                 old.update({field: attribute})
