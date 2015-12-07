@@ -113,23 +113,27 @@ def elos_diversity_all(request, pk):
 def elos_fork(request, pk):
     if request.method == 'POST':
         elo_original = ELO.objects.get(id=pk)
-        elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
-                                     author = request.user,
-                                     original_type = elo_original.original_type,
-                                     init_file = elo_original.init_file,
-                                     version = 1,
-                                     parent_elo = elo_original,
-                                     parent_elo_uuid = elo_original.uuid,
-                                     parent_elo_version = elo_original.version,
-                                     parent_elo2 = elo_original,
-                                     parent_elo2_uuid = elo_original.uuid,
-                                     parent_elo2_version = elo_original.version)
-        return Response({"code": 202,
-                         "status": "ok",
-                         "result": {
-                             "elo_id": elo_new.id
-                             }
-                        },
-                        status=status.HTTP_201_CREATED)
+
+        if elo_original.is_public:
+            elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
+                                         author = request.user,
+                                         original_type = elo_original.original_type,
+                                         init_file = elo_original.init_file,
+                                         version = 1,
+                                         parent_elo = elo_original,
+                                         parent_elo_uuid = elo_original.uuid,
+                                         parent_elo_version = elo_original.version,
+                                         parent_elo2 = elo_original,
+                                         parent_elo2_uuid = elo_original.uuid,
+                                         parent_elo2_version = elo_original.version)
+            return Response({"code": 202,
+                             "status": "ok",
+                             "result": {
+                                 "elo_id": elo_new.id
+                                 }
+                            },
+                            status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
