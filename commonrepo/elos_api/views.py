@@ -72,6 +72,23 @@ class ELOFileUploadViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user,
                        datafile=self.request.FILES.get('file'))
 
+@api_view(['GET'])
+def elos_diversity(request, pk, pk2):
+    if request.method == 'GET':
+        elo_source = ELO.objects.get(id=pk)
+        elo_target = ELO.objects.get(id=pk2)
+        return Response({"code": 202,
+                         "status": "ok",
+                         "result": {
+                             "elo_source": elo_source.id,
+                             "elo_target": elo_target.id,
+                             "deviesity": elo_source.diversity(elo_target)
+                             }
+                         },
+                        status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def elos_fork(request, pk):
     if request.method == 'POST':
