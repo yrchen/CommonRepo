@@ -89,6 +89,26 @@ def elos_diversity(request, pk, pk2):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def elos_diversity_all(request, pk):
+    elo_source = ELO.objects.get(id=pk)
+    elos_public = ELO.objects.filter(is_public=1)
+    elos_result = {}
+
+    if request.method == 'GET':
+        for elo in elos_public:
+            elos_result.update({elo.id: elo_source.diversity(elo)})
+        return Response({"code": 202,
+                         "status": "ok",
+                         "result": {
+                             "elo_source": elo_source.id,
+                             "diversity": elos_result
+                             }
+                         },
+                        status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def elos_fork(request, pk):
     if request.method == 'POST':
