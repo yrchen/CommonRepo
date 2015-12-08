@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
 
@@ -8,9 +9,9 @@ from commonrepo.elos.models import ELO
 from commonrepo.users.models import User as User
 
 class DashboardView(TemplateView):
-    
+
     template_name='main/dashboard.html'
-    
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return redirect('home')
@@ -26,7 +27,7 @@ class DashboardView(TemplateView):
         context['users_total_count'] = User.objects.all().count()
 
         # ELOs
-        context['elos_my_list'] = ELO.objects.filter(author=self.request.user)[:8]
-        context['elos_all_list'] = ELO.objects.all()[:8]
+        context['elos_my_list'] = ELO.objects.filter(author=self.request.user)[:settings.DASHBOARD_MAX_ELOS_MY_PER_PAGE]
+        context['elos_all_list'] = ELO.objects.all()[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
 
         return context
