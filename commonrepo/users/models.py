@@ -25,6 +25,9 @@ class User(AbstractUser):
     # User Pedagogical Information
     teaching_category = models.CharField(_("Teaching Category"), blank=True, max_length=255)
     teaching_subject_area = models.CharField(_("Teaching Subject Area"), blank=True, max_length=255)
+    
+    # Preferences
+    elo_similarity_threshold = models.FloatField(_("ELOs Similarity Threshold"), default=0)
 
     def __str__(self):
         return self.username
