@@ -65,7 +65,7 @@ class ELOForkForm(ModelForm):
 class ELOUpdateForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'original_type', 'is_public']
+        fields = ['name', 'original_type', 'is_public', 'metadata']
 
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)
