@@ -317,7 +317,7 @@ class ELOMetadata(models.Model):
         return counter_total, counter_matched
 
     def __str__(self):
-        if self.elo:
+        if hasattr(self, 'elo'):
             return str(self.elo.id) + ' - ' + self.elo.name
         else:
             return 'Metadata No.' + str(self.id)
