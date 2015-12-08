@@ -22,15 +22,15 @@ from .permissions import IsOwnerOrReadOnly
 @api_view(['GET'])
 def elos_total_count(request):
     if request.method == 'GET':
-        return Response({"code": 202, 
+        return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
                              "total_elos": ELO.objects.all().count()
                              }
-                         }, 
+                         },
                         status=status.HTTP_202_ACCEPTED)
     else:
-        return Response({"code": 400,
+        return Response({"code": status.HTTP_400_BAD_REQUEST,
                          "status": "error"
                          },
                         status=status.HTTP_400_BAD_REQUEST)
@@ -39,7 +39,7 @@ def elos_total_count(request):
 @api_view(['GET'])
 def users_total_count(request):
     if request.method == 'GET':
-        return Response({"code": 202, 
+        return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
                              "total_users": User.objects.all().count()
@@ -47,7 +47,7 @@ def users_total_count(request):
                          },
                         status=status.HTTP_202_ACCEPTED)
     else:
-        return Response({"code": 400,
+        return Response({"code": status.HTTP_400_BAD_REQUEST,
                          "status": "error"
                          },
                         status=status.HTTP_400_BAD_REQUEST)
