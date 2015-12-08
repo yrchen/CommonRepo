@@ -32,7 +32,7 @@ class ELOViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
-        
+
     def perform_update(self, serializer):
         instance = serializer.save()
 
@@ -57,16 +57,16 @@ class ELOTypeViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
-        
+
     def perform_update(self, serializer):
-        instance = serializer.save()    
+        instance = serializer.save()
 
 class ELOFileUploadViewSet(viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
     queryset = ELOFileUpload.objects.all()
     serializer_class = ELOFileUploadSerializer
     parser_classes = (MultiPartParser, FormParser,)
-    permission_classes = (permissions.IsAuthenticated,)    
+    permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user,
@@ -77,7 +77,7 @@ def elos_diversity(request, pk, pk2):
     if request.method == 'GET':
         elo_source = ELO.objects.get(id=pk)
         elo_target = ELO.objects.get(id=pk2)
-        return Response({"code": 202,
+        return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
                              "elo_source": elo_source.id,
@@ -98,7 +98,7 @@ def elos_diversity_all(request, pk):
     if request.method == 'GET':
         for elo in elos_public:
             elos_result.update({elo.id: elo_source.diversity(elo)})
-        return Response({"code": 202,
+        return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
                              "elo_source": elo_source.id,
@@ -126,7 +126,7 @@ def elos_fork(request, pk):
                                          parent_elo2 = elo_original,
                                          parent_elo2_uuid = elo_original.uuid,
                                          parent_elo2_version = elo_original.version)
-            return Response({"code": 202,
+            return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
                              "result": {
                                  "elo_id": elo_new.id
