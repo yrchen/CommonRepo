@@ -201,8 +201,8 @@ class ELOMetadata(models.Model):
                 continue
 
             try:
-                # check target object has value
-                if bool(dict_target[field]):
+                # check source object has value
+                if bool(attribute):
                     counter_total += 1
                     if attribute == dict_target[field]:
                         counter_matched += 1
@@ -285,8 +285,8 @@ class ELOMetadata(models.Model):
                 continue
 
             try:
-                # check target object has value
-                if bool(dict_target[field]):
+                # check source object has value
+                if bool(attribute):
                     counter_total += 1
 
                     # V1: precise / single-choice criteria
