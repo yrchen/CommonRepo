@@ -166,25 +166,25 @@ class ELOMetadata(models.Model):
     Classification_description = models.CharField(_("Classification-description"), blank=True, max_length=255)
     # 9.4 keyword
     Classification_keyword = models.CharField(_("Classification-keyword"), blank=True, max_length=255)
-    
+
     def compare(self, obj):
-        excluded_keys = 'id', '_state'
-        return self._compare(self, obj, excluded_keys)
-    
-    def _compare(self, obj1, obj2, excluded_keys):
-        d1, d2 = obj1.__dict__, obj2.__dict__
-        old, new = {}, {}
-        for k,v in d1.items():
-            if k in excluded_keys:
+        fields_excluded = 'id', '_state', '_elo_cache'
+        return self._compare(self, obj, fields_excluded)
+
+    def _compare(self, obj_source, obj_target, fields_excluded):
+        dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
+        source, target = {}, {}
+        for field, attribute in dict_source.items():
+            if field in fields_excluded:
                 continue
             try:
-                if v != d2[k]:
-                    old.update({k: v})
-                    new.update({k: d2[k]})
+                if attribute != dict_target[field]:
+                    source.update({field: attribute})
+                    target.update({field: dict_target[field]})
             except KeyError:
-                old.update({k: v})
+                source.update({field: attribute})
 
-        return old, new
+        return source, target
 
     def match(self, obj):
         fields_all = self._meta.get_all_field_names()
