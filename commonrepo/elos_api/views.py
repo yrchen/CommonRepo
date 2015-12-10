@@ -126,6 +126,59 @@ def elos_diversity_all(request, pk):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def elos_similarity(request, pk, pk2):
+    if request.method == 'GET':
+        elo_source = ELO.objects.get(id=pk)
+        elo_target = ELO.objects.get(id=pk2)
+
+        # Check user is authenticated and has setting of elo_similarity_threshold
+        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+            elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+        # if not, use default setting
+        else:
+            elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+
+        return Response({"code": status.HTTP_202_ACCEPTED,
+                         "status": "ok",
+                         "result": {
+                             "elo_source": elo_source.id,
+                             "elo_target": elo_target.id,
+                             "similarity": elo_similarity
+                             }
+                         },
+                        status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def elos_similarity_all(request, pk):
+    if request.method == 'GET':
+        elo_source = ELO.objects.get(id=pk)
+        elos_public = ELO.objects.filter(is_public=1)
+        elos_result = {}
+
+        # Check user is authenticated and has setting of elo_similarity_threshold
+        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+            threshold = request.user.elo_similarity_threshold
+        # if not, use default setting
+        else:
+            threshold = settings.ELO_SIMILARITY_THRESHOLD
+
+        for elo in elos_public:
+            elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+
+        return Response({"code": status.HTTP_202_ACCEPTED,
+                         "status": "ok",
+                         "result": {
+                             "elo_source": elo_source.id,
+                             "similarity": elos_result
+                             }
+                         },
+                        status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def elos_fork(request, pk):
     if request.method == 'POST':
