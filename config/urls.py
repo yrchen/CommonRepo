@@ -7,7 +7,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 
-#from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -18,17 +17,23 @@ from commonrepo.main import views as MainViews
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet, UserViewSetV2
 
-router_api = DefaultRouter()
+#
 # API v1
-router_api.register(r'api/v1/elos', ELOViewSet)
-router_api.register(r'api/v1/elotypes', ELOTypeViewSet)
-router_api.register(r'api/v1/groups', GroupViewSet)
-router_api.register(r'api/v1/snippets', SnippetViewSet)
-router_api.register(r'api/v1/users', UserViewSet)
+#
+router_api_v1 = DefaultRouter()
+router_api_v1.register(r'api/v1/elos', ELOViewSet)
+router_api_v1.register(r'api/v1/elotypes', ELOTypeViewSet)
+router_api_v1.register(r'api/v1/groups', GroupViewSet)
+router_api_v1.register(r'api/v1/snippets', SnippetViewSet)
+router_api_v1.register(r'api/v1/users', UserViewSet)
+
+#
 # API v2
-router_api.register(r'api/v2/elos', ELOViewSetV2)
-router_api.register(r'api/v2/groups', GroupViewSetV2)
-router_api.register(r'api/v2/users', UserViewSetV2)
+#
+router_api_v2 = DefaultRouter()
+router_api_v2.register(r'api/v2/elos', ELOViewSetV2)
+router_api_v2.register(r'api/v2/groups', GroupViewSetV2)
+router_api_v2.register(r'api/v2/users', UserViewSetV2)
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
@@ -47,11 +52,6 @@ urlpatterns = [
     url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),
 
     #
-    # API endpoints
-    #
-    url(r'', include(router_api.urls)),
-
-    #
     # API v0
     #
 
@@ -61,6 +61,10 @@ urlpatterns = [
     #
     # API v1
     #
+
+    # API v1 - Endpoints
+    url(r'', include(router_api_v1.urls)),
+
 
     # API v1 - Authenticaion
     url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -86,6 +90,9 @@ urlpatterns = [
     #
     # API v2
     #
+
+    # API v2 - Endpoints
+    url(r'', include(router_api_v2.urls)),
 
     # API v2 - Authenticaion
     url(r'^api/v2/auth/', include('rest_framework.urls', namespace='rest_framework')),
