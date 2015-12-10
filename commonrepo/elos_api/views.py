@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -77,12 +78,20 @@ def elos_diversity(request, pk, pk2):
     if request.method == 'GET':
         elo_source = ELO.objects.get(id=pk)
         elo_target = ELO.objects.get(id=pk2)
+
+        # Check user is authenticated and has setting of elo_similarity_threshold
+        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+            elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+        # if not, use default setting
+        else:
+            elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
                              "elo_source": elo_source.id,
                              "elo_target": elo_target.id,
-                             "deviesity": elo_source.diversity(elo_target)
+                             "deviesity": elo_diversity
                              }
                          },
                         status=status.HTTP_202_ACCEPTED)
@@ -91,13 +100,21 @@ def elos_diversity(request, pk, pk2):
 
 @api_view(['GET'])
 def elos_diversity_all(request, pk):
-    elo_source = ELO.objects.get(id=pk)
-    elos_public = ELO.objects.filter(is_public=1)
-    elos_result = {}
-
     if request.method == 'GET':
+        elo_source = ELO.objects.get(id=pk)
+        elos_public = ELO.objects.filter(is_public=1)
+        elos_result = {}
+
+        # Check user is authenticated and has setting of elo_similarity_threshold
+        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+            threshold = request.user.elo_similarity_threshold
+        # if not, use default setting
+        else:
+            threshold = settings.ELO_SIMILARITY_THRESHOLD
+
         for elo in elos_public:
-            elos_result.update({elo.id: elo_source.diversity(elo)})
+            elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          "result": {
