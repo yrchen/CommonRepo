@@ -398,7 +398,7 @@ class ELO(models.Model):
 
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=False)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
     
@@ -410,7 +410,7 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
 
 @python_2_unicode_compatible
 class ReusabilityTree(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=False)
     base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree')
     root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
     
