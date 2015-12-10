@@ -48,26 +48,65 @@ urlpatterns = [
 
     #
     # API endpoints
-    url(r'^', include(router_api.urls)),
-    # API - Auth
+    #
+    url(r'', include(router_api.urls)),
+
+    #
+    # API v0
+    #
+
+    # Authenticaion
     url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    #
+    # API v1
+    #
+
+    # API v1 - Authenticaion
+    url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/auth/', include('djoser.urls')),
     url(r'^api/v1/auth/token', obtain_auth_token),
-    # API - ELOs
+
+    # API v1 - ELOs
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
+    url(r'^api/v1/elos/diversity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_diversity'),
+    url(r'^api/v1/elos/diversity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_diversity_all'),
+    url(r'^api/v1/elos/similarity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_similarity'),
+    url(r'^api/v1/elos/similarity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_similarity_all'),
+    url(r'^api/v1/elos/fork/(?P<pk>[0-9]+)/$', 'commonrepo.elos_api.views.elos_fork'),
+
+    # API v1 - Information
+    url(r'^api/v1/infor/elos-total/$', 'commonrepo.infor_api.views.elos_total_count'),
+    url(r'^api/v1/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'),
+
+    # API v1 - Groups
+    url(r'^api/v1/groups/abort/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_abort'),
+    url(r'^api/v1/groups/join/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_join'),
+
+    #
+    # API v2
+    #
+
+    # API v2 - Authenticaion
+    url(r'^api/v2/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v2/auth/', include('djoser.urls')),
+    url(r'^api/v2/auth/token', obtain_auth_token),
+
+    # API v2 - ELOs
+    url(r'^api/v2/elos-upload', ELOFileUploadViewSet),
     url(r'^api/v2/elos/diversity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_diversity'),
     url(r'^api/v2/elos/diversity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_diversity_all'),
     url(r'^api/v2/elos/similarity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_similarity'),
     url(r'^api/v2/elos/similarity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_similarity_all'),
     url(r'^api/v2/elos/fork/(?P<pk>[0-9]+)/$', 'commonrepo.elos_api.views.elos_fork'),
-    # API - Information
+
+    # API v2 - Information
     url(r'^api/v2/infor/elos-total/$', 'commonrepo.infor_api.views.elos_total_count'),
-    url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'), 
-    # API - Groups
+    url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'),
+
+    # API v2 - Groups
     url(r'^api/v2/groups/abort/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_abort'),
     url(r'^api/v2/groups/join/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_join'),
-    # API - Users
-
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
