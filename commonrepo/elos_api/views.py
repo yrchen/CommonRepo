@@ -91,7 +91,7 @@ def elos_diversity(request, pk, pk2):
                          "result": {
                              "elo_source": elo_source.id,
                              "elo_target": elo_target.id,
-                             "deviesity": elo_diversity
+                             "diversity": elo_diversity
                              }
                          },
                         status=status.HTTP_202_ACCEPTED)
