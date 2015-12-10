@@ -63,7 +63,17 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others', 'commonrepo_groups', 'commonrepo_groups_members', 'snippets', )
+        fields = (
+            # Basic user information
+            'url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area',
+            # Extend user information
+            'teaching_category', 'teaching_subject_area',
+            # ELO related information
+            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
+            # Group information
+            'commonrepo_groups', 'commonrepo_groups_members',
+            # Misc
+            'snippets', )
 
 class UserSerializerV2(serializers.ModelSerializer):
     # ELOs information
@@ -119,5 +129,14 @@ class UserSerializerV2(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area', 'teaching_category', 'teaching_subject_area', 'elos', 'elos_published', 'elos_forks', 'elos_from_others', 'commonrepo_groups', 'commonrepo_groups_members', 'snippets', )
-
+        fields = (
+            # Basic user information
+            'url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area',
+            # Extend user information
+            'teaching_category', 'teaching_subject_area',
+            # ELO related information
+            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
+            # Group information
+            'commonrepo_groups', 'commonrepo_groups_members',
+            # Misc
+            'snippets', )
