@@ -5,6 +5,7 @@ from uuid import uuid4
 import math
 import os
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -165,25 +166,25 @@ class ELOMetadata(models.Model):
     Classification_description = models.CharField(_("Classification-description"), blank=True, max_length=255)
     # 9.4 keyword
     Classification_keyword = models.CharField(_("Classification-keyword"), blank=True, max_length=255)
-    
+
     def compare(self, obj):
-        excluded_keys = 'id', '_state'
-        return self._compare(self, obj, excluded_keys)
-    
-    def _compare(self, obj1, obj2, excluded_keys):
-        d1, d2 = obj1.__dict__, obj2.__dict__
-        old, new = {}, {}
-        for k,v in d1.items():
-            if k in excluded_keys:
+        fields_excluded = 'id', '_state', '_elo_cache'
+        return self._compare(self, obj, fields_excluded)
+
+    def _compare(self, obj_source, obj_target, fields_excluded):
+        dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
+        source, target = {}, {}
+        for field, attribute in dict_source.items():
+            if field in fields_excluded:
                 continue
             try:
-                if v != d2[k]:
-                    old.update({k: v})
-                    new.update({k: d2[k]})
+                if attribute != dict_target[field]:
+                    source.update({field: attribute})
+                    target.update({field: dict_target[field]})
             except KeyError:
-                old.update({k: v})
+                source.update({field: attribute})
 
-        return old, new
+        return source, target
 
     def match(self, obj):
         fields_all = self._meta.get_all_field_names()
@@ -200,8 +201,8 @@ class ELOMetadata(models.Model):
                 continue
 
             try:
-                # check target object has value
-                if bool(dict_target[field]):
+                # check source object has value
+                if bool(attribute):
                     counter_total += 1
                     if attribute == dict_target[field]:
                         counter_matched += 1
@@ -284,8 +285,8 @@ class ELOMetadata(models.Model):
                 continue
 
             try:
-                # check target object has value
-                if bool(dict_target[field]):
+                # check source object has value
+                if bool(attribute):
                     counter_total += 1
 
                     # V1: precise / single-choice criteria
@@ -362,28 +363,38 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
-    def similarity(self, obj_target):
-        return self._similarity(self, obj_target)
+    def similarity(self, obj_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        return self._similarity(self, obj_target, threshold)
 
-    def similarity_reverse(self, obj_target):
-        return self._similarity(obj_target, self)
+    def similarity_reverse(self, obj_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        return self._similarity(obj_target, self, threshold)
 
-    def _similarity(self, obj_source, obj_target):
+    def _similarity(self, obj_source, obj_target, threshold):
         if obj_source.metadata and obj_target.metadata:
             counter_total, counter_matched = obj_source.metadata.match(obj_target.metadata)
 
             if counter_total and counter_matched:
-                return float(counter_matched) / float(counter_total)
+                result = float(counter_matched) / float(counter_total)
+
+                if result >= threshold:
+                    return result
+                else:
+                    return 0
             else:
                 return 0
         else:
             return 0
 
-    def diversity(self, obj_target):
-        if self.similarity(obj_target):
-            return (math.log(1 / self.similarity(obj_target)) + math.log(1 / self.similarity_reverse(obj_target))) / 2
-        else:
-            return 0
+    def diversity(self, obj_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        result = 0.0
+
+        if self.similarity(obj_target, threshold):
+            result += math.log(1 / self.similarity(obj_target, threshold)) / 2
+
+        if self.similarity_reverse(obj_target, threshold):
+            result += (math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2)
+
+        return result
 
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
