@@ -396,9 +396,38 @@ class ELO(models.Model):
 
         return result
 
+    def reusability_tree_find_root(self):
+        return self._reusability_tree_find_root(self)
+
+    def _reusability_tree_find_root(self, elo_source):
+        if elo_source.parent_elo.id != 1:
+            return self._reusability_tree_find_root(elo_source.parent_elo)
+        else:
+            return elo_source
+
+    def reusability_tree_build(self):
+        # Check if Reusability Tree already exist, delete it first
+        if hasattr(self, 'reusability_tree'):
+            self.reusability_tree.delete()
+
+        reusability_tree = ReusabilityTree.objects.create(name=self.name,
+                                                          base_elo=self,
+                                                          root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
+
+    def _reusability_tree_build(self, elo_source, node_parent=None):
+        reusability_tree_node = ReusabilityTreeNode.objects.create(name=elo_source.name, parent=node_parent, elo=elo_source)
+
+        # Find child
+        elo_childs = ELO.objects.filter(parent_elo=elo_source)
+
+        for elo in elo_childs:
+            self._reusability_tree_build(elo, reusability_tree_node)
+
+        return reusability_tree_node
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=False)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
     
@@ -410,8 +439,8 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
 
 @python_2_unicode_compatible
 class ReusabilityTree(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree')
+    name = models.CharField(max_length=50, unique=False)
+    base_elo = models.OneToOneField(ELO, blank=True, null=True, related_name='reusability_tree')
     root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
     
     def __str__(self):
