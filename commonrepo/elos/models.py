@@ -405,6 +405,27 @@ class ELO(models.Model):
         else:
             return elo_source
 
+    def reusability_tree_build(self):
+        if hasattr(self, 'reusability_tree'):
+            self.reusability_tree.delete()
+        else:
+            reusability_tree = ReusabilityTree.objects.create(name=self.name,
+                                                              base_elo=self,
+                                                              root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
+            if reusability_tree:
+                print (":D")
+
+    def _reusability_tree_build(self, elo_source, node_parent=None):
+        reusability_tree_node = ReusabilityTreeNode.objects.create(name=elo_source.name, parent=node_parent, elo=elo_source)
+
+        # Find child
+        elo_childs = ELO.objects.filter(parent_elo=elo_source)
+
+        for elo in elo_childs:
+            self._reusability_tree_build(elo, reusability_tree_node)
+
+        return reusability_tree_node
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
