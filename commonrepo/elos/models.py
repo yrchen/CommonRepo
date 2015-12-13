@@ -396,6 +396,15 @@ class ELO(models.Model):
 
         return result
 
+    def reusability_tree_find_root(self):
+        return self._reusability_tree_find_root(self)
+
+    def _reusability_tree_find_root(self, elo_source):
+        if elo_source.parent_elo.id != 1:
+            return self._reusability_tree_find_root(elo_source.parent_elo)
+        else:
+            return elo_source
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
