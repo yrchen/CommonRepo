@@ -406,14 +406,13 @@ class ELO(models.Model):
             return elo_source
 
     def reusability_tree_build(self):
+        # Check if Reusability Tree already exist, delete it first
         if hasattr(self, 'reusability_tree'):
             self.reusability_tree.delete()
-        else:
-            reusability_tree = ReusabilityTree.objects.create(name=self.name,
-                                                              base_elo=self,
-                                                              root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
-            if reusability_tree:
-                print (":D")
+
+        reusability_tree = ReusabilityTree.objects.create(name=self.name,
+                                                          base_elo=self,
+                                                          root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
 
     def _reusability_tree_build(self, elo_source, node_parent=None):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=elo_source.name, parent=node_parent, elo=elo_source)
