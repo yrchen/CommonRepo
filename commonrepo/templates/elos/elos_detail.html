@@ -900,7 +900,7 @@
               <ul class="root">
                 {% recursetree nodes %}
                   <li>
-                    {{ node.name }}
+                    <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
                     {% if not node.is_leaf_node %}
                       <ul class="children">
                           {{ children }}
