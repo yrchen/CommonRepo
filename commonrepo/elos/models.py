@@ -412,9 +412,9 @@ class ELO(models.Model):
 
         reusability_tree = ReusabilityTree.objects.create(name=str(self.id) + '. ' + self.name,
                                                           base_elo=self,
-                                                          root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
+                                                          root_node=self._reusability_tree_build(self.reusability_tree_find_root(), base_elo=self))
 
-    def _reusability_tree_build(self, elo_source, node_parent=None):
+    def _reusability_tree_build(self, elo_source, base_elo, node_parent=None):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
                                                                    parent=node_parent,
                                                                    elo=elo_source)
@@ -423,7 +423,7 @@ class ELO(models.Model):
         elo_childs = ELO.objects.filter(parent_elo=elo_source)
 
         for elo in elo_childs:
-            self._reusability_tree_build(elo, reusability_tree_node)
+            self._reusability_tree_build(elo, base_elo, reusability_tree_node)
 
         return reusability_tree_node
 
@@ -432,6 +432,7 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
+    base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree_node')
     
     def __str__(self):
         return self.name
