@@ -408,6 +408,12 @@ class ELO(models.Model):
     def reusability_tree_build(self):
         # Check if Reusability Tree already exist, delete it first
         if hasattr(self, 'reusability_tree'):
+            # Delete all related reusability tree nodes accodring base_elo information
+            reusability_tree_nodes = ReusabilityTreeNode.objects.filter(base_elo=self)
+            for reusability_tree_node in reusability_tree_nodes:
+                reusability_tree_node.delete()
+
+            # Delete reusability tree
             self.reusability_tree.delete()
 
         reusability_tree = ReusabilityTree.objects.create(name=str(self.id) + '. ' + self.name,
