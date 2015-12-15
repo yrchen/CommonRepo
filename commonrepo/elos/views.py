@@ -28,11 +28,15 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
         # Check Reusability Tree
         if not hasattr(elo, 'reusability_tree'):
             elo.reusability_tree_build()
+        # Force to rebuild every time
+        else:
+            elo.reusability_tree_build()
 
         context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
 
         # Count Fork
         context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+
         return context
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
