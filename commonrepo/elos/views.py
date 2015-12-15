@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from braces.views import LoginRequiredMixin
 
-from .models import ELO, ELOType
+from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 class ELOsCreateView(LoginRequiredMixin, CreateView):
@@ -23,8 +23,20 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        elo = ELO.objects.get(id=self.kwargs['pk'])
+
+        # Check Reusability Tree
+        if not hasattr(elo, 'reusability_tree'):
+            elo.reusability_tree_build()
+        # Force to rebuild every time
+        else:
+            elo.reusability_tree_build()
+
+        context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
+
+        # Count Fork
         context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+
         return context
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
