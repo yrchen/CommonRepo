@@ -3,10 +3,20 @@ from __future__ import absolute_import, unicode_literals
 
 from rest_framework import serializers
 
-from commonrepo.elos.models import ELO, ELOType, ELOMetadata
+from commonrepo.elos.models import ELO, ELOType, ELOMetadata, ReusabilityTree, ReusabilityTreeNode
 from commonrepo.users.models import User as User
 
 from .models import ELOFileUpload
+
+class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReusabilityTreeNode
+        exclude = ('id',)
+
+class ReusabilityTreeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReusabilityTree
+        exclude = ('id',)
 
 class ELOMetadataSerializer(serializers.ModelSerializer):
     class Meta:
