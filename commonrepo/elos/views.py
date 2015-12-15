@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from braces.views import LoginRequiredMixin
 
-from .models import ELO, ELOType
+from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 class ELOsCreateView(LoginRequiredMixin, CreateView):
@@ -28,6 +28,8 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
         # Check Reusability Tree
         if not hasattr(elo, 'reusability_tree'):
             elo.reusability_tree_build()
+
+        context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
 
         # Count Fork
         context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
