@@ -23,7 +23,13 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        elo = ELO.objects.get(id=self.kwargs['pk'])
+
+        # Check Reusability Tree
+        if not hasattr(elo, 'reusability_tree'):
+            elo.reusability_tree_build()
+
+        # Count Fork
         context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
         return context
 
