@@ -17,25 +17,26 @@ class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
         exclude = ('id',)
 
 class ReusabilityTreeSerializer(serializers.Serializer):
-    nodes = serializers.SerializerMethodField()
+    tree = serializers.SerializerMethodField()
 
     def recursive_node_to_dict(self, node):
-        result = {'elo_id': node.elo.id}
-        children = [self.recursive_node_to_dict(c) for c in node.get_children()],
-
-        if children is not None:
-            result['children'] = children
+        result = {
+            'elo_id': node.elo.id,
+            'child_elo' : [
+                self.recursive_node_to_dict(c) for c in node._cached_children
+            ]
+        }
 
         return result
 
-    def get_nodes(self, obj):
-        root_nodes = mptt_tags.cache_tree_children(obj.root_node.get_descendants(include_self=True))
-        dicts = []
+    def get_tree(self, obj):
+        nodes = mptt_tags.cache_tree_children(obj.root_node.get_descendants(include_self=True))
+        result = []
 
-        for n in root_nodes:
-            dicts.append(self.recursive_node_to_dict(root_nodes[0]))
+        for node in nodes:
+            result.append(self.recursive_node_to_dict(node))
 
-        return dicts
+        return result
 
 class ELOMetadataSerializer(serializers.ModelSerializer):
     class Meta:
