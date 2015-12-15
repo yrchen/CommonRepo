@@ -410,12 +410,14 @@ class ELO(models.Model):
         if hasattr(self, 'reusability_tree'):
             self.reusability_tree.delete()
 
-        reusability_tree = ReusabilityTree.objects.create(name=self.name,
+        reusability_tree = ReusabilityTree.objects.create(name=str(self.id) + '. ' + self.name,
                                                           base_elo=self,
                                                           root_node=self._reusability_tree_build(self.reusability_tree_find_root()))
 
     def _reusability_tree_build(self, elo_source, node_parent=None):
-        reusability_tree_node = ReusabilityTreeNode.objects.create(name=elo_source.name, parent=node_parent, elo=elo_source)
+        reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
+                                                                   parent=node_parent,
+                                                                   elo=elo_source)
 
         # Find child
         elo_childs = ELO.objects.filter(parent_elo=elo_source)
