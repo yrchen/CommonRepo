@@ -5,6 +5,8 @@
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
 {% block page_breadcrumb %}ELO Detail{% endblock %}
 
+{% load mptt_tags %}
+
 {% block content %}
 
 <div class="row">
@@ -12,7 +14,7 @@
   <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Info</h3>
+        <h3 class="box-title">Info</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -75,7 +77,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata</h3>
+        <h3 class="box-title">Metadata</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -381,7 +383,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Precise criteria (mandatory)</h3>
+        <h3 class="box-title">Metadata - Precise criteria (mandatory)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -488,7 +490,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Incremental criteria (rewritable)</h3>
+        <h3 class="box-title">Metadata - Incremental criteria (rewritable)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -579,7 +581,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Precedence criteria (rewritable)</h3>
+        <h3 class="box-title">Metadata - Precedence criteria (rewritable)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -635,7 +637,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Time/duration criteria (rewritable)</h3>
+        <h3 class="box-title">Metadata - Time/duration criteria (rewritable)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -716,7 +718,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Single-choice criteria (rewritable)</h3>
+        <h3 class="box-title">Metadata - Single-choice criteria (rewritable)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -827,7 +829,7 @@
   <div class="col-md-12">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
-        <h3 class="box-title">ELOs - {{object.name}} - Metadata - Many-choice criteria (rewritable)</h3>
+        <h3 class="box-title">Metadata - Many-choice criteria (rewritable)</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -878,6 +880,44 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.Metadata - Many-choice criteria (rewritable)-->
+
+  <!-- Reusability Tree -->
+  <div class="col-md-12">
+    <div class="box box-info collapsed-box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Reusability Tree</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-bordered">
+          <table class="table no-margin">
+            <thead>
+            </thead>
+            <tbody>
+              <ul class="root">
+                {% recursetree nodes %}
+                  <li>
+                    {{ node.name }}
+                    {% if not node.is_leaf_node %}
+                      <ul class="children">
+                          {{ children }}
+                      </ul>
+                    {% endif %}
+                  </li>
+                {% endrecursetree %}
+              </ul>
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.Reusability Tree-->
 
 </div><!-- /.row -->
 {% endblock content %}
