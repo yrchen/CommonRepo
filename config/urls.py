@@ -51,12 +51,8 @@ urlpatterns = [
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
     url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),
 
-    #
-    # API v0
-    #
-
-    # Authenticaion
-    url(r'^api/v0/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # Django REST Framework (DRF) Authenticaion
+    url(r'^api/drf/auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     #
     # API v1
@@ -67,7 +63,6 @@ urlpatterns = [
 
 
     # API v1 - Authenticaion
-    url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/auth/', include('djoser.urls')),
     url(r'^api/v1/auth/token', obtain_auth_token),
 
@@ -95,7 +90,6 @@ urlpatterns = [
     url(r'', include(router_api_v2.urls)),
 
     # API v2 - Authenticaion
-    url(r'^api/v2/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v2/auth/', include('djoser.urls')),
     url(r'^api/v2/auth/token', obtain_auth_token),
 
