@@ -400,7 +400,7 @@ class ELO(models.Model):
         return self._reusability_tree_find_root(self)
 
     def _reusability_tree_find_root(self, elo_source):
-        if elo_source.parent_elo.id != 1:
+        if elo_source.parent_elo.id != settings.ELO_ROOT_ID:
             return self._reusability_tree_find_root(elo_source.parent_elo)
         else:
             return elo_source
