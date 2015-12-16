@@ -36,9 +36,14 @@ DJANGO_APPS = (
 )
 THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
+
+    # Allauth
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'allauth.socialaccount.providers.google', # Google
+
+    'oauth2_provider', # Django OAuth Toolkit
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
     'djoser', # authentication
