@@ -897,18 +897,24 @@
             <thead>
             </thead>
             <tbody>
-              <ul class="root">
-                {% recursetree nodes %}
-                  <li>
-                    <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
-                    {% if not node.is_leaf_node %}
-                      <ul class="children">
-                          {{ children }}
-                      </ul>
-                    {% endif %}
-                  </li>
-                {% endrecursetree %}
-              </ul>
+              {% if object.reusability_tree %}
+                <ul class="root">
+                  {% recursetree nodes %}
+                    <li>
+                      <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                      {% if not node.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endrecursetree %}
+                </ul>
+              {% else %}
+                <tr>
+                  <td>Reusability Tree is not exist</td>
+                </tr>
+              {% endif %}
             </tbody>
           </table>
         </div><!-- /.table-responsive -->
