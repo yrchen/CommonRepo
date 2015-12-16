@@ -406,19 +406,23 @@ class ELO(models.Model):
             return elo_source
 
     def reusability_tree_build(self):
-        # Check if Reusability Tree already exist, delete it first
-        if hasattr(self, 'reusability_tree'):
-            # Delete all related reusability tree nodes accodring base_elo information
-            reusability_tree_nodes = ReusabilityTreeNode.objects.filter(base_elo=self)
-            for reusability_tree_node in reusability_tree_nodes:
-                reusability_tree_node.delete()
+        # Don't build RT when meet ELO Root
+        if self.id == settings.ELO_ROOT_ID:
+            pass
+        else:
+            # Check if Reusability Tree already exist, delete it first
+            if hasattr(self, 'reusability_tree'):
+                # Delete all related reusability tree nodes accodring base_elo information
+                reusability_tree_nodes = ReusabilityTreeNode.objects.filter(base_elo=self)
+                for reusability_tree_node in reusability_tree_nodes:
+                    reusability_tree_node.delete()
 
-            # Delete reusability tree
-            self.reusability_tree.delete()
+                # Delete reusability tree
+                self.reusability_tree.delete()
 
-        reusability_tree = ReusabilityTree.objects.create(name=str(self.id) + '. ' + self.name,
-                                                          base_elo=self,
-                                                          root_node=self._reusability_tree_build(self.reusability_tree_find_root(), self))
+            reusability_tree = ReusabilityTree.objects.create(name=str(self.id) + '. ' + self.name,
+                                                              base_elo=self,
+                                                              root_node=self._reusability_tree_build(self.reusability_tree_find_root(), self))
 
     def _reusability_tree_build(self, elo_source, elo_base, node_parent=None):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
