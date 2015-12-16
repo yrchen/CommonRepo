@@ -310,6 +310,16 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ########## END CELERY
 
 # Your common stuff: Below this line define 3rd party library settings
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online'
+        }
+    }
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
