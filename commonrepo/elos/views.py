@@ -31,7 +31,7 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
             elo.reusability_tree_build()
         # Force to rebuild every time
         else:
-            elo.reusability_tree_build()
+            elo.reusability_tree_update()
 
         context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
 
