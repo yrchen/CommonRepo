@@ -38,26 +38,30 @@ THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
 
     # Allauth
-    'allauth',  # registration
-    'allauth.account',  # registration
-    'allauth.socialaccount',  # registration
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.google', # Google
 
+    # Django REST Framework
     'oauth2_provider', # Django OAuth Toolkit
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
     'djoser', # authentication
+
+    # Others
     'mptt', # django-mptt
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'commonrepo.users',  # custom users app
-    # Your stuff: custom apps go here
+    'commonrepo.users',  # CommonRepo custom users app
+
+    # CommonRepo custom apps
     'commonrepo.elos',
     'commonrepo.groups',
 
-    # API endpoints
+    # CommonRepo API endpoints
     'commonrepo.snippets_api',
     'commonrepo.users_api',
     'commonrepo.elos_api',
