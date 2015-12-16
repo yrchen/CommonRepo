@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render
@@ -30,7 +31,7 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
             elo.reusability_tree_build()
         # Force to rebuild every time
         else:
-            elo.reusability_tree_build()
+            elo.reusability_tree_update()
 
         context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
 
@@ -72,9 +73,9 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
         # Add in a QuerySet of all the books
         elo = ELO.objects.get(id=self.kwargs['pk'])
         parent_elos = []
-        
-        if elo.parent_elo_id != 1:
-            while elo.parent_elo_id != 1:
+
+        if elo.parent_elo_id != settings.ELO_ROOT_ID:
+            while elo.parent_elo_id != settings.ELO_ROOT_ID:
                 parent_elo = ELO.objects.get(id=elo.parent_elo_id)
                 parent_elos.insert(0, parent_elo)
                 elo = parent_elo
