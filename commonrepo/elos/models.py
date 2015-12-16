@@ -438,6 +438,9 @@ class ELO(models.Model):
 
         return reusability_tree_node
 
+    def reusability_tree_update(self):
+        self.reusability_tree_build()
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
