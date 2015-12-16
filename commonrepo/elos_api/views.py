@@ -17,7 +17,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 
 from commonrepo.users.models import User as User
-from commonrepo.elos.models import ELO, ELOType
+from commonrepo.elos.models import ELO, ELOType, ELOMetadata
 
 from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly
@@ -196,6 +196,14 @@ def elos_fork(request, pk):
                                          parent_elo2 = elo_original,
                                          parent_elo2_uuid = elo_original.uuid,
                                          parent_elo2_version = elo_original.version)
+
+            if elo_original.metadata:
+                elo_new_metadata = elo_original.metadata
+                elo_new_metadata.pk = None
+                elo_new_metadata.save()
+
+                elo_new.metadata = elo_new_metadata
+
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
                              "result": {
