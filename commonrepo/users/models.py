@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from annoying.fields import AutoOneToOneField
 
 @python_2_unicode_compatible
 class User(AbstractUser):
@@ -17,11 +18,13 @@ class User(AbstractUser):
     # Basic User Information
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
     organization = models.CharField(_("Organization/School"), blank=True, max_length=255)
+    education = models.CharField(_("Education"), blank=True, max_length=255)
     url = models.URLField(_("URL"), blank=True)
     phone = models.CharField(_("Phone nubmer"), blank=True, max_length=255)
     address = models.CharField(_("Address"), blank=True, max_length=255)
     language =  models.CharField(_("Language"), blank=True, max_length=255)
     area = models.CharField(_("Area/Nation"), blank=True, max_length=255)
+    about = models.CharField(_("About Me"), blank=True, max_length=255)
 
     # User Pedagogical Information
     teaching_category = models.CharField(_("Teaching Category"), blank=True, max_length=255)
@@ -35,3 +38,12 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+@python_2_unicode_compatible
+class UserProfile(models.Model):
+    user = AutoOneToOneField(User, primary_key=True)
+    friends = models.ManyToManyField(User, related_name='friend_with')
+    follows = models.ManyToManyField(User, related_name='followed_by')
+
+    def __str__(self):
+        return self.user.username

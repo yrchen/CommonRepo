@@ -41,7 +41,7 @@
               <tr>
                 <td><a href="{% url 'elos:elos-detail' parent_elo.id %}">{{parent_elo.id}}</a></td>
                 <td>{{parent_elo.name}}</td>
-                <td>{{parent_elo.author}}</td>
+                <td><a href="{% url 'users:detail' parent_elo.author %}">{{parent_elo.author}}</a></td>
                 <td>{{parent_elo.create_date}}</td>
                 <td>{{parent_elo.update_date}}</td>
                 <td>{{parent_elo.version}}</td>
@@ -99,7 +99,7 @@
               <tr>
                 <td><a href="{% url 'elos:elos-detail' object.id %}">{{object.id}}</a></td>
                 <td>{{object.name}}</td>
-                <td>{{object.author}}</td>
+                <td><a href="{% url 'users:detail' object.author %}">{{object.author}}</a></td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td>{{object.version}}</td>
@@ -161,7 +161,7 @@
               <tr>
                 <td><a href="{% url 'elos:elos-detail' child_elo.id %}">{{child_elo.id}}</a></td>
                 <td>{{child_elo.name}}</td>
-                <td>{{child_elo.author}}</td>
+                <td><a href="{% url 'users:detail' child_elo.author %}">{{child_elo.author}}</a></td>
                 <td>{{child_elo.create_date}}</td>
                 <td>{{child_elo.update_date}}</td>
                 <td>{{child_elo.version}}</td>
@@ -173,7 +173,7 @@
                   Yes
                   {% else %}
                   No
-                  {% endif %}                
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}

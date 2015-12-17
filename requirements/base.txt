@@ -48,6 +48,7 @@ djangorestframework-recursive
 django-filter==0.11.0
 django-mptt
 django-avatar
+django-annoying
 
 # Authentication
 djoser==0.3.1
