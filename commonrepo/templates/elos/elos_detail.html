@@ -42,7 +42,7 @@
               <tr>
                 <td><a href="{% url 'elos:elos-detail' object.id %}">{{object.id}}</a></td>
                 <td>{{object.name}}</td>
-                <td>{{object.author}}</td>
+                <td><a href="{% url 'users:detail' object.author %}">{{object.author}}</a></td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td><a href="{% url 'elos:elos-network' object.id %}">{{fork_count}}</a></td>
