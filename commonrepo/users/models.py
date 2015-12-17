@@ -31,6 +31,9 @@ class User(AbstractUser):
     # Preferences
     elo_similarity_threshold = models.FloatField(_("ELOs Similarity Threshold"), default=0)
 
+    # Social Information
+    friends = models.ManyToManyField('self', related_name='friends_with')
+
     def __str__(self):
         return self.username
 
