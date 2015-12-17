@@ -5,6 +5,7 @@
 {% block page_description %}Update user information{% endblock %}
 {% block page_breadcrumb %}Users Update{% endblock %}
 
+{% load avatar_tags %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -20,6 +21,13 @@
         </div>
       </div><!-- /.box-header -->
       <div class="box-body">
+        <div id="div_id_avatar" class="form-group">
+          <label for="id_name" class="control-label ">Your Avatar</label>
+          <div class="controls">
+            <img src="{% avatar_url user 160 %}" class="img-circle" alt="User Image">
+            <a href="{% url 'avatar_change' %}">Change your avatar</a>
+          </div>
+        </div>
         <form method="post" action="{% url 'users:update' %}">
           {% csrf_token %}
           {{ form|crispy }}
