@@ -37,17 +37,22 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
 
+    # Authentication
     # Allauth
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'allauth.socialaccount.providers.google', # Google
 
+    # OAuth
     'oauth2_provider', # Django OAuth Toolkit
+
+    # Django REST Framework
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
     'djoser', # authentication
     'mptt', # django-mptt
+    'avatar', # django-avatar
 )
 
 # Apps specific for this project go here.
@@ -303,6 +308,7 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ########## END CELERY
 
 # Your common stuff: Below this line define 3rd party library settings
+# Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -318,6 +324,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     )
 }
+
+# Avatar
+AVATAR_STORAGE_DIR = 'avatar'
 
 # System variables
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8

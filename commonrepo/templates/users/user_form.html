@@ -1,17 +1,45 @@
-{% extends "base.html" %}
+{% extends "starter.html" %}
+
+{% block title %}Users - {{ user.username }} - Update{% endblock %}
+{% block page_title %}Users {{ user.username }} Update{% endblock %}
+{% block page_description %}Update user information{% endblock %}
+{% block page_breadcrumb %}Users Update{% endblock %}
+
+{% load avatar_tags %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ user.username }}{% endblock %}
-
 {% block content %}
-    <h1>{{ user.username }}</h1>
-    <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="control-group">
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Update {{ user.username }}</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div id="div_id_avatar" class="form-group">
+          <label for="id_name" class="control-label ">Your Avatar</label>
           <div class="controls">
-            <button type="submit" class="btn">Update</button>
+            <img src="{% avatar_url user 160 %}" class="img-circle" alt="User Image">
+            <a href="{% url 'avatar_change' %}">Change your avatar</a>
           </div>
         </div>
-    </form>
+        <form method="post" action="{% url 'users:update' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'users:detail' user.username %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Profile</a>
+      </div>
+      <!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+
 {% endblock %}
