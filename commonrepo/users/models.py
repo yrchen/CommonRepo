@@ -17,6 +17,7 @@ class User(AbstractUser):
     # Basic User Information
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
     organization = models.CharField(_("Organization/School"), blank=True, max_length=255)
+    url = models.URLField(_("URL"), blank=True)
     phone = models.CharField(_("Phone nubmer"), blank=True, max_length=255)
     address = models.CharField(_("Address"), blank=True, max_length=255)
     language =  models.CharField(_("Language"), blank=True, max_length=255)
