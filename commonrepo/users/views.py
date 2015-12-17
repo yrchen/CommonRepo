@@ -6,6 +6,8 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from braces.views import LoginRequiredMixin
 
+from commonrepo.elos.models import ELO
+
 from .models import User
 
 
@@ -14,6 +16,15 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
     slug_url_kwarg = "username"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailView, self).get_context_data(**kwargs)
+        user_id = User.objects.get(username=self.kwargs['username'])
+
+        # Count ELOs
+        context['elo_count'] = ELO.objects.filter(author=user_id).count()
+
+        return context
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
@@ -26,7 +37,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['name', 'organization' , 'phone' , 'address' , 'language' , 'area' , 'teaching_category', 'teaching_subject_area', 'elo_similarity_threshold']
+    fields = ['name', 'organization' , 'education', 'url', 'phone' , 'address' , 'language' , 'area' , 'teaching_category', 'teaching_subject_area', 'elo_similarity_threshold']
 
     # we already imported User in the view code above, remember?
     model = User
