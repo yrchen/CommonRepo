@@ -50,21 +50,31 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
+              {% block navbar_messages %}
               {% include "widgets/menu-messages.html" %}
+              {% endblock navbar_messages %}
 
               <!-- Notifications Menu -->
+              {% block navbar_notifications %}
               {% include "widgets/menu-notification.html" %}
+              {% endblock navbar_notifications %}
               
               <!-- Tasks Menu -->
+              {% block navbar_tasks %}
               {% include "widgets/menu-tasks.html" %}
+              {% endblock navbar_tasks %}
               
               <!-- User Account Menu -->
+              {% block navbar_user %}
               {% include "widgets/menu-user.html" %}
+              {% endblock navbar_user %}
               
               <!-- Control Sidebar Toggle Button -->
+              {% block navbar_sidebar_control_button %}
               <li>
                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
               </li>
+              {% endblock navbar_sidebar_control_button %}
             </ul>
           </div>
         </nav>
