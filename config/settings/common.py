@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = (
     'djoser', # authentication
     'mptt', # django-mptt
     'avatar', # django-avatar
+    'annoying', # django-annoying
 )
 
 # Apps specific for this project go here.

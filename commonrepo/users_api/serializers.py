@@ -65,7 +65,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = (
             # Basic user information
-            'url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area',
+            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
             # Extend user information
             'teaching_category', 'teaching_subject_area',
             # ELO related information
@@ -131,7 +131,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         model = User
         fields = (
             # Basic user information
-            'url', 'id', 'username', 'organization', 'phone', 'address', 'language', 'area',
+            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
             # Extend user information
             'teaching_category', 'teaching_subject_area',
             # ELO related information
