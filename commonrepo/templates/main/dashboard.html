@@ -70,7 +70,7 @@
                     <li>
                         <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
                         <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name}}</a>
-                        <span class="users-list-date">{{elo.author.username}}</span>
+                        <a href="{% url 'users:detail' elo.author %}"><span class="users-list-date">{{elo.author.username}}</span></a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -101,7 +101,7 @@
                     <li>
                         <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
                         <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name}}</a>
-                        <span class="users-list-date">{{elo.author.username}}</span>
+                        <a href="{% url 'users:detail' elo.author %}"><span class="users-list-date">{{elo.author.username}}</span></a>
                     </li>
                 {% endfor %}
                 </ul>
