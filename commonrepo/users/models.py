@@ -33,6 +33,7 @@ class User(AbstractUser):
 
     # Social Information
     friends = models.ManyToManyField('self', related_name='friends_with')
+    followers = models.ManyToManyField('self', related_name='follow_by')
 
     def __str__(self):
         return self.username
