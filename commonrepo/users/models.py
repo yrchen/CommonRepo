@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from annoying.fields import AutoOneToOneField
 
 @python_2_unicode_compatible
 class User(AbstractUser):
@@ -31,12 +32,17 @@ class User(AbstractUser):
     # Preferences
     elo_similarity_threshold = models.FloatField(_("ELOs Similarity Threshold"), default=0)
 
-    # Social Information
-    friends = models.ManyToManyField('self', related_name='friends_with')
-    followers = models.ManyToManyField('self', related_name='follow_by')
-
     def __str__(self):
         return self.username
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+@python_2_unicode_compatible
+class UserProfile(models.Model):
+    user = AutoOneToOneField(User, primary_key=True)
+    friends = models.ManyToManyField(User, related_name='friend_with')
+    follows = models.ManyToManyField(User, related_name='followed_by')
+
+    def __str__(self):
+        return self.user.username
