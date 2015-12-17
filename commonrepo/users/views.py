@@ -19,10 +19,15 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
-        user_id = User.objects.get(username=self.kwargs['username'])
+        user = User.objects.get(username=self.kwargs['username'])
+
+        # Count Friends and Followers
+        context['friends_count'] = user.userprofile.friends.all().count()
+        context['followers_count'] = user.followed_by.all().count()
+        context['following_count'] = user.userprofile.follows.all().count()
 
         # Count ELOs
-        context['elo_count'] = ELO.objects.filter(author=user_id).count()
+        context['elo_count'] = ELO.objects.filter(author=user).count()
 
         return context
 
