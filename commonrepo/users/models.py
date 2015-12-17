@@ -24,6 +24,7 @@ class User(AbstractUser):
     address = models.CharField(_("Address"), blank=True, max_length=255)
     language =  models.CharField(_("Language"), blank=True, max_length=255)
     area = models.CharField(_("Area/Nation"), blank=True, max_length=255)
+    about = models.CharField(_("About Me"), blank=True, max_length=255)
 
     # User Pedagogical Information
     teaching_category = models.CharField(_("Teaching Category"), blank=True, max_length=255)
