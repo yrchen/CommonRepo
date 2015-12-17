@@ -25,6 +25,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['friends_count'] = user.userprofile.friends.all().count()
         context['followers_count'] = user.followed_by.all().count()
         context['following_count'] = user.userprofile.follows.all().count()
+        context['has_followed'] = user.userprofile.follows.filter(username=self.request.user.username)
 
         # Count ELOs
         context['elo_count'] = ELO.objects.filter(author=user).count()
