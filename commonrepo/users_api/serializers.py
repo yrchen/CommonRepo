@@ -92,7 +92,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         request = self.context.get("request")
         
         if request and hasattr(request, "user") and request.user.is_authenticated():
-            return ELO.objects.filter(author=request.user).filter(is_public=1).count()
+            return ELO.objects.filter(author=obj).filter(is_public=1).count()
         else:
             return -1
     
@@ -101,7 +101,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         total_forks = 0
         
         if request and hasattr(request, "user") and request.user.is_authenticated():
-            my_elo_sets = ELO.objects.filter(author=request.user)
+            my_elo_sets = ELO.objects.filter(author=obj)
             
             for elo in my_elo_sets:
                 total_forks += ELO.objects.filter(parent_elo=elo.id).count()
@@ -116,10 +116,10 @@ class UserSerializerV2(serializers.ModelSerializer):
         
         if request and hasattr(request, "user") and request.user.is_authenticated():
             my_elo_count = ELO.objects.filter(
-                    author=request.user).filter(
+                    author=obj).filter(
                     is_public=1).count()
             my_original_elo_count = ELO.objects.filter(
-                    author=request.user).filter(
+                    author=obj).filter(
                     is_public=1).filter(
                     parent_elo=1).count()
             return my_elo_count - my_original_elo_count
