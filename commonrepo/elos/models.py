@@ -405,6 +405,23 @@ class ELO(models.Model):
         else:
             return elo_source
 
+    def reusability_tree_get_elo_similarity(self, elo_source, elo_target, threshold):
+        return self._similarity(elo_source, elo_target, threshold)
+
+    def reusability_tree_get_elo_similarity_reverse(self, elo_source, elo_target, threshold):
+        return self._similarity(elo_target, elo_source, threshold)
+
+    def reusability_tree_get_elo_diversity(self, elo_source, elo_target, threshold):
+        result = 0.0
+
+        if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
+            result += math.log(1 / self.similarity(obj_target, threshold)) / 2
+
+        if self.reusability_tree_get_elo_similarity_reverse(elo_source, elo_target, threshold):
+            result += math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2
+
+        return result
+
     def reusability_tree_build(self):
         # Don't build RT when meet ELO Root
         if self.id == settings.ELO_ROOT_ID:
