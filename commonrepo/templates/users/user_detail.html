@@ -37,6 +37,9 @@
           <li class="list-group-item">
             <b>ELOs</b> <a class="pull-right">{{ elo_count }}</a>
           </li>
+          <li class="list-group-item">
+            <b>Groups</b> <a class="pull-right">{{ group_count }}</a>
+          </li>
         </ul>
 
         {% if object == request.user %}
@@ -123,8 +126,6 @@
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Create Date</th>
-                <th>Update Date</th>
                 <th>Version</th>
                 <th>Parent ELO</th>
                 <th>Type</th>
@@ -135,8 +136,6 @@
               <tr>
                 <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
                 <td>{{elo.name}}</td>
-                <td>{{elo.create_date}}</td>
-                <td>{{elo.update_date}}</td>
                 <td>{{elo.version}}</td>
                 <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
                 <td>{{elo.original_type}}</td>
@@ -146,9 +145,92 @@
           </table>
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+
+  <div class="col-md-8">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Groups created by {{ user.username }}</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Members</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for group in group_list %}
+                {% if group.creator == request.user %}
+                 <tr>
+                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                   <td>{{group.name}}</td>
+                   <td>{{group.description}}</td>
+                   <td>
+                   {% for member in group.members.all %}
+                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                   {% endfor %}
+                   </td>
+                 </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Groups joined by {{ user.username }}</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Creator</th>
+                <th>Description</th>
+                <th>Members</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for group in group_list %}
+                {% for member in group.members.all %}
+                  {% if group.creator != user and member == user %}
+                   <tr>
+                     <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                     <td>{{group.name}}</td>
+                     <td>{{group.creator}}</td>
+                     <td>{{group.description}}</td>
+                     <td>
+                     {% for member in group.members.all %}
+                       <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                     {% endfor %}
+                     </td>
+                   </tr>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
 
