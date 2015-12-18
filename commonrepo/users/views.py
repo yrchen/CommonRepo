@@ -7,6 +7,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 from braces.views import LoginRequiredMixin
 
 from commonrepo.elos.models import ELO
+from commonrepo.groups.models import Group
 
 from .models import User
 
@@ -30,6 +31,10 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         # ELOs
         context['elo_count'] = ELO.objects.filter(author=user).count()
         context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)
+
+        # Groups
+        context['group_count'] = Group.objects.filter(creator=user).count()
+        context['group_list'] = Group.objects.filter(creator=user)
 
         return context
 
