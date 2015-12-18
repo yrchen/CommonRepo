@@ -446,6 +446,8 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
+    elo_similarity = models.FloatField(blank=True, default=0)
+    elo_diversity = models.FloatField(blank=True, default=0)
     base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree_node')
     
     def __str__(self):
