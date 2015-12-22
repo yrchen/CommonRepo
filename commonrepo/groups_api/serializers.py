@@ -9,9 +9,9 @@ from commonrepo.users.models import User as User
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'id', 'name', 'creator', 'create_date', 'create_date','members','description')
-        
+        fields = ('url', 'id', 'name', 'creator', 'description', 'create_date', 'update_date', 'members',)
+
 class GroupSerializerV2(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'id', 'name', 'creator', 'create_date', 'create_date','members','description')
+        fields = ('url', 'id', 'name', 'creator', 'description', 'create_date', 'update_date', 'members',)
