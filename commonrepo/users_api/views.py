@@ -12,13 +12,15 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 
+from rest_framework_tracking.mixins import LoggingMixin
+
 from commonrepo.users.models import User as User
 
 #from .models import Snippet
 from .permissions import IsOwnerOrReadOnly
 from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the users in the system.
 
@@ -29,7 +31,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-class UserViewSetV2(viewsets.ModelViewSet):
+class UserViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the users in the system.
 
