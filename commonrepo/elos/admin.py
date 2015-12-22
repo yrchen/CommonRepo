@@ -104,7 +104,7 @@ admin.site.register(ReusabilityTreeNode, MPTTModelAdmin)
 class ReusabilityTreeAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Reusability Tree Info',         {'fields': ['name']}),
-        ('ELO Info',                      {'fields': ['base_elo']}),
+        ('ELO Info',                      {'fields': ['base_elo', 'elo_similarity', 'elo_diversity']}),
         ('Reusability Tree Node',         {'fields': ['root_node']}),
     ]
 

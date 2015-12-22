@@ -902,6 +902,11 @@
                   {% recursetree nodes %}
                     <li>
                       <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                      {% if node.elo == object %}
+                      (Base node)
+                      {% else %}
+                      (S: {{ node.elo_similarity }}, D: {{ node.elo_diversity }})
+                      {% endif %}
                       {% if not node.is_leaf_node %}
                         <ul class="children">
                             {{ children }}
