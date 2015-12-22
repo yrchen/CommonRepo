@@ -445,8 +445,8 @@ class ELO(models.Model):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
                                                                    parent=node_parent,
                                                                    elo=elo_source,
-                                                                   elo_similarity=0,
-                                                                   elo_diversity=0,
+                                                                   elo_similarity=self.reusability_tree_get_elo_similarity(elo_base, elo_source),
+                                                                   elo_diversity=self.reusability_tree_get_elo_diversity(elo_base, elo_source),
                                                                    base_elo=elo_base)
 
         # Find child
