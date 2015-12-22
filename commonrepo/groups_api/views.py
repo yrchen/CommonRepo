@@ -67,6 +67,7 @@ def groups_member_join(request, pk):
                          },
                          status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
 def groups_member_abort(request, pk):
     if request.method == 'POST':
         group = Group.objects.get(id=pk)
