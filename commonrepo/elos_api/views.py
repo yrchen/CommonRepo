@@ -21,7 +21,7 @@ from commonrepo.elos.models import ELO, ELOType, ELOMetadata
 
 from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly
-from .serializers import ELOSerializer, ELOSerializerV2, ELOTypeSerializer, ELOFileUploadSerializer
+from .serializers import ELOSerializer, ELOSerializerV2, ELOLiteSerializer, ELOTypeSerializer, ELOFileUploadSerializer
 
 class ELOViewSet(viewsets.ModelViewSet):
     """
@@ -45,8 +45,14 @@ class ELOViewSetV2(viewsets.ModelViewSet):
     serializer_class = ELOSerializerV2
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+
+    def list(self, request):
+        queryset = ELO.objects.all()
+        serializer = ELOLiteSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ELOTypeViewSet(viewsets.ModelViewSet):
     """
