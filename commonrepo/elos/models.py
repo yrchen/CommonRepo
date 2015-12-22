@@ -370,29 +370,35 @@ class ELO(models.Model):
         return self._similarity(obj_target, self, threshold)
 
     def _similarity(self, obj_source, obj_target, threshold):
-        if obj_source.metadata and obj_target.metadata:
-            counter_total, counter_matched = obj_source.metadata.match(obj_target.metadata)
+        # Pass itself
+        if not obj_source == obj_target:
+            if obj_source.metadata and obj_target.metadata:
+                counter_total, counter_matched = obj_source.metadata.match(obj_target.metadata)
 
-            if counter_total and counter_matched:
-                result = float(counter_matched) / float(counter_total)
+                if counter_total and counter_matched:
+                    result = float(counter_matched) / float(counter_total)
 
-                if result >= threshold:
-                    return result
+                    if result >= threshold:
+                        return result
+                    else:
+                        return 0
                 else:
                     return 0
             else:
                 return 0
         else:
-            return 0
+            return 1
 
     def diversity(self, obj_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         result = 0.0
 
-        if self.similarity(obj_target, threshold):
-            result += math.log(1 / self.similarity(obj_target, threshold)) / 2
+        # Pass itself
+        if not self == obj_target:
+            if self.similarity(obj_target, threshold):
+                result += math.log(1 / self.similarity(obj_target, threshold)) / 2
 
-        if self.similarity_reverse(obj_target, threshold):
-            result += (math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2)
+            if self.similarity_reverse(obj_target, threshold):
+                result += (math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2)
 
         return result
 
@@ -404,6 +410,24 @@ class ELO(models.Model):
             return self._reusability_tree_find_root(elo_source.parent_elo)
         else:
             return elo_source
+
+    def reusability_tree_get_elo_similarity(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        return self._similarity(elo_source, elo_target, threshold)
+
+    def reusability_tree_get_elo_similarity_reverse(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        return self._similarity(elo_target, elo_source, threshold)
+
+    def reusability_tree_get_elo_diversity(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        result = 0.0
+
+        if not elo_source == elo_target:
+            if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
+                result += math.log(1 / self.similarity(elo_target, threshold)) / 2
+
+            if self.reusability_tree_get_elo_similarity_reverse(elo_source, elo_target, threshold):
+                result += math.log(1 / self.similarity_reverse(elo_target, threshold)) / 2
+
+        return result
 
     def reusability_tree_build(self):
         # Don't build RT when meet ELO Root
@@ -428,6 +452,8 @@ class ELO(models.Model):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
                                                                    parent=node_parent,
                                                                    elo=elo_source,
+                                                                   elo_similarity=self.reusability_tree_get_elo_similarity(elo_base, elo_source),
+                                                                   elo_diversity=self.reusability_tree_get_elo_diversity(elo_base, elo_source),
                                                                    base_elo=elo_base)
 
         # Find child
@@ -446,6 +472,8 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=50, unique=False)
     parent = MPTTmodels.TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
     elo = models.ForeignKey(ELO, blank=True, default=1)
+    elo_similarity = models.FloatField(blank=True, default=0)
+    elo_diversity = models.FloatField(blank=True, default=0)
     base_elo = models.ForeignKey(ELO, blank=True, default=1, related_name='reusability_tree_node')
     
     def __str__(self):

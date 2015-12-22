@@ -22,6 +22,8 @@ class ReusabilityTreeSerializer(serializers.Serializer):
     def recursive_node_to_dict(self, node):
         result = {
             'elo_id': node.elo.id,
+            'elo_similarity': node.elo_similarity,
+            'elo_diversity': node.elo_diversity,
             'child_elo' : [
                 self.recursive_node_to_dict(c) for c in node._cached_children
             ]
