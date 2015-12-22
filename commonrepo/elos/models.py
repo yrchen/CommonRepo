@@ -415,10 +415,10 @@ class ELO(models.Model):
         result = 0.0
 
         if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
-            result += math.log(1 / self.similarity(obj_target, threshold)) / 2
+            result += math.log(1 / self.similarity(elo_target, threshold)) / 2
 
         if self.reusability_tree_get_elo_similarity_reverse(elo_source, elo_target, threshold):
-            result += math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2
+            result += math.log(1 / self.similarity_reverse(elo_target, threshold)) / 2
 
         return result
 
