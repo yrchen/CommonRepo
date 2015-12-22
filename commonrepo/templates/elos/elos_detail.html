@@ -901,7 +901,7 @@
                 <ul class="root">
                   {% recursetree nodes %}
                     <li>
-                      <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                      <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a> (S: {{ node.elo_similarity }}, D: {{ node.elo_diversity }})
                       {% if not node.is_leaf_node %}
                         <ul class="children">
                             {{ children }}
