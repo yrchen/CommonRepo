@@ -405,13 +405,13 @@ class ELO(models.Model):
         else:
             return elo_source
 
-    def reusability_tree_get_elo_similarity(self, elo_source, elo_target, threshold):
+    def reusability_tree_get_elo_similarity(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         return self._similarity(elo_source, elo_target, threshold)
 
-    def reusability_tree_get_elo_similarity_reverse(self, elo_source, elo_target, threshold):
+    def reusability_tree_get_elo_similarity_reverse(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         return self._similarity(elo_target, elo_source, threshold)
 
-    def reusability_tree_get_elo_diversity(self, elo_source, elo_target, threshold):
+    def reusability_tree_get_elo_diversity(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         result = 0.0
 
         if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
@@ -445,6 +445,8 @@ class ELO(models.Model):
         reusability_tree_node = ReusabilityTreeNode.objects.create(name=str(elo_source.id) + '. ' + elo_source.name,
                                                                    parent=node_parent,
                                                                    elo=elo_source,
+                                                                   elo_similarity=0,
+                                                                   elo_diversity=0,
                                                                    base_elo=elo_base)
 
         # Find child
