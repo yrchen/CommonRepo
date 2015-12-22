@@ -41,7 +41,7 @@ Pygments==2.0.2
 markdown
 
 # Django REST Framework
-djangorestframework==3.1.3
+djangorestframework==3.3.2
 djangorestframework-recursive
 
 # Django tools
