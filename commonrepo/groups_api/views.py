@@ -15,13 +15,15 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 
+from rest_framework_tracking.mixins import LoggingMixin
+
 from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import GroupSerializer, GroupSerializerV2
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the Groups in the system.
     """
@@ -35,7 +37,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         instance = serializer.save()
 
-class GroupViewSetV2(viewsets.ModelViewSet):
+class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the Groups in the system.
     """
