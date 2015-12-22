@@ -140,3 +140,12 @@ class UserSerializerV2(serializers.ModelSerializer):
             'commonrepo_groups', 'commonrepo_groups_members',
             # Misc
             'snippets', )
+
+class UserLiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            # Basic user information
+            'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            # Extend user information
+            'teaching_category', 'teaching_subject_area', )
