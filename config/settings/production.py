@@ -97,6 +97,7 @@ MEDIA_URL = os.environ.get('DJANGO_MEDIA_URL', 'https://s3.amazonaws.com/%s/' % 
 # ------------------------
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
 # EMAIL
 # ------------------------------------------------------------------------------
