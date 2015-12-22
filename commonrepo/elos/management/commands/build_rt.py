@@ -29,16 +29,16 @@ class Command(BaseCommand):
                 try:
                     elo = ELO.objects.get(pk=elo_id)
                 except ELO.DoesNotExist:
-                    raise CommandError('ELOs "%s" does not exist' % poll_id)
+                    raise CommandError('ELOs "%s" does not exist' % elo_id)
 
                 elo.reusability_tree_build()
 
-                self.stdout.write('Successfully builded RT of ELO "%s"' % poll_id)
+                self.stdout.write('Successfully builded RT of ELO "%s"' % elo_id)
 
         if options['all']:
             elos = ELO.objects.all()
-            
+
             for elo in elos:
                 elo.reusability_tree_build()
-                
+
             self.stdout.write('Successfully builded RTs of all ELOs')
