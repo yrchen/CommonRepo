@@ -50,7 +50,10 @@ THIRD_PARTY_APPS = (
     # Django REST Framework
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
+    'rest_framework_tracking', # DRF tracking
     'djoser', # authentication
+
+    # Other tools
     'mptt', # django-mptt
     'avatar', # django-avatar
     'annoying', # django-annoying
