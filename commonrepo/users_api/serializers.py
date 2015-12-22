@@ -134,9 +134,20 @@ class UserSerializerV2(serializers.ModelSerializer):
             'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
             # Extend user information
             'teaching_category', 'teaching_subject_area',
+            # Social information
+            'friend_with', 'followed_by',
             # ELO related information
             'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
             # Group information
             'commonrepo_groups', 'commonrepo_groups_members',
             # Misc
             'snippets', )
+
+class UserLiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            # Basic user information
+            'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            # Extend user information
+            'teaching_category', 'teaching_subject_area', )

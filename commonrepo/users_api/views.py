@@ -16,7 +16,7 @@ from commonrepo.users.models import User as User
 
 #from .models import Snippet
 from .permissions import IsOwnerOrReadOnly
-from .serializers import UserSerializer, UserSerializerV2
+from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -39,3 +39,8 @@ class UserViewSetV2(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializerV2
     permission_classes = [IsOwnerOrReadOnly]
+
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserLiteSerializer(queryset, many=True)
+        return Response(serializer.data)    
