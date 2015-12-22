@@ -16,6 +16,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 
+from rest_framework_tracking.mixins import LoggingMixin
+
 from commonrepo.users.models import User as User
 from commonrepo.elos.models import ELO, ELOType, ELOMetadata
 
@@ -23,7 +25,7 @@ from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly
 from .serializers import ELOSerializer, ELOSerializerV2, ELOLiteSerializer, ELOTypeSerializer, ELOFileUploadSerializer
 
-class ELOViewSet(viewsets.ModelViewSet):
+class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system.
     """
@@ -37,7 +39,7 @@ class ELOViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         instance = serializer.save()
 
-class ELOViewSetV2(viewsets.ModelViewSet):
+class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system.
     """
@@ -54,7 +56,7 @@ class ELOViewSetV2(viewsets.ModelViewSet):
         serializer = ELOLiteSerializer(queryset, many=True)
         return Response(serializer.data)
 
-class ELOTypeViewSet(viewsets.ModelViewSet):
+class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system.
     """
@@ -68,7 +70,7 @@ class ELOTypeViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         instance = serializer.save()
 
-class ELOFileUploadViewSet(viewsets.ModelViewSet):
+class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
     queryset = ELOFileUpload.objects.all()
     serializer_class = ELOFileUploadSerializer
