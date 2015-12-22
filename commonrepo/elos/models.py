@@ -370,29 +370,35 @@ class ELO(models.Model):
         return self._similarity(obj_target, self, threshold)
 
     def _similarity(self, obj_source, obj_target, threshold):
-        if obj_source.metadata and obj_target.metadata:
-            counter_total, counter_matched = obj_source.metadata.match(obj_target.metadata)
+        # Pass itself
+        if not obj_source == obj_target:
+            if obj_source.metadata and obj_target.metadata:
+                counter_total, counter_matched = obj_source.metadata.match(obj_target.metadata)
 
-            if counter_total and counter_matched:
-                result = float(counter_matched) / float(counter_total)
+                if counter_total and counter_matched:
+                    result = float(counter_matched) / float(counter_total)
 
-                if result >= threshold:
-                    return result
+                    if result >= threshold:
+                        return result
+                    else:
+                        return 0
                 else:
                     return 0
             else:
                 return 0
         else:
-            return 0
+            return 1
 
     def diversity(self, obj_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         result = 0.0
 
-        if self.similarity(obj_target, threshold):
-            result += math.log(1 / self.similarity(obj_target, threshold)) / 2
+        # Pass itself
+        if not self == obj_target:
+            if self.similarity(obj_target, threshold):
+                result += math.log(1 / self.similarity(obj_target, threshold)) / 2
 
-        if self.similarity_reverse(obj_target, threshold):
-            result += (math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2)
+            if self.similarity_reverse(obj_target, threshold):
+                result += (math.log(1 / self.similarity_reverse(obj_target, threshold)) / 2)
 
         return result
 
@@ -414,11 +420,12 @@ class ELO(models.Model):
     def reusability_tree_get_elo_diversity(self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
         result = 0.0
 
-        if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
-            result += math.log(1 / self.similarity(elo_target, threshold)) / 2
+        if not elo_source == elo_target:
+            if self.reusability_tree_get_elo_similarity(elo_source, elo_target, threshold):
+                result += math.log(1 / self.similarity(elo_target, threshold)) / 2
 
-        if self.reusability_tree_get_elo_similarity_reverse(elo_source, elo_target, threshold):
-            result += math.log(1 / self.similarity_reverse(elo_target, threshold)) / 2
+            if self.reusability_tree_get_elo_similarity_reverse(elo_source, elo_target, threshold):
+                result += math.log(1 / self.similarity_reverse(elo_target, threshold)) / 2
 
         return result
 
