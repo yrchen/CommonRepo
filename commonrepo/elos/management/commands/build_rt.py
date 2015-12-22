@@ -25,6 +25,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['id']:
+            self.stdout.write('Building RT of ELO "%s"...' % elo_id)
             for elo_id in options['id']:
                 try:
                     elo = ELO.objects.get(pk=elo_id)
@@ -38,7 +39,9 @@ class Command(BaseCommand):
         if options['all']:
             elos = ELO.objects.all()
 
+            self.stdout.write('Building RTs of all ELOs...')
             for elo in elos:
                 elo.reusability_tree_build()
+                self.stdout.write('Successfully builded RT of ELO "%s"' % elo_id)
 
             self.stdout.write('Successfully builded RTs of all ELOs')
