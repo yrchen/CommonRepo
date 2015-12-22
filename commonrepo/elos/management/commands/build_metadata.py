@@ -25,6 +25,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['id']:
+            self.stdout.write('Building Metadata of ELO "%s"...' % elo_id)
             for elo_id in options['id']:
                 try:
                     elo = ELO.objects.get(pk=elo_id)
@@ -41,10 +42,12 @@ class Command(BaseCommand):
         if options['all']:
             elos = ELO.objects.all()
 
+            self.stdout.write('Building Metadata of all ELOs...')
             for elo in elos:
                 if not elo.metadata:
                     metadata = ELOMetadata.objects.create()
                     elo.metadata = metadata
                     elo.save()
+                    self.stdout.write('Successfully builded Metadata of ELO "%s"' % elo_id)
 
             self.stdout.write('Successfully builded Metadata of all ELOs')
