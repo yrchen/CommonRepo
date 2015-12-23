@@ -211,6 +211,7 @@ def elos_fork(request, pk):
                 elo_new_metadata.save()
 
                 elo_new.metadata = elo_new_metadata
+                elo_new.save()
 
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
