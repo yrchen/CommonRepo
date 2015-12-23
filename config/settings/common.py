@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = (
     'avatar', # django-avatar
     'annoying', # django-annoying
     'messages_extends', # django-messages-extends
+    'notifications', # django-notifications-hq
 )
 
 # Apps specific for this project go here.
