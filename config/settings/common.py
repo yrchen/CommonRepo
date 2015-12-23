@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = (
     'mptt', # django-mptt
     'avatar', # django-avatar
     'annoying', # django-annoying
+    'messages_extends', # django-messages-extends
 )
 
 # Apps specific for this project go here.
