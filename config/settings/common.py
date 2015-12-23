@@ -333,6 +333,9 @@ REST_FRAMEWORK = {
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
 
+# Message
+MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
+
 # System variables
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8
 DASHBOARD_MAX_ELOS_ALL_PER_PAGE = 8
