@@ -48,6 +48,9 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^avatar/', include('avatar.urls')),
 
+    # Message
+    url(r'^messages/', include('messages_extends.urls')), # django-messages-extends
+
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
     url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),
