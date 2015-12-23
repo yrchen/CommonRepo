@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = (
     'mptt', # django-mptt
     'avatar', # django-avatar
     'annoying', # django-annoying
+    'messages_extends', # django-messages-extends
 )
 
 # Apps specific for this project go here.
@@ -331,6 +332,9 @@ REST_FRAMEWORK = {
 
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
+
+# Message
+MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 
 # System variables
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8

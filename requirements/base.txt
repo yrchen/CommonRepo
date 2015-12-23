@@ -50,6 +50,7 @@ django-filter==0.11.0
 django-mptt
 django-avatar
 django-annoying
+django-messages-extends
 
 # Authentication
 djoser==0.3.1
