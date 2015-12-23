@@ -1,21 +1,42 @@
+{% load notifications_tags %}
+
 <li class="dropdown notifications-menu">
   <!-- Menu toggle button -->
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     <i class="fa fa-bell-o"></i>
-    <span class="label label-warning">10</span>
+    {% notifications_unread as unread_count %}
+    {% if unread_count %}
+      <span class="label label-warning">{{ unread_count }}</span>
+    {% else %}
+      <span class="label label-warning">0</span>
+    {% endif %}
   </a>
   <ul class="dropdown-menu">
-    <li class="header">You have 10 notifications</li>
-    <li>
-      <!-- Inner Menu: contains the notifications -->
-      <ul class="menu">
-        <li><!-- start notification -->
-          <a href="#">
-            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-          </a>
-        </li><!-- end notification -->
-      </ul>
-    </li>
+    {% if unread_count %}
+      <li class="header">You have {{ unread_count }} notifications</li>
+      {% for notice in notifications %}
+        <!-- inner menu: contains the notification -->
+        <ul class="menu">
+          <li><!-- start notification -->
+            <a href="{% url 'notifications:mark_as_read' notice.slug %}">
+              <!-- Notification title and timestamp -->
+              <h4>
+                {{ notice.actor }} 
+                {{ notice.verb }}
+                {% if notice.target %}
+                  of {{ notice.target }}
+                {% endif %}
+                <small><i class="fa fa-clock-o"></i>{{ notice.timesince }}</small>
+              </h4>
+              <!-- The notification -->
+              <p>{{ notice.description|linebreaksbr }}</p>
+            </a>
+          </li><!-- end notification -->
+        </ul><!-- /.menu -->
+      {% endfor %}
+    {% else %}
+      <li class="header">You have 0 notification</li>
+    {% endif %}
     <li class="footer"><a href="#">View all</a></li>
   </ul>
 </li>
