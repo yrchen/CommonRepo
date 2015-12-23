@@ -50,6 +50,9 @@ urlpatterns = [
 
     # Message
     url(r'^messages/', include('messages_extends.urls')), # django-messages-extends
+    
+    # Notifications
+    url(r'^notifications-api/', include('notifications.urls', namespace='notifications')),
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
