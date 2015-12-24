@@ -14,7 +14,7 @@ from commonrepo.api.routers import DefaultRouter
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
 from commonrepo.elos_api.views import ELODiversity, ELODiversityAll, ELOSimilarity, ELOSimilarityAll, ELOFork
 from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
-from commonrepo.groups_api.views import GroupsMemberJoin
+from commonrepo.groups_api.views import GroupsMemberAbort, GroupsMemberJoin
 from commonrepo.main import views as MainViews
 from commonrepo.snippets_api.views import SnippetViewSet
 from commonrepo.users_api.views import UserViewSet, UserViewSetV2
@@ -113,7 +113,7 @@ urlpatterns = [
     url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'),
 
     # API v2 - Groups
-    url(r'^api/v2/groups/abort/(?P<pk>[0-9]+)/$', 'commonrepo.groups_api.views.groups_member_abort'),
+    url(r'^api/v2/groups/abort/(?P<pk>[0-9]+)/$', GroupsMemberAbort.as_view()),
     url(r'^api/v2/groups/join/(?P<pk>[0-9]+)/$', GroupsMemberJoin.as_view()),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

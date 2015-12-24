@@ -109,3 +109,28 @@ def groups_member_abort(request, pk):
                          "status": "error"
                          },
                          status=status.HTTP_400_BAD_REQUEST)
+
+class GroupsMemberAbort(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, pk):
+        if request.method == 'POST':
+            group = Group.objects.get(id=pk)
+            group.members.remove(request.user)
+            group.save()
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             },
+                             status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({"code": status.HTTP_400_BAD_REQUEST,
+                             "status": "error"
+                             },
+                             status=status.HTTP_400_BAD_REQUEST)
