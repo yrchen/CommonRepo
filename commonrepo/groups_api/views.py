@@ -14,6 +14,7 @@ from rest_framework.decorators import api_view, detail_route
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
+from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
 
@@ -66,6 +67,32 @@ def groups_member_join(request, pk):
                          "status": "error"
                          },
                          status=status.HTTP_400_BAD_REQUEST)
+
+class GroupsMemberJoin(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, pk):
+        if request.method == 'POST':
+            group = Group.objects.get(id=pk)
+            group.members.add(request.user)
+            group.save()
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             },
+                             status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({"code": status.HTTP_400_BAD_REQUEST,
+                             "status": "error"
+                             },
+                             status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def groups_member_abort(request, pk):
