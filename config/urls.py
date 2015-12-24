@@ -13,6 +13,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from commonrepo.api.routers import DefaultRouter
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
 from commonrepo.elos_api.views import ELODiversity, ELODiversityAll, ELOSimilarity, ELOSimilarityAll, ELOFork
+from commonrepo.infor_api.views import InforELOTotalCount
 from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
 from commonrepo.groups_api.views import GroupsMemberAbort, GroupsMemberJoin
 from commonrepo.main import views as MainViews
@@ -109,7 +110,7 @@ urlpatterns = [
     url(r'^api/v2/elos/fork/(?P<pk>[0-9]+)/$', ELOFork.as_view()),
 
     # API v2 - Information
-    url(r'^api/v2/infor/elos-total/$', 'commonrepo.infor_api.views.elos_total_count'),
+    url(r'^api/v2/infor/elos-total/$', InforELOTotalCount.as_view()),
     url(r'^api/v2/infor/users-total/$', 'commonrepo.infor_api.views.users_total_count'),
 
     # API v2 - Groups
