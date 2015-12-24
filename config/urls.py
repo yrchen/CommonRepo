@@ -70,8 +70,7 @@ urlpatterns = [
 
 
     # API v1 - Authenticaion
-    url(r'^api/v1/auth/', include('djoser.urls')),
-    url(r'^api/v1/auth/token', obtain_auth_token),
+    url(r'^api/v1/auth/', include('djoser.urls.authtoken')),
 
     # API v1 - ELOs
     url(r'^api/v1/elos-upload', ELOFileUploadViewSet),
@@ -97,8 +96,7 @@ urlpatterns = [
     url(r'', include(router_api_v2.urls)),
 
     # API v2 - Authenticaion
-    url(r'^api/v2/auth/', include('djoser.urls')),
-    url(r'^api/v2/auth/token', obtain_auth_token),
+    url(r'^api/v2/auth/', include('djoser.urls.authtoken')),
 
     # API v2 - ELOs
     url(r'^api/v2/elos-upload', ELOFileUploadViewSet),
