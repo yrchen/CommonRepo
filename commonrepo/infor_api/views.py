@@ -80,3 +80,28 @@ def users_total_count(request):
                          "status": "error"
                          },
                         status=status.HTTP_400_BAD_REQUEST)
+
+class InforUsersTotalCount(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        if request.method == 'GET':
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "total_users": User.objects.all().count()
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({"code": status.HTTP_400_BAD_REQUEST,
+                             "status": "error"
+                             },
+                            status=status.HTTP_400_BAD_REQUEST)
