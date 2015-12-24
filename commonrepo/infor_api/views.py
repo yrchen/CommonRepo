@@ -47,7 +47,7 @@ class InforELOTotalCount(LoggingMixin, APIView):
     * Only admin users are able to access this view.
     """
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         if request.method == 'GET':
@@ -89,7 +89,7 @@ class InforUsersTotalCount(LoggingMixin, APIView):
     * Only admin users are able to access this view.
     """
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         if request.method == 'GET':
