@@ -54,7 +54,7 @@ django-messages-extends
 django-notifications-hq
 
 # Authentication
-djoser==0.3.1
+djoser==0.4.0
 django-oauth-toolkit
 
 # MongoDB
