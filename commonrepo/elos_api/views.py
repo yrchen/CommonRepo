@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view, detail_route
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
+from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
 
@@ -106,6 +107,40 @@ def elos_diversity(request, pk, pk2):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class ELODiversity(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk, pk2):
+        if request.method == 'GET':
+            elo_source = ELO.objects.get(id=pk)
+            elo_target = ELO.objects.get(id=pk2)
+
+            # Check user is authenticated and has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+            # if not, use default setting
+            else:
+                elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "elo_source": elo_source.id,
+                                 "elo_target": elo_target.id,
+                                 "diversity": elo_diversity
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def elos_diversity_all(request, pk):
     if request.method == 'GET':
@@ -134,6 +169,43 @@ def elos_diversity_all(request, pk):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class ELODiversityAll(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk):
+        if request.method == 'GET':
+            elo_source = ELO.objects.get(id=pk)
+            elos_public = ELO.objects.filter(is_public=1)
+            elos_result = {}
+
+            # Check user is authenticated and has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                threshold = request.user.elo_similarity_threshold
+            # if not, use default setting
+            else:
+                threshold = settings.ELO_SIMILARITY_THRESHOLD
+
+            for elo in elos_public:
+                elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "elo_source": elo_source.id,
+                                 "diversity": elos_result
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def elos_similarity(request, pk, pk2):
     if request.method == 'GET':
@@ -158,6 +230,40 @@ def elos_similarity(request, pk, pk2):
                         status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ELOSimilarity(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk, pk2):
+        if request.method == 'GET':
+            elo_source = ELO.objects.get(id=pk)
+            elo_target = ELO.objects.get(id=pk2)
+
+            # Check user is authenticated and has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+            # if not, use default setting
+            else:
+                elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "elo_source": elo_source.id,
+                                 "elo_target": elo_target.id,
+                                 "similarity": elo_similarity
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def elos_similarity_all(request, pk):
@@ -186,6 +292,43 @@ def elos_similarity_all(request, pk):
                         status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ELOSimilarityAll(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk):
+        if request.method == 'GET':
+            elo_source = ELO.objects.get(id=pk)
+            elos_public = ELO.objects.filter(is_public=1)
+            elos_result = {}
+
+            # Check user is authenticated and has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                threshold = request.user.elo_similarity_threshold
+            # if not, use default setting
+            else:
+                threshold = settings.ELO_SIMILARITY_THRESHOLD
+
+            for elo in elos_public:
+                elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "elo_source": elo_source.id,
+                                 "similarity": elos_result
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def elos_fork(request, pk):
@@ -224,3 +367,50 @@ def elos_fork(request, pk):
             return Response(status=status.HTTP_403_FORBIDDEN)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ELOFork(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, pk):
+        if request.method == 'POST':
+            elo_original = ELO.objects.get(id=pk)
+
+            if elo_original.is_public:
+                elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
+                                             author = request.user,
+                                             original_type = elo_original.original_type,
+                                             init_file = elo_original.init_file,
+                                             version = 1,
+                                             parent_elo = elo_original,
+                                             parent_elo_uuid = elo_original.uuid,
+                                             parent_elo_version = elo_original.version,
+                                             parent_elo2 = elo_original,
+                                             parent_elo2_uuid = elo_original.uuid,
+                                             parent_elo2_version = elo_original.version)
+
+                if elo_original.metadata:
+                    elo_new_metadata = elo_original.metadata
+                    elo_new_metadata.pk = None
+                    elo_new_metadata.save()
+
+                    elo_new.metadata = elo_new_metadata
+                    elo_new.save()
+
+                return Response({"code": status.HTTP_201_CREATED,
+                                 "status": "ok",
+                                 "result": {
+                                     "elo_id": elo_new.id
+                                     }
+                                },
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
