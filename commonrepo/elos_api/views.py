@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view, detail_route
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
+from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
 
@@ -105,6 +106,40 @@ def elos_diversity(request, pk, pk2):
                         status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ELODiversity(LoggingMixin, APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk, pk2):
+        if request.method == 'GET':
+            elo_source = ELO.objects.get(id=pk)
+            elo_target = ELO.objects.get(id=pk2)
+
+            # Check user is authenticated and has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+            # if not, use default setting
+            else:
+                elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+
+            return Response({"code": status.HTTP_202_ACCEPTED,
+                             "status": "ok",
+                             "result": {
+                                 "elo_source": elo_source.id,
+                                 "elo_target": elo_target.id,
+                                 "diversity": elo_diversity
+                                 }
+                             },
+                            status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def elos_diversity_all(request, pk):

@@ -11,7 +11,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
-from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
+from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet, ELODiversity
 from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
 from commonrepo.main import views as MainViews
 from commonrepo.snippets_api.views import SnippetViewSet
@@ -100,7 +100,7 @@ urlpatterns = [
 
     # API v2 - ELOs
     url(r'^api/v2/elos-upload', ELOFileUploadViewSet),
-    url(r'^api/v2/elos/diversity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_diversity'),
+    url(r'^api/v2/elos/diversity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', ELODiversity.as_view()),
     url(r'^api/v2/elos/diversity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_diversity_all'),
     url(r'^api/v2/elos/similarity/(?P<pk>[0-9]+)/(?P<pk2>[0-9]+)/$', 'commonrepo.elos_api.views.elos_similarity'),
     url(r'^api/v2/elos/similarity/(?P<pk>[0-9]+)/all/$', 'commonrepo.elos_api.views.elos_similarity_all'),
