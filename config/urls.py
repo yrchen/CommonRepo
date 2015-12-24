@@ -11,7 +11,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from commonrepo.api.routers import DefaultRouter
-from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet, ELODiversity, ELODiversityAll, ELOSimilarity
+from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
+from commonrepo.elos_api.views import ELODiversity, ELODiversityAll, ELOSimilarity
 from commonrepo.groups_api.views import GroupViewSet, GroupViewSetV2
 from commonrepo.main import views as MainViews
 from commonrepo.snippets_api.views import SnippetViewSet
