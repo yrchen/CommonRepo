@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import authentication
@@ -16,8 +17,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 from rest_framework.views import APIView
 
-from rest_framework_tracking.mixins import LoggingMixin
-
+from commonrepo.api.tracking import LoggingMixin
 from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
 
@@ -55,7 +55,7 @@ class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
 @api_view(['POST'])
 def groups_member_join(request, pk):
     if request.method == 'POST':
-        group = Group.objects.get(id=pk)
+        group = get_object_or_404(Group, id=pk)
         group.members.add(request.user)
         group.save()
         return Response({"code": status.HTTP_202_ACCEPTED,
@@ -80,7 +80,7 @@ class GroupsMemberJoin(LoggingMixin, APIView):
 
     def post(self, request, pk):
         if request.method == 'POST':
-            group = Group.objects.get(id=pk)
+            group = get_object_or_404(Group, id=pk)
             group.members.add(request.user)
             group.save()
 
@@ -97,7 +97,7 @@ class GroupsMemberJoin(LoggingMixin, APIView):
 @api_view(['POST'])
 def groups_member_abort(request, pk):
     if request.method == 'POST':
-        group = Group.objects.get(id=pk)
+        group = get_object_or_404(Group, id=pk)
         group.members.remove(request.user)
         group.save()
         return Response({"code": status.HTTP_202_ACCEPTED,
@@ -122,7 +122,7 @@ class GroupsMemberAbort(LoggingMixin, APIView):
 
     def post(self, request, pk):
         if request.method == 'POST':
-            group = Group.objects.get(id=pk)
+            group = get_object_or_404(Group, id=pk)
             group.members.remove(request.user)
             group.save()
             return Response({"code": status.HTTP_202_ACCEPTED,
