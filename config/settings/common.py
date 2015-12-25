@@ -39,11 +39,10 @@ THIRD_PARTY_APPS = (
 
     # Authentication
     # Allauth
-    'allauth',  # registration
-    'allauth.account',  # registration
-    'allauth.socialaccount',  # registration
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.google', # Google
-
     # OAuth
     'oauth2_provider', # Django OAuth Toolkit
 
@@ -63,12 +62,13 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'commonrepo.users',  # custom users app
-    # Your stuff: custom apps go here
+    'commonrepo.users',  # CommonRepo custom users app
+
+    # CommonRepo custom apps
     'commonrepo.elos',
     'commonrepo.groups',
 
-    # API endpoints
+    # CommonRepo API endpoints
     'commonrepo.snippets_api',
     'commonrepo.users_api',
     'commonrepo.elos_api',
@@ -255,7 +255,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
@@ -314,6 +317,17 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ########## END CELERY
 
 # Your common stuff: Below this line define 3rd party library settings
+
+# Allauth
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online'
+        }
+    }
+}
+
 # Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
