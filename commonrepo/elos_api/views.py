@@ -85,8 +85,8 @@ class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
 @api_view(['GET'])
 def elos_diversity(request, pk, pk2):
     if request.method == 'GET':
-        elo_source = ELO.objects.get(id=pk)
-        elo_target = ELO.objects.get(id=pk2)
+        elo_source = get_object_or_404(ELO, id=pk)
+        elo_target = get_object_or_404(ELO, id=pk2)
 
         # Check user is authenticated and has setting of elo_similarity_threshold
         if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
@@ -144,7 +144,7 @@ class ELODiversity(LoggingMixin, APIView):
 @api_view(['GET'])
 def elos_diversity_all(request, pk):
     if request.method == 'GET':
-        elo_source = ELO.objects.get(id=pk)
+        elo_source = get_object_or_404(ELO, id=pk)
         elos_public = ELO.objects.filter(is_public=1)
         elos_result = {}
 
@@ -181,7 +181,7 @@ class ELODiversityAll(LoggingMixin, APIView):
 
     def get(self, request, pk):
         if request.method == 'GET':
-            elo_source = ELO.objects.get(id=pk)
+            elo_source = get_object_or_404(ELO, id=pk)
             elos_public = ELO.objects.filter(is_public=1)
             elos_result = {}
 
@@ -209,8 +209,8 @@ class ELODiversityAll(LoggingMixin, APIView):
 @api_view(['GET'])
 def elos_similarity(request, pk, pk2):
     if request.method == 'GET':
-        elo_source = ELO.objects.get(id=pk)
-        elo_target = ELO.objects.get(id=pk2)
+        elo_source = get_object_or_404(ELO, id=pk)
+        elo_target = get_object_or_404(ELO, id=pk2)
 
         # Check user is authenticated and has setting of elo_similarity_threshold
         if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
@@ -243,8 +243,8 @@ class ELOSimilarity(LoggingMixin, APIView):
 
     def get(self, request, pk, pk2):
         if request.method == 'GET':
-            elo_source = ELO.objects.get(id=pk)
-            elo_target = ELO.objects.get(id=pk2)
+            elo_source = get_object_or_404(ELO, id=pk)
+            elo_target = get_object_or_404(ELO, id=pk2)
 
             # Check user is authenticated and has setting of elo_similarity_threshold
             if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
@@ -268,7 +268,7 @@ class ELOSimilarity(LoggingMixin, APIView):
 @api_view(['GET'])
 def elos_similarity_all(request, pk):
     if request.method == 'GET':
-        elo_source = ELO.objects.get(id=pk)
+        elo_source = get_object_or_404(ELO, id=pk)
         elos_public = ELO.objects.filter(is_public=1)
         elos_result = {}
 
@@ -305,7 +305,7 @@ class ELOSimilarityAll(LoggingMixin, APIView):
 
     def get(self, request, pk):
         if request.method == 'GET':
-            elo_source = ELO.objects.get(id=pk)
+            elo_source = get_object_or_404(ELO, id=pk)
             elos_public = ELO.objects.filter(is_public=1)
             elos_result = {}
 
@@ -333,7 +333,7 @@ class ELOSimilarityAll(LoggingMixin, APIView):
 @api_view(['POST'])
 def elos_fork(request, pk):
     if request.method == 'POST':
-        elo_original = ELO.objects.get(id=pk)
+        elo_original = get_object_or_404(ELO, id=pk)
 
         if elo_original.is_public:
             elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
@@ -380,7 +380,7 @@ class ELOFork(LoggingMixin, APIView):
 
     def post(self, request, pk):
         if request.method == 'POST':
-            elo_original = ELO.objects.get(id=pk)
+            elo_original = get_object_or_404(ELO, id=pk)
 
             if elo_original.is_public:
                 elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
