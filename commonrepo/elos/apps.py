@@ -9,3 +9,4 @@ class ELOsAppConfig(AppConfig):
 
     def ready(self):
         registry.register(self.get_model('ELO'))
+        import commonrepo.elos.signals
