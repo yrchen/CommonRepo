@@ -63,6 +63,7 @@ urlpatterns = [
 
     # Django REST Framework (DRF) Authenticaion
     url(r'^api/drf/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     #
     # API v1
