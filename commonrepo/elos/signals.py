@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 
 from actstream import action
 
@@ -9,7 +9,11 @@ from .models import ELO
 
 # ELO has been registered with actstream.registry.register
 
-def elo_saved_handler(sender, instance, created, **kwargs):
-    action.send(instance, verb='was saved')
+def elo_deleted_handler(sender, instance, created, **kwargs):
+    action.send(instance, verb='was deleted')
 
+def elo_saved_handler(sender, instance, created, **kwargs):
+    action.send(instance, verb='was updated')
+
+post_delete.connect(elo_deleted_handler, sender=ELO)
 post_save.connect(elo_saved_handler, sender=ELO)
