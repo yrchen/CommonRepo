@@ -52,6 +52,7 @@ django-avatar
 django-annoying
 django-messages-extends
 django-notifications-hq
+django-activity-stream
 
 # Authentication
 djoser==0.4.0
