@@ -55,7 +55,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         # Social informaion
         'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
         # Extend user information
-        'teaching_category', 'teaching_subject_area',]
+        'teaching_category', 'teaching_subject_area',
+        # Preferences
+        'elo_similarity_threshold']
 
     # we already imported User in the view code above, remember?
     model = User
