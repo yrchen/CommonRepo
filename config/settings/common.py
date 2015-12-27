@@ -351,6 +351,15 @@ REST_FRAMEWORK = {
     )
 }
 
+# Django Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MANAGER': 'actstream.managers.ActionManager',
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': True,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
+}
+
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
 
