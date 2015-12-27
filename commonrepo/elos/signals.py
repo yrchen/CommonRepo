@@ -13,7 +13,10 @@ def elo_deleted_handler(sender, instance, created, **kwargs):
     action.send(instance, verb='was deleted')
 
 def elo_saved_handler(sender, instance, created, **kwargs):
-    action.send(instance, verb='was updated')
+    if created:
+        action.send(instance, verb='was created')
+    else:
+        action.send(instance, verb='was updated')
 
 post_delete.connect(elo_deleted_handler, sender=ELO)
 post_save.connect(elo_saved_handler, sender=ELO)
