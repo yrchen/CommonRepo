@@ -143,7 +143,9 @@ class UserSerializerV2(serializers.ModelSerializer):
             # Group information
             'commonrepo_groups', 'commonrepo_groups_members',
             # Misc
-            'snippets', )
+            'snippets',
+            # Preferences
+            'elo_similarity_threshold',)
 
 class UserLiteSerializer(serializers.ModelSerializer):
     class Meta:
