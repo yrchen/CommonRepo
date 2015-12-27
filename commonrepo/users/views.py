@@ -49,10 +49,13 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
-    fields = ['name', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
-              'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
-              'teaching_category', 'teaching_subject_area',
-              'elo_similarity_threshold']
+    fields = [
+        # Basic user information
+        'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+        # Social informaion
+        'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
+        # Extend user information
+        'teaching_category', 'teaching_subject_area',]
 
     # we already imported User in the view code above, remember?
     model = User
