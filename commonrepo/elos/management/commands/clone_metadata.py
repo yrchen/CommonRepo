@@ -22,16 +22,16 @@ class Command(BaseCommand):
         try:
             elo_source = ELO.objects.get(id=options['source'])
         except ELO.DoesNotExist:
-            raise CommandError('Source ELOs "%s" does not exist' % elo_source)
+            raise CommandError('Source ELO "%s" does not exist' % options['source'])
 
         if not elo_source.metadata:
-            raise CommandError('Source Metadata of ELOs "%s" does not exist' % elo_source)
+            raise CommandError('Source Metadata of ELO "%s" does not exist' % elo_source.id)
 
         for target in options['target']:
             try:
                 elo_target = ELO.objects.get(id=target)
             except ELO.DoesNotExist:
-                raise CommandError('ELOs "%s" does not exist' % target)
+                raise CommandError('ELO "%s" does not exist' % target)
 
             # Delete original metadata
             if elo_target.metadata:
