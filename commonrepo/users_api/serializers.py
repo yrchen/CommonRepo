@@ -132,6 +132,8 @@ class UserSerializerV2(serializers.ModelSerializer):
         fields = (
             # Basic user information
             'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            # Social informaion
+            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
             # Extend user information
             'teaching_category', 'teaching_subject_area',
             # Social information
@@ -149,5 +151,7 @@ class UserLiteSerializer(serializers.ModelSerializer):
         fields = (
             # Basic user information
             'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            # Social informaion
+            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
             # Extend user information
             'teaching_category', 'teaching_subject_area', )
