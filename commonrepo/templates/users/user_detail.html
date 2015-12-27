@@ -63,7 +63,7 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+        <strong><i class="fa fa-graduation-cap margin-r-5"></i> Education</strong>
 
         <p class="text-muted">
           {{ user.education }}
@@ -91,7 +91,7 @@
 
         <hr>
 
-        <strong><i class="fa fa-pencil margin-r-5"></i> Language</strong>
+        <strong><i class="fa fa-language margin-r-5"></i> Language</strong>
 
         <p>
           <span class="label label-info">{{ user.language }}</span>
@@ -99,9 +99,53 @@
 
         <hr>
 
-        <strong><i class="fa fa-file-text-o margin-r-5"></i> About Me</strong>
+        <strong><i class="fa fa-user margin-r-5"></i> About Me</strong>
 
-        <p>{{ user.about }}</p>
+        <p>
+          {{ user.about }}
+        </p>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <!-- Social Box -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Socials</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <strong><i class="fa fa-facebook margin-r-5"></i> Facebook</strong>
+
+        <p class="text-muted">
+          <a href="{{ user.social_facebook }}" target="_blank">{{ user.social_facebook }}</a>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-google-plus margin-r-5"></i> Google Plus</strong>
+
+        <p class="text-muted">
+          <a href="{{ user.social_google }}" target="_blank">{{ user.social_google }}</a>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-linkedin margin-r-5"></i> Linkedin</strong>
+
+        <p class="text-muted">
+          <a href="{{ user.social_linkedin }}" target="_blank">{{ user.social_linkedin }}</a>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-twitter margin-r-5"></i> Twitter</strong>
+
+        <p class="text-muted">
+          <a href="{{ user.social_twitter }}" target="_blank">{{ user.social_twitter }}</a>
+        </p>
+
       </div>
       <!-- /.box-body -->
     </div>

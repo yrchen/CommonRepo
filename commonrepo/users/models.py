@@ -25,6 +25,10 @@ class User(AbstractUser):
     language =  models.CharField(_("Language"), blank=True, max_length=255)
     area = models.CharField(_("Area/Nation"), blank=True, max_length=255)
     about = models.CharField(_("About Me"), blank=True, max_length=255)
+    social_facebook = models.URLField(_("Social - Facebook"), blank=True, max_length=255)
+    social_google = models.URLField(_("Social - Google Plus"), blank=True, max_length=255)
+    social_linkedin = models.URLField(_("Social - Linkedin"), blank=True, max_length=255)
+    social_twitter = models.URLField(_("Social - Twitter"), blank=True, max_length=255)
 
     # User Pedagogical Information
     teaching_category = models.CharField(_("Teaching Category"), blank=True, max_length=255)
