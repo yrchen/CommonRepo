@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, absolute_import
 
 from django.forms import ModelForm, ModelChoiceField
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 from crispy_forms.helper import FormHelper
@@ -35,7 +36,7 @@ class ELOForkForm(ModelForm):
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(ELOForkForm, self).__init__(*args, **kwargs)
-        elo_original = ELO.objects.get(id=pk)
+        elo_original = get_object_or_404(ELO, id=pk)
         self.fields["name"].initial = elo_original.name + " (Fork from author " + elo_original.author.username + ")"
         self.fields["name"].widget.attrs['readonly'] = True
         self.fields["author"].queryset = User.objects.filter(username=self.request_user)

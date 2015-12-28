@@ -4,7 +4,7 @@ from __future__ import absolute_import, unicode_literals
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from braces.views import LoginRequiredMixin
 
@@ -24,7 +24,7 @@ class ELOsDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
-        elo = ELO.objects.get(id=self.kwargs['pk'])
+        elo = get_object_or_404(ELO, id=self.kwargs['pk'])
 
         # Check Reusability Tree
         if not hasattr(elo, 'reusability_tree'):
@@ -71,12 +71,12 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        elo = ELO.objects.get(id=self.kwargs['pk'])
+        elo = get_object_or_404t(ELO, id=self.kwargs['pk'])
         parent_elos = []
 
         if elo.parent_elo_id != settings.ELO_ROOT_ID:
             while elo.parent_elo_id != settings.ELO_ROOT_ID:
-                parent_elo = ELO.objects.get(id=elo.parent_elo_id)
+                parent_elo = get_object_or_404(ELO, id=elo.parent_elo_id)
                 parent_elos.insert(0, parent_elo)
                 elo = parent_elo
 
