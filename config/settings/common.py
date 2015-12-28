@@ -76,8 +76,13 @@ LOCAL_APPS = (
 
 )
 
+THIRD_PARTY_APPS2 = (
+    # django-activity-stream
+    'actstream',
+)
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + THIRD_PARTY_APPS2
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -344,6 +349,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
     )
+}
+
+# Django Activity Stream
+ACTSTREAM_SETTINGS = {
+    'MANAGER': 'actstream.managers.ActionManager',
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': True,
+    'USE_JSONFIELD': True,
+    'GFK_FETCH_DEPTH': 1,
 }
 
 # Avatar
