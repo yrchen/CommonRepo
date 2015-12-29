@@ -57,6 +57,10 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs
 
+    def get_success_url(self):
+        action.send(self.request.user, verb='forked', target=self.object)
+        return super(ELOsForkView, self).get_success_url()
+
 class ELOsListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_list.html'
 
