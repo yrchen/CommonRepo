@@ -18,6 +18,11 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
 
+    def get_success_url(self):
+        action.send(self.request.user, verb='created', target=self.object)
+        return super(ELOsCreateView, self).get_success_url()
+
+
 class ELOsDetailView(LoginRequiredMixin, DetailView):
     model = ELO
     query_pk_and_slug = True
