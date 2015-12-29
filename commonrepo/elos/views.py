@@ -93,7 +93,6 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object.version += 1
-        action.send(self.request.user, verb='updated', target=self.object)
         return super(ELOsUpdateView, self).form_valid(form)
 
     def get_form_kwargs(self):
@@ -102,6 +101,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='updated', target=self.object)
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
