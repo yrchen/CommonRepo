@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render, get_object_or_404
 
+from actstream import action
 from braces.views import LoginRequiredMixin
 
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
@@ -92,6 +93,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object.version += 1
+        action.send(self.request.user, verb='updated', target=self.object)
         return super(ELOsUpdateView, self).form_valid(form)
 
     def get_form_kwargs(self):
