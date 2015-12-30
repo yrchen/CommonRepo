@@ -38,7 +38,7 @@
               <tr>
                 <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
                 <td>{{group.name}}</td>
-                <td>{{group.creator}}</td>
+                <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
                 <td>{{group.create_date}}</td>
                 <td>{{group.update_date}}</td>
                 <td>
@@ -67,5 +67,4 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
-</div><!-- /.row -->
 {% endblock content %}
