@@ -135,6 +135,8 @@
                   <ul>
                   {% for action in stream %}
                       <li>{% display_action action %}</li>
+                    {% empty %}
+                    No actions yet.
                   {% endfor %}
                   </ul>
             </div>
