@@ -326,7 +326,13 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 # Allauth
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': ['profile', 'email'],
+        'SCOPE': [
+            # https://developers.google.com/+/web/api/rest/oauth
+            'profile', 'email',
+            # https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest?fields=auth(oauth2(scopes))
+            'https://www.googleapis.com/auth/plus.login', # Know your basic profile info and list of people in your circles.
+            'https://www.googleapis.com/auth/plus.me', # Know who you are on Google
+            ],
         'AUTH_PARAMS': {
             'access_type': 'online'
         }
