@@ -213,19 +213,17 @@
               </tr>
             </thead>
             <tbody>
-              {% for group in group_list %}
-                {% if group.creator == request.user %}
-                 <tr>
-                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                   <td>{{group.name}}</td>
-                   <td>{{group.description}}</td>
-                   <td>
-                   {% for member in group.members.all %}
-                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
-                   {% endfor %}
-                   </td>
-                 </tr>
-                {% endif %}
+              {% for group in object.commonrepo_groups.all %}
+                <tr>
+                  <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                  <td>{{group.name}}</td>
+                  <td>{{group.description}}</td>
+                  <td>
+                  {% for member in group.members.all %}
+                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                  {% endfor %}
+                  </td>
+                </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -254,22 +252,18 @@
               </tr>
             </thead>
             <tbody>
-              {% for group in group_list %}
-                {% for member in group.members.all %}
-                  {% if group.creator != user and member == user %}
-                   <tr>
-                     <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                     <td>{{group.name}}</td>
-                     <td>{{group.creator}}</td>
-                     <td>{{group.description}}</td>
-                     <td>
-                     {% for member in group.members.all %}
-                       <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
-                     {% endfor %}
-                     </td>
-                   </tr>
-                  {% endif %}
-                {% endfor %}
+              {% for group in object.commonrepo_groups_members.all %}
+                <tr>
+                  <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                  <td>{{group.name}}</td>
+                  <td>{{group.creator}}</td>
+                  <td>{{group.description}}</td>
+                  <td>
+                  {% for member in group.members.all %}
+                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                  {% endfor %}
+                  </td>
+                </tr>
               {% endfor %}
             </tbody>
           </table>

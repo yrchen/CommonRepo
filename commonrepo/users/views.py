@@ -34,7 +34,6 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
         # Groups
         context['group_count'] = Group.objects.filter(creator=user).count()
-        context['group_list'] = Group.objects.filter(creator=user)
 
         return context
 
