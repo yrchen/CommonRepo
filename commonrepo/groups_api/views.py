@@ -113,6 +113,8 @@ def groups_member_abort(request, pk):
         group = get_object_or_404(Group, id=pk)
         group.members.remove(request.user)
         group.save()
+        action.send(request.user, verb="aborted", target=group)
+
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          },
@@ -138,6 +140,8 @@ class GroupsMemberAbort(LoggingMixin, APIView):
             group = get_object_or_404(Group, id=pk)
             group.members.remove(request.user)
             group.save()
+            action.send(request.user, verb="aborted", target=group)
+
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
                              },
