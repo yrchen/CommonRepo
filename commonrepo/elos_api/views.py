@@ -54,14 +54,18 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         elo = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        # send action to action stream
         action.send(self.request.user, verb='created', target=elo)
 
     def perform_update(self, serializer):
+        # bumped version
         elo_instance = serializer.save()
         serializer.save(version=elo_instance.version+1)
+        # send action to action stream
         action.send(self.request.user, verb='updated', target=elo_instance)
 
     def perform_destroy(self, instance):
+        # send action to action stream before instance been deleted
         action.send(self.request.user, verb='deleted', target=instance)
         instance.delete()
 
