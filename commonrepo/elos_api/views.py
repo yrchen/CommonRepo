@@ -373,6 +373,9 @@ def elos_fork(request, pk):
                 elo_new.metadata = elo_new_metadata
                 elo_new.save()
 
+            # send action to action stream
+            action.send(request.user, verb='forked', target=elo_new)
+
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
                              "result": {
@@ -419,6 +422,9 @@ class ELOFork(LoggingMixin, APIView):
 
                     elo_new.metadata = elo_new_metadata
                     elo_new.save()
+
+                # send action to action stream
+                action.send(request.user, verb='forked', target=elo_new) 
 
                 return Response({"code": status.HTTP_201_CREATED,
                                  "status": "ok",
