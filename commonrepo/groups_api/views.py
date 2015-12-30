@@ -17,6 +17,8 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 from rest_framework.views import APIView
 
+from actstream import action
+
 from commonrepo.api.tracking import LoggingMixin
 from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
@@ -32,6 +34,7 @@ class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
@@ -46,11 +49,18 @@ class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     serializer_class = GroupSerializerV2
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        group_instance = serializer.save(creator=self.request.user)
+        action.send(self.request.user, verb='created', target=group_instance)
 
     def perform_update(self, serializer):
-        instance = serializer.save()
+        group_instance = serializer.save()
+        action.send(self.request.user, verb='updated', target=group_instance)
+
+    def perform_destroy(self, instance):
+        action.send(self.request.user, verb='deleted', target=instance)
+        instance.delete()
 
 @api_view(['POST'])
 def groups_member_join(request, pk):
