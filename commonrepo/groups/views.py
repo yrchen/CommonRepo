@@ -107,5 +107,6 @@ class GroupsUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='updated', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
