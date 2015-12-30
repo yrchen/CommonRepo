@@ -53,15 +53,19 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
-        elo = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
-        action.send(self.request.user, verb='created', target=elo)
+        elo_instance = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        # send action to action stream
+        action.send(self.request.user, verb='created', target=elo_instance)
 
     def perform_update(self, serializer):
+        # bumped version
         elo_instance = serializer.save()
         serializer.save(version=elo_instance.version+1)
+        # send action to action stream
         action.send(self.request.user, verb='updated', target=elo_instance)
 
     def perform_destroy(self, instance):
+        # send action to action stream before instance been deleted
         action.send(self.request.user, verb='deleted', target=instance)
         instance.delete()
 
@@ -369,6 +373,9 @@ def elos_fork(request, pk):
                 elo_new.metadata = elo_new_metadata
                 elo_new.save()
 
+            # send action to action stream
+            action.send(request.user, verb='forked', target=elo_new)
+
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
                              "result": {
@@ -415,6 +422,9 @@ class ELOFork(LoggingMixin, APIView):
 
                     elo_new.metadata = elo_new_metadata
                     elo_new.save()
+
+                # send action to action stream
+                action.send(request.user, verb='forked', target=elo_new) 
 
                 return Response({"code": status.HTTP_201_CREATED,
                                  "status": "ok",

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render
 
+from actstream import action
 from braces.views import LoginRequiredMixin
 
 from .models import Group
@@ -31,6 +32,7 @@ class GroupsAbortView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='aborted', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
@@ -38,12 +40,16 @@ class GroupsCreateView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = GroupForm
     template_name = "groups/groups_create.html"
-    #success_url = "/groups"
+
     def get_form_kwargs(self):
         kwargs = super(GroupsCreateView, self).get_form_kwargs()
         kwargs.update({'request_user': self.request.user})
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs
+
+    def get_success_url(self):
+        action.send(self.request.user, verb='created', target=self.object)
+        return super(GroupsCreateView, self).get_success_url()
 
 class GroupsDetailView(LoginRequiredMixin, DetailView):
     model = Group
@@ -70,6 +76,7 @@ class GroupsJoinView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='joined', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
@@ -102,5 +109,6 @@ class GroupsUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='updated', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})

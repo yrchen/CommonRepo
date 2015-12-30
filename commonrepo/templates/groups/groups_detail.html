@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load activity_tags %}
+
 {% block title %}Groups - {{object.name}}{% endblock %}
 {% block page_title %}Groups Detail{% endblock %}
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
@@ -68,5 +70,32 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
+
+  <!-- Activity -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Activity</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% activity_stream 'target' object %}
+          <ul>
+          {% for action in stream %}
+              <li>{% display_action action %}</li>
+              {% empty %}
+              No actions yet.
+          {% endfor %}
+          </ul>
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+
 </div><!-- /.row -->
 {% endblock content %}
