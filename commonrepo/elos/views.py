@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render, get_object_or_404
 
+from actstream import action
 from braces.views import LoginRequiredMixin
 
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
@@ -16,6 +17,11 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
     form_class = ELOForm
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
+
+    def get_success_url(self):
+        action.send(self.request.user, verb='created', target=self.object)
+        return super(ELOsCreateView, self).get_success_url()
+
 
 class ELOsDetailView(LoginRequiredMixin, DetailView):
     model = ELO
@@ -50,6 +56,10 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
         kwargs.update({'request_user': self.request.user})
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs
+
+    def get_success_url(self):
+        action.send(self.request.user, verb='forked', target=self.object)
+        return super(ELOsForkView, self).get_success_url()
 
 class ELOsListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_list.html'
@@ -100,6 +110,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='updated', target=self.object)
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
 

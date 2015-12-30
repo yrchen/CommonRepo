@@ -18,6 +18,8 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 from rest_framework.views import APIView
 
+from actstream import action
+
 from commonrepo.api.tracking import LoggingMixin
 from commonrepo.users.models import User as User
 from commonrepo.elos.models import ELO, ELOType, ELOMetadata
@@ -34,6 +36,7 @@ class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
     serializer_class = ELOSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
 
@@ -50,7 +53,17 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        elo = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        action.send(self.request.user, verb='created', target=elo)
+
+    def perform_update(self, serializer):
+        elo_instance = serializer.save()
+        serializer.save(version=elo_instance.version+1)
+        action.send(self.request.user, verb='updated', target=elo_instance)
+
+    def perform_destroy(self, instance):
+        action.send(self.request.user, verb='deleted', target=instance)
+        instance.delete()
 
     def list(self, request):
         queryset = ELO.objects.all()
