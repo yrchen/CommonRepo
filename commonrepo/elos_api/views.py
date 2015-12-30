@@ -61,6 +61,10 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         serializer.save(version=elo_instance.version+1)
         action.send(self.request.user, verb='updated', target=elo_instance)
 
+    def perform_destroy(self, instance):
+        action.send(self.request.user, verb='deleted', target=instance)
+        instance.delete()
+
     def list(self, request):
         queryset = ELO.objects.all()
         serializer = ELOLiteSerializer(queryset, many=True)
