@@ -53,9 +53,9 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
-        elo = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        elo_instance = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
         # send action to action stream
-        action.send(self.request.user, verb='created', target=elo)
+        action.send(self.request.user, verb='created', target=elo_instance)
 
     def perform_update(self, serializer):
         # bumped version
