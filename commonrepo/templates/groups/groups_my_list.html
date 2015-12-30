@@ -39,7 +39,7 @@
                  <tr>
                    <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
                    <td>{{group.name}}</td>
-                   <td>{{group.creator}}</td>
+                   <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
                    <td>{{group.create_date}}</td>
                    <td>{{group.update_date}}</td>
                    <td>
@@ -87,31 +87,27 @@
               </tr>
             </thead>
             <tbody>
-              {% for group in object_list %}
-                {% for member in group.members.all %}
-                  {% if group.creator != request.user and member == request.user %}
-                   <tr>
-                     <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                     <td>{{group.name}}</td>
-                     <td>{{group.creator}}</td>
-                     <td>{{group.create_date}}</td>
-                     <td>{{group.update_date}}</td>
-                     <td>
-                       {% if group.is_public %}
-                       Yes
-                       {% else %}
-                       No
-                       {% endif %}
-                     </td>
-                     <td>{{group.description}}</td>
-                     <td>
-                     {% for member in group.members.all %}
-                       <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
-                     {% endfor %}
-                     </td>
-                   </tr>
-                  {% endif %}
-                {% endfor %}
+              {% for group in request.user.commonrepo_groups_members.all %}
+                <tr>
+                  <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                  <td>{{group.name}}</td>
+                  <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
+                  <td>{{group.create_date}}</td>
+                  <td>{{group.update_date}}</td>
+                  <td>
+                    {% if group.is_public %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                  </td>
+                  <td>{{group.description}}</td>
+                  <td>
+                  {% for member in group.members.all %}
+                    <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                  {% endfor %}
+                  </td>
+                </tr>
               {% endfor %}
             </tbody>
           </table>
