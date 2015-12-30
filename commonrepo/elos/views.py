@@ -19,6 +19,7 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
     #success_url = "/elos"
 
     def get_success_url(self):
+        # send action to action stream
         action.send(self.request.user, verb='created', target=self.object)
         return super(ELOsCreateView, self).get_success_url()
 
@@ -70,6 +71,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
         return super(ELOsForkView, self).form_valid(form)
 
     def get_success_url(self):
+        # send action to action stream
         action.send(self.request.user, verb='forked', target=self.object)
         return super(ELOsForkView, self).get_success_url()
 
@@ -122,6 +124,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        # send action to action stream
         action.send(self.request.user, verb='updated', target=self.object)
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
