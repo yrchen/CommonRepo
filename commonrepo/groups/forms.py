@@ -33,20 +33,18 @@ class GroupForm(ModelForm):
 class GroupAddForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name','members']
+        fields = ['name',]
 
     def __init__(self, pk=None,*args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(GroupAddForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
-        self.fields["members"].initial = group_original.members.add(self.request_user)
-        self.fields["members"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
-                        href="{% url 'groups:groups-mylist' %}">Confirm</a>"""),
-#                Submit('save', 'Submit'),
+                        href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
+                Submit('save', 'Submit'),
         ))
 
 class GroupUpdateForm(ModelForm):
@@ -68,18 +66,16 @@ class GroupUpdateForm(ModelForm):
 class GroupLeaveForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name','members']
+        fields = ['name',]
 
     def __init__(self, pk=None,*args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(GroupLeaveForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
-        self.fields["members"].initial = group_original.members.remove(self.request_user)
-        self.fields["members"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
-                        href="{% url 'groups:groups-mylist' %}">Confirm</a>"""),
-#                Submit('save', 'Submit'),
+                        href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
+                Submit('save', 'Submit'),
         ))
