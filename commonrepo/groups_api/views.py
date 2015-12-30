@@ -68,6 +68,8 @@ def groups_member_join(request, pk):
         group = get_object_or_404(Group, id=pk)
         group.members.add(request.user)
         group.save()
+        action.send(request.user, verb="joined", target=group)
+
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
                          },
@@ -93,6 +95,7 @@ class GroupsMemberJoin(LoggingMixin, APIView):
             group = get_object_or_404(Group, id=pk)
             group.members.add(request.user)
             group.save()
+            action.send(request.user, verb="joined", target=group)
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
