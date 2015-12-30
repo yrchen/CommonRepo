@@ -52,13 +52,16 @@ class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         group_instance = serializer.save(creator=self.request.user)
+        # send action to action stream
         action.send(self.request.user, verb='created', target=group_instance)
 
     def perform_update(self, serializer):
         group_instance = serializer.save()
+        # send action to action stream
         action.send(self.request.user, verb='updated', target=group_instance)
 
     def perform_destroy(self, instance):
+        # send action to action stream before instance been deleted
         action.send(self.request.user, verb='deleted', target=instance)
         instance.delete()
 
@@ -68,6 +71,7 @@ def groups_member_join(request, pk):
         group = get_object_or_404(Group, id=pk)
         group.members.add(request.user)
         group.save()
+        # send action to action stream
         action.send(request.user, verb="joined", target=group)
 
         return Response({"code": status.HTTP_202_ACCEPTED,
@@ -95,6 +99,7 @@ class GroupsMemberJoin(LoggingMixin, APIView):
             group = get_object_or_404(Group, id=pk)
             group.members.add(request.user)
             group.save()
+            # send action to action stream
             action.send(request.user, verb="joined", target=group)
 
             return Response({"code": status.HTTP_202_ACCEPTED,
@@ -113,6 +118,7 @@ def groups_member_abort(request, pk):
         group = get_object_or_404(Group, id=pk)
         group.members.remove(request.user)
         group.save()
+        # send action to action stream
         action.send(request.user, verb="aborted", target=group)
 
         return Response({"code": status.HTTP_202_ACCEPTED,
@@ -140,6 +146,7 @@ class GroupsMemberAbort(LoggingMixin, APIView):
             group = get_object_or_404(Group, id=pk)
             group.members.remove(request.user)
             group.save()
+            # send action to action stream
             action.send(request.user, verb="aborted", target=group)
 
             return Response({"code": status.HTTP_202_ACCEPTED,
