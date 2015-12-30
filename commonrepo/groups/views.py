@@ -18,6 +18,10 @@ class GroupsAbortView(LoginRequiredMixin, UpdateView):
     template_name = 'groups/groups_abort.html'
 
     def form_valid(self, form):
+        # remove request user from the members of group
+        form.instance.members.remove(self.request.user)
+        form.save()
+
         return super(GroupsAbortView, self).form_valid(form)
 
     def get_form_kwargs(self):
