@@ -56,6 +56,11 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         elo = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
         action.send(self.request.user, verb='created', target=elo)
 
+    def perform_update(self, serializer):
+        elo_instance = serializer.save()
+        serializer.save(version=elo_instance.version+1)
+        action.send(self.request.user, verb='updated', target=elo_instance)
+
     def list(self, request):
         queryset = ELO.objects.all()
         serializer = ELOLiteSerializer(queryset, many=True)
