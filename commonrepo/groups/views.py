@@ -76,6 +76,7 @@ class GroupsJoinView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='joined', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
