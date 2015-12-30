@@ -1,6 +1,7 @@
 {% extends "starter.html" %}
 
 {% load static %}
+{% load activity_tags %}
 
 {% block title %}Dashboard{% endblock %}
 {% block page_title %}Dashboard{% endblock %}
@@ -9,6 +10,7 @@
 
 {% block content %}
 
+<!-- Information -->
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
@@ -51,6 +53,7 @@
     </div><!-- /.col -->
 </div><!-- /.row -->
 
+<!-- ELO -->
 <div class="row">
     <div class="col-md-6">
       <!-- My ELO List -->
@@ -64,7 +67,7 @@
             </div>
         </div><!-- /.box-header -->
         <div class="box-body no-padding">
-            <div id="localELO">
+            <div id="myELO">
                 <ul class="users-list clearfix">
                 {% for elo in elos_my_list %}
                     <li>
@@ -81,7 +84,7 @@
         </div><!-- /.box-footer -->
       </div><!--/.box -->
     </div><!-- /.col -->
-    <!-- local ELOs -->
+    <!-- My ELOs -->
     
     <div class="col-md-6">
       <!-- All ELO List -->
@@ -95,7 +98,7 @@
             </div>
         </div><!-- /.box-header -->
         <div class="box-body no-padding">
-            <div id="remoteELO">
+            <div id="allELO">
                 <ul class="users-list clearfix">
                 {% for elo in elos_all_list %}
                     <li>
@@ -112,6 +115,34 @@
         </div><!-- /.box-footer -->
       </div><!--/.box -->
     </div><!-- /.col -->
-    <!-- remote ELOs -->
+    <!-- All ELOs -->
+</div><!-- /.row -->
+
+<!-- Activities -->
+<div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Activities</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding">
+            <div id="activities">
+                {% activity_stream 'user' request.user with_user_activity=True %}
+                  <ul>
+                  {% for action in stream %}
+                      <li>{% display_action action %}</li>
+                  {% endfor %}
+                  </ul>
+            </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="{% url 'actstream_user' request.user %}" class="uppercase">View All My Activities</a>
+        </div><!-- /.box-footer -->
+      </div><!--/.box -->
+    </div><!-- /.col -->
 </div><!-- /.row -->
 {% endblock content %}
