@@ -57,6 +57,18 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
         kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
         return kwargs
 
+    def form_valid(self, form):
+        # clone metadata
+        if form.instance.parent_elo.metadata:
+            elo_new_metadata = form.instance.parent_elo.metadata
+            elo_new_metadata.pk = None
+            elo_new_metadata.save()
+
+            form.instance.metadata = elo_new_metadata
+            form.save()
+
+        return super(ELOsForkView, self).form_valid(form)
+
     def get_success_url(self):
         action.send(self.request.user, verb='forked', target=self.object)
         return super(ELOsForkView, self).get_success_url()

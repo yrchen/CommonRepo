@@ -45,7 +45,7 @@ class ELOForkForm(ModelForm):
         self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
         self.fields["init_file"].initial = elo_original.init_file
-        self.fields["init_file"].widget.attrs['readonly'] = True        
+        self.fields["init_file"].widget.attrs['readonly'] = True
         self.fields["version"].initial = 1
         self.fields["version"].widget.attrs['readonly'] = True
         self.fields["parent_elo"].queryset = ELO.objects.filter(id=pk)
