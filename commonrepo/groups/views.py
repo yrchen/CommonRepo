@@ -32,6 +32,7 @@ class GroupsAbortView(LoginRequiredMixin, UpdateView):
         return kwargs
 
     def get_success_url(self):
+        action.send(self.request.user, verb='aborted', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
