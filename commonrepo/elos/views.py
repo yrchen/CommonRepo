@@ -75,7 +75,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
         action.send(self.request.user, verb='forked', target=self.object)
         return super(ELOsForkView, self).get_success_url()
 
-class ELOsListView(LoginRequiredMixin, ListView):
+class ELOsListView(ListView):
     template_name = 'elos/elos_list.html'
 
     def get_queryset(self):
