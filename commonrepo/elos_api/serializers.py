@@ -50,7 +50,7 @@ class ELOSerializer(serializers.HyperlinkedModelSerializer):
         model = ELO
         fields = (
             # Basic information
-            'url', 'id', 'name', 'fullname', 'author',
+            'url', 'id', 'name', 'fullname', 'author', 'description',
             # Metadata
             'create_date', 'update_date', 'original_type', 'is_public', 'init_file',
             # Version control
@@ -64,7 +64,7 @@ class ELOSerializerV2(serializers.ModelSerializer):
         model = ELO
         fields = (
             # Basic information
-            'url', 'id', 'name', 'fullname', 'author',
+            'url', 'id', 'name', 'fullname', 'author', 'description',
             # Metadata
             'create_date', 'update_date', 'metadata', 'original_type', 'is_public', 'init_file', 'reusability_tree',
             # Version control
@@ -75,11 +75,9 @@ class ELOLiteSerializer(serializers.ModelSerializer):
         model = ELO
         fields = (
             # Basic information
-            'id', 'name', 'fullname', 'author',
+            'id', 'name', 'author',
             # Metadata
-            'create_date', 'update_date', 'original_type', 'is_public', 'init_file',
-            # Version control
-            'version', 'parent_elo', 'parent_elo_version' )
+            'original_type', 'is_public', 'init_file',)
 
 
 class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):

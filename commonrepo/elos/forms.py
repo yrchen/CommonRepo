@@ -16,7 +16,7 @@ from .models import ELO
 class ELOForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'original_type']
+        fields = ['name', 'author', 'description', 'original_type']
 
     def __init__(self, *args, **kwargs):
         super(ELOForm, self).__init__(*args, **kwargs)
@@ -31,7 +31,7 @@ class ELOForm(ModelForm):
 class ELOForkForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'original_type', 'init_file', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
+        fields = ['name', 'author', 'description', 'original_type', 'init_file', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -42,6 +42,8 @@ class ELOForkForm(ModelForm):
         self.fields["author"].queryset = User.objects.filter(username=self.request_user)
         self.fields["author"].empty_label = None
         self.fields["author"].widget.attrs['readonly'] = True
+        self.fields["description"].initial = elo_original.description
+        self.fields["description"].widget.attrs['readonly'] = True
         self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
         self.fields["init_file"].initial = elo_original.init_file
@@ -66,7 +68,7 @@ class ELOForkForm(ModelForm):
 class ELOUpdateForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'original_type', 'is_public', 'metadata']
+        fields = ['name', 'description', 'original_type', 'is_public', 'metadata']
 
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)
