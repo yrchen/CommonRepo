@@ -17,9 +17,10 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 from rest_framework.views import APIView
 
+from rest_framework_tracking.mixins import LoggingMixin
+
 from actstream import action
 
-from commonrepo.api.tracking import LoggingMixin
 from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
 
