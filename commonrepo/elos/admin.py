@@ -9,7 +9,7 @@ from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityT
 
 class ELOAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'uuid']}),
+        ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'description', 'uuid']}),
         ('ELO Metadata',     {'fields': ['original_type', 'metadata']}),
         ('ELO Version',      {'fields': ['version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']}),
     ]
