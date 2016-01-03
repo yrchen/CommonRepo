@@ -95,7 +95,7 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        elo = get_object_or_404t(ELO, id=self.kwargs['pk'])
+        elo = get_object_or_404(ELO, id=self.kwargs['pk'])
         parent_elos = []
 
         if elo.parent_elo_id != settings.ELO_ROOT_ID:
