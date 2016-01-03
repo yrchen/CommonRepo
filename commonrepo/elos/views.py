@@ -24,7 +24,7 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
         return super(ELOsCreateView, self).get_success_url()
 
 
-class ELOsDetailView(LoginRequiredMixin, DetailView):
+class ELOsDetailView(DetailView):
     model = ELO
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
