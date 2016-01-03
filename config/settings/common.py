@@ -64,6 +64,9 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'commonrepo.users',  # CommonRepo custom users app
 
+    # CommonRepo common apps
+    'commonrepo.main',
+
     # CommonRepo custom apps
     'commonrepo.elos',
     'commonrepo.groups',
