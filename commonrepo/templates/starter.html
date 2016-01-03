@@ -7,6 +7,9 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <!-- Google Site-->
+    <meta name="google-site-verification" content="cPWx6iSeojj6XLRGYhqDk8DCIFXCwlR7qPn-gIGBHLA" />
+
     {% block opengraph %}
     <meta property="og:site_name" content="Common Repository" />
     <meta property="og:title" content="{% block og_title %}None{% endblock og_title %}" />
@@ -27,6 +30,24 @@
     <link rel="stylesheet" href="{% static "AdminLTE/css/AdminLTE.min.css" %}">
     <link rel="stylesheet" href="{% static "AdminLTE/css/skins/skin-black.min.css" %}">
     {% endblock css %}
+
+    <!-- REQUIRED JS SCRIPTS -->
+    {% block javascript %}
+    <!-- jQuery 2.1.4 -->
+    <script src="{% static "plugins/jQuery/jQuery-2.1.4.min.js" %}"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <!-- SlimScroll -->
+    <script src="{% static "plugins/slimScroll/jquery.slimscroll.min.js" %}" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="{% static "plugins/fastclick/fastclick.min.js" %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static "AdminLTE/js/app.min.js" %}"></script>
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Addthis-->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896f69920ba750" async="async"></script>
+    {% endblock javascript %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -149,22 +170,5 @@
       
     </div><!-- ./wrapper -->
 
-    <!-- REQUIRED JS SCRIPTS -->
-    {% block javascript %}
-    <!-- jQuery 2.1.4 -->
-    <script src="{% static "plugins/jQuery/jQuery-2.1.4.min.js" %}"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <!-- SlimScroll -->
-    <script src="{% static "plugins/slimScroll/jquery.slimscroll.min.js" %}" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src="{% static "plugins/fastclick/fastclick.min.js" %}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static "AdminLTE/js/app.min.js" %}"></script>
-    <!-- Google -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <!-- Addthis-->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896f69920ba750" async="async"></script>
-    {% endblock javascript %}
   </body>
 </html>
