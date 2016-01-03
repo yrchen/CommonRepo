@@ -35,6 +35,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Author</th>
+                <th>Description</th>
                 <th>Create Date</th>
                 <th>Update Date</th>
                 <th>Fork Count</th>
@@ -56,6 +57,7 @@
                     </div>
                   </a>
                 </td>
+                <td itemprop="description">{{object.description}}</td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td><a href="{% url 'elos:elos-network' object.id %}">{{fork_count}}</a></td>
