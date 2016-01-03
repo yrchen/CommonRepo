@@ -6,6 +6,16 @@
     <title>Common Repository | {% block title %}Home{% endblock title %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    {% block opengraph %}
+    <meta property="og:site_name" content="Common Repository" />
+    <meta property="og:title" content="{% block og_title %}None{% endblock og_title %}" />
+    <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}" />
+    <meta property="og:url" content="{% block og_url %}None{% endblock og_url %}" />
+    <meta property="og:image" content="{% block og_image %}None{% endblock og_image %}" />
+    <meta property="og:description" content="{% block og_description %}None{% endblock og_description %}" />
+    {% endblock opengraph %}
+
     {% block css %}
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
