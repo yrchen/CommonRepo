@@ -339,6 +339,7 @@ class ELO(models.Model):
     # basic infor
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of ELO"), blank=True, max_length=255)
+    description = models.CharField(_("Description of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
     uuid = models.UUIDField(_("UUID"), default=uuid4)
     # metadata
