@@ -43,7 +43,7 @@ markdown
 # Django REST Framework
 djangorestframework==3.3.2
 djangorestframework-recursive
-drf-tracking
+drf-tracking==0.2.4
 
 # Django tools
 django-filter==0.11.0
