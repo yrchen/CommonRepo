@@ -356,6 +356,7 @@ def elos_fork(request, pk):
         if elo_original.is_public:
             elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
                                          author = request.user,
+                                         description = elo_original.description,
                                          original_type = elo_original.original_type,
                                          init_file = elo_original.init_file,
                                          version = 1,
@@ -406,6 +407,7 @@ class ELOFork(LoggingMixin, APIView):
             if elo_original.is_public:
                 elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
                                              author = request.user,
+                                             description = elo_original.description,
                                              original_type = elo_original.original_type,
                                              init_file = elo_original.init_file,
                                              version = 1,
