@@ -48,8 +48,14 @@
             <tbody>
               <tr>
                 <td><a href="{% url 'elos:elos-detail' object.id %}">{{object.id}}</a></td>
-                <td>{{object.name}}</td>
-                <td><a href="{% url 'users:detail' object.author %}">{{object.author}}</a></td>
+                <td itemprop="name">{{object.name}}</td>
+                <td>
+                  <a href="{% url 'users:detail' object.author %}">
+                    <div itemprop="author" itemscope itemtype="http://schema.org/Person">
+                    {{object.author}}
+                    </div>
+                  </a>
+                </td>
                 <td>{{object.create_date}}</td>
                 <td>{{object.update_date}}</td>
                 <td><a href="{% url 'elos:elos-network' object.id %}">{{fork_count}}</a></td>
