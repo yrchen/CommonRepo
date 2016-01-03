@@ -61,17 +61,23 @@
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
               {% block navbar_messages %}
-              {% include "widgets/menu-messages.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-messages.html" %}
+              {% endif %}
               {% endblock navbar_messages %}
 
               <!-- Notifications Menu -->
               {% block navbar_notifications %}
-              {% include "widgets/menu-notification.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-notification.html" %}
+              {% endif %}
               {% endblock navbar_notifications %}
               
               <!-- Tasks Menu -->
               {% block navbar_tasks %}
-              {% include "widgets/menu-tasks.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-tasks.html" %}
+              {% endif %}
               {% endblock navbar_tasks %}
               
               <!-- User Account Menu -->
@@ -92,7 +98,9 @@
       
       <!-- Left side column. contains the logo and sidebar -->
       {% block sidebar_main %}
-      {% include "widgets/sidebar-main.html" %}
+      {% if request.user.is_authenticated %}
+        {% include "widgets/sidebar-main.html" %}
+      {% endif%}
       {% endblock sidebar_main %}
 
       <!-- Content Wrapper. Contains page content -->
@@ -134,7 +142,9 @@
 
       <!-- Control Sidebar -->
       {% block sidebar_control %}
-      {% include "widgets/sidebar-control.html" %}
+      {% if request.user.is_authenticated %}
+        {% include "widgets/sidebar-control.html" %}
+      {% endif %}
       {% endblock sidebar_control %}
       
     </div><!-- ./wrapper -->
@@ -151,6 +161,8 @@
     <script src="{% static "plugins/fastclick/fastclick.min.js" %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static "AdminLTE/js/app.min.js" %}"></script>
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     {% endblock javascript %}
   </body>
 </html>
