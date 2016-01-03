@@ -6,6 +6,16 @@
     <title>Common Repository | {% block title %}Home{% endblock title %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    {% block opengraph %}
+    <meta property="og:site_name" content="Common Repository" />
+    <meta property="og:title" content="{% block og_title %}None{% endblock og_title %}" />
+    <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}" />
+    <meta property="og:url" content="{% block og_url %}None{% endblock og_url %}" />
+    <meta property="og:image" content="{% block og_image %}None{% endblock og_image %}" />
+    <meta property="og:description" content="{% block og_description %}None{% endblock og_description %}" />
+    {% endblock opengraph %}
+
     {% block css %}
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
@@ -26,7 +36,7 @@
     <![endif]-->
   </head>
 
-  <body class="hold-transition skin-black fixed sidebar-mini">
+  <body class="hold-transition skin-black fixed sidebar-mini" itemscope itemtype="http://schema.org/CreativeWork">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -51,17 +61,23 @@
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
               {% block navbar_messages %}
-              {% include "widgets/menu-messages.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-messages.html" %}
+              {% endif %}
               {% endblock navbar_messages %}
 
               <!-- Notifications Menu -->
               {% block navbar_notifications %}
-              {% include "widgets/menu-notification.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-notification.html" %}
+              {% endif %}
               {% endblock navbar_notifications %}
               
               <!-- Tasks Menu -->
               {% block navbar_tasks %}
-              {% include "widgets/menu-tasks.html" %}
+              {% if request.user.is_authenticated %}
+                {% include "widgets/menu-tasks.html" %}
+              {% endif %}
               {% endblock navbar_tasks %}
               
               <!-- User Account Menu -->
@@ -82,7 +98,9 @@
       
       <!-- Left side column. contains the logo and sidebar -->
       {% block sidebar_main %}
-      {% include "widgets/sidebar-main.html" %}
+      {% if request.user.is_authenticated %}
+        {% include "widgets/sidebar-main.html" %}
+      {% endif%}
       {% endblock sidebar_main %}
 
       <!-- Content Wrapper. Contains page content -->
@@ -124,7 +142,9 @@
 
       <!-- Control Sidebar -->
       {% block sidebar_control %}
-      {% include "widgets/sidebar-control.html" %}
+      {% if request.user.is_authenticated %}
+        {% include "widgets/sidebar-control.html" %}
+      {% endif %}
       {% endblock sidebar_control %}
       
     </div><!-- ./wrapper -->
@@ -141,6 +161,10 @@
     <script src="{% static "plugins/fastclick/fastclick.min.js" %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static "AdminLTE/js/app.min.js" %}"></script>
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Addthis-->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896f69920ba750" async="async"></script>
     {% endblock javascript %}
   </body>
 </html>
