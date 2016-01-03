@@ -64,6 +64,9 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'commonrepo.users',  # CommonRepo custom users app
 
+    # CommonRepo common apps
+    'commonrepo.main',
+
     # CommonRepo custom apps
     'commonrepo.elos',
     'commonrepo.groups',
@@ -378,3 +381,5 @@ DASHBOARD_MAX_ELOS_ALL_PER_PAGE = 8
 
 ELO_ROOT_ID = 1
 ELO_SIMILARITY_THRESHOLD = 0.5
+
+VERSION = "v0.2.1"
