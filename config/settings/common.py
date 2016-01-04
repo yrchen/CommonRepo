@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = (
     'annoying', # django-annoying
     'messages_extends', # django-messages-extends
     'notifications', # django-notifications-hq
+    'bootstrap_pagination', # django-bootstrap-pagination
 )
 
 # Apps specific for this project go here.
