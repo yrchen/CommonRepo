@@ -18,6 +18,20 @@ class ELOsCreateView(LoginRequiredMixin, CreateView):
     template_name = "elos/elos_create.html"
     #success_url = "/elos"
 
+    def get_form_kwargs(self):
+        kwargs = super(ELOsCreateView, self).get_form_kwargs()
+        kwargs.update({'request_user': self.request.user})
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+
+    def form_valid(self, form):
+        # only staff can choose user
+        if not self.request.user.is_staff:
+            form.instance.author = self.request.user
+            form.save()
+
+        return super(ELOsCreateView, self).form_valid(form)
+
     def get_success_url(self):
         # send action to action stream
         action.send(self.request.user, verb='created', target=self.object)
