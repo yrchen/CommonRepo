@@ -66,7 +66,7 @@ class ELOSerializerV2(serializers.ModelSerializer):
             # Basic information
             'url', 'id', 'name', 'fullname', 'author', 'description',
             # Metadata
-            'create_date', 'update_date', 'metadata', 'original_type', 'is_public', 'init_file', 'reusability_tree',
+            'create_date', 'update_date', 'metadata', 'original_type', 'license', 'is_public', 'init_file', 'reusability_tree',
             # Version control
             'version', 'parent_elo', 'parent_elo_version' )
 
