@@ -54,6 +54,7 @@ django-messages-extends
 django-notifications-hq
 django-activity-stream
 django-bootstrap-pagination
+django-reversion
 
 # Authentication
 djoser==0.4.0
