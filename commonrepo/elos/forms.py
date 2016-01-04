@@ -16,7 +16,7 @@ from .models import ELO
 class ELOForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'description', 'original_type']
+        fields = ['name', 'author', 'description', 'original_type', 'license']
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
