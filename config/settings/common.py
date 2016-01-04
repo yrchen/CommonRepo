@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = (
     'annoying', # django-annoying
     'messages_extends', # django-messages-extends
     'notifications', # django-notifications-hq
+    'bootstrap_pagination', # django-bootstrap-pagination
 )
 
 # Apps specific for this project go here.
@@ -384,6 +385,8 @@ VERSION = "v0.2.1"
 
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8
 DASHBOARD_MAX_ELOS_ALL_PER_PAGE = 8
+ELOS_MAX_ITEMS_PER_PAGE = 20
+GROUPS_MAX_ITEMS_PER_PAGE = 20
 
 # ELO
 ELO_ROOT_ID = 1

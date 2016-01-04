@@ -91,12 +91,14 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
 class ELOsListView(ListView):
     template_name = 'elos/elos_list.html'
+    paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
 
     def get_queryset(self):
         return ELO.objects.all()
 
 class ELOsMyListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
+    paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)

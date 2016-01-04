@@ -53,6 +53,7 @@ django-annoying
 django-messages-extends
 django-notifications-hq
 django-activity-stream
+django-bootstrap-pagination
 
 # Authentication
 djoser==0.4.0

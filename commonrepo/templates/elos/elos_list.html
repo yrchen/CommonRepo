@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block title %}All ELOs{% endblock %}
 {% block page_title %}All ELOs{% endblock %}
 {% block page_description %}All ELOs on Common Repository{% endblock %}
@@ -63,7 +65,9 @@
       <div class="box-footer clearfix">
         <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create ELO</a>
         <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-info btn-flat pull-left">View My ELOs</a>
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
