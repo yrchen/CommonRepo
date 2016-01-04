@@ -11,8 +11,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    {% block google_site %}
     <!-- Google Site-->
     <meta name="google-site-verification" content="{% get_settings_value "GOOGLE_SITE_VERIFICATION" %}" />
+    {% endblock google_site %}
 
     {% block opengraph %}
     <meta property="og:site_name" content="Common Repository" />
