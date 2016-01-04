@@ -141,3 +141,5 @@ CACHES = {
 }
 
 # Your production stuff: Below this line define 3rd party library settings
+
+OAUTH2_CLIENT_ID_GOOGLE = env('OAUTH2_CLIENT_ID_GOOGLE')
