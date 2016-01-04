@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from licenses.models import License
 from mptt import models as MPTTmodels
 
 from commonrepo.users.models import User as User
@@ -346,6 +347,7 @@ class ELO(models.Model):
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
     metadata = models.OneToOneField(ELOMetadata, blank=True, null=True)
+    license = models.ForeignKey(License, related_name='elos', blank=True, null=True)
     original_type = models.ForeignKey(ELOType, to_field='type_id', related_name='elos')
     is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=get_random_filename)

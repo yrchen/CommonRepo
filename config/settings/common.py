@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = (
     'notifications', # django-notifications-hq
     'bootstrap_pagination', # django-bootstrap-pagination
     'reversion', # django-reversion
+    'licenses', # django-licenses
 )
 
 # Apps specific for this project go here.

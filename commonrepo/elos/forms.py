@@ -16,7 +16,7 @@ from .models import ELO
 class ELOForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'description', 'original_type']
+        fields = ['name', 'author', 'description', 'original_type', 'license']
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -41,7 +41,7 @@ class ELOForm(ModelForm):
 class ELOForkForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'description', 'original_type', 'init_file', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
+        fields = ['name', 'author', 'description', 'original_type', 'license', 'init_file', 'version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -56,6 +56,8 @@ class ELOForkForm(ModelForm):
         self.fields["description"].widget.attrs['readonly'] = True
         self.fields["original_type"].initial = elo_original.original_type
         self.fields["original_type"].widget.attrs['readonly'] = True
+        self.fields["license"].initial = elo_original.license
+        self.fields["license"].widget.attrs['readonly'] = True
         self.fields["init_file"].initial = elo_original.init_file
         self.fields["init_file"].widget.attrs['readonly'] = True
         self.fields["version"].initial = 1
@@ -78,7 +80,7 @@ class ELOForkForm(ModelForm):
 class ELOUpdateForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'description', 'original_type', 'is_public', 'metadata']
+        fields = ['name', 'description', 'original_type', 'license', 'is_public', 'metadata']
 
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)

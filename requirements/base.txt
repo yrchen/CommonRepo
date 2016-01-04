@@ -55,6 +55,7 @@ django-notifications-hq
 django-activity-stream
 django-bootstrap-pagination
 django-reversion
+django-licenses==0.2.5
 
 # Authentication
 djoser==0.4.0
