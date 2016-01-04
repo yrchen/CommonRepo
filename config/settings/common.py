@@ -375,11 +375,15 @@ AVATAR_STORAGE_DIR = 'avatar'
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 
-# System variables
+#
+# System config variables
+GOOGLE_SITE_VERIFICATION = "cPWx6iSeojj6XLRGYhqDk8DCIFXCwlR7qPn-gIGBHLA"
+
+VERSION = "v0.2.1"
+
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8
 DASHBOARD_MAX_ELOS_ALL_PER_PAGE = 8
 
+# ELO
 ELO_ROOT_ID = 1
 ELO_SIMILARITY_THRESHOLD = 0.5
-
-VERSION = "v0.2.1"
