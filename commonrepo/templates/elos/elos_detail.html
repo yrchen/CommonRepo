@@ -5,6 +5,8 @@
 {% load mptt_tags %}
 {% load static %}
 
+{% load commonrepo_tags %}
+
 {% block title %}ELOs - {{object.name}}{% endblock %}
 {% block page_title %}ELOs Detail{% endblock %}
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
@@ -89,7 +91,7 @@
         <div id="shareELOonGooglePlus">
           <button
             class="g-interactivepost btn btn-default"
-            data-clientid="205004874679-sce0aiev2rgvu41sjve3fpeqqb85cfeq.apps.googleusercontent.com"
+            data-clientid="{% get_settings_value "OAUTH2_CLIENT_ID_GOOGLE" %}"
             data-contenturl="{{object.get_absolute_url}}"
             data-calltoactionlabel="VISIT"
             data-calltoactionurl="http://www.commonrepo.com/"
