@@ -8,7 +8,7 @@ from reversion.admin import VersionAdmin
 
 from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityTree
 
-class ELOAdmin(VersionAdmin, admin.ModelAdmin):
+class ELOAdmin(VersionAdmin):
     fieldsets = [
         ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'description', 'uuid']}),
         ('ELO Metadata',     {'fields': ['original_type', 'metadata']}),
@@ -17,7 +17,7 @@ class ELOAdmin(VersionAdmin, admin.ModelAdmin):
     
 admin.site.register(ELO, ELOAdmin)
 
-class ELOTypeAdmin(admin.ModelAdmin):
+class ELOTypeAdmin(VersionAdmin):
     fieldsets = [
         ('Type Name',         {'fields': ['name']}),
         ('Type ID',           {'fields': ['type_id']}),
@@ -25,7 +25,7 @@ class ELOTypeAdmin(admin.ModelAdmin):
     
 admin.site.register(ELOType, ELOTypeAdmin)
 
-class ELOMetadataAdmin(admin.ModelAdmin):
+class ELOMetadataAdmin(VersionAdmin):
     fieldsets = [
         (
             'Gerneral', {
