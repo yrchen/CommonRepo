@@ -377,6 +377,7 @@ MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 
 #
 # System config variables
+GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
 GOOGLE_SITE_VERIFICATION = "cPWx6iSeojj6XLRGYhqDk8DCIFXCwlR7qPn-gIGBHLA"
 
 VERSION = "v0.2.1"
