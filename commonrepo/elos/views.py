@@ -98,6 +98,7 @@ class ELOsListView(ListView):
 
 class ELOsMyListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
+    paginate_by = 20
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
