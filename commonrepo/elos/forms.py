@@ -19,7 +19,17 @@ class ELOForm(ModelForm):
         fields = ['name', 'author', 'description', 'original_type']
 
     def __init__(self, *args, **kwargs):
+        self.request_user = kwargs.pop("request_user")
         super(ELOForm, self).__init__(*args, **kwargs)
+
+        # check if user is not staff
+        if not self.request_user.is_staff:
+            self.fields["author"].queryset = User.objects.filter(username=self.request_user)
+            self.fields["author"].widget.attrs['readonly'] = True
+
+        # author can't be empty
+        self.fields["author"].empty_label = None
+
         self.helper = FormHelper(self)
         self.helper.layout.append(
             FormActions(
