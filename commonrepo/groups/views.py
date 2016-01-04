@@ -90,6 +90,7 @@ class GroupsListView(LoginRequiredMixin, ListView):
 
 class GroupsMyListView(LoginRequiredMixin, ListView):
     template_name = 'groups/groups_my_list.html'
+    paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
 
     def get_queryset(self):
         return Group.objects.filter(creator=self.request.user)
