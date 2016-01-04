@@ -61,7 +61,7 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     def perform_update(self, serializer):
         # bumped version
         elo_instance = serializer.save()
-        serializer.save(version=elo_instance.version+1)
+        serializer.save(author=self.request.user, version=elo_instance.version+1)
         # send action to action stream
         action.send(self.request.user, verb='updated', target=elo_instance)
 
