@@ -91,6 +91,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
 class ELOsListView(ListView):
     template_name = 'elos/elos_list.html'
+    paginate_by = 20
 
     def get_queryset(self):
         return ELO.objects.all()
