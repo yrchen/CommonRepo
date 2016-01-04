@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render
@@ -82,6 +83,7 @@ class GroupsJoinView(LoginRequiredMixin, UpdateView):
 
 class GroupsListView(LoginRequiredMixin, ListView):
     template_name = 'groups/groups_list.html'
+    paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
 
     def get_queryset(self):
         return Group.objects.all()
