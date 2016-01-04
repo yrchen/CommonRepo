@@ -59,6 +59,7 @@ THIRD_PARTY_APPS = (
     'messages_extends', # django-messages-extends
     'notifications', # django-notifications-hq
     'bootstrap_pagination', # django-bootstrap-pagination
+    'reversion', # django-reversion
 )
 
 # Apps specific for this project go here.
