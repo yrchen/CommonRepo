@@ -250,7 +250,7 @@
           <ul class="root">
             {% recursetree nodes %}
               <li>
-                <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name|truncatechars:30 }}</a>
                 {% if node.elo == object %}
                 (Base node)
                 {% else %}

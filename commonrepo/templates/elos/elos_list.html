@@ -42,12 +42,12 @@
               {% for elo in object_list %}
               <tr>
                 <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
-                <td>{{elo.name}}</td>
+                <td>{{elo.name|truncatechars:30}}</td>
                 <td><a href="{% url 'users:detail' elo.author %}">{{elo.author}}</a></td>
                 <td>{{elo.create_date}}</td>
                 <td>{{elo.update_date}}</td>
                 <td>{{elo.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo}}</a></td>
+                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
                 <td>{{elo.parent_elo_version}}</td>
                 <td>{{elo.original_type}}</td>
                 <td>{{elo.license.abbreviation}}</td>
