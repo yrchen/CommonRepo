@@ -2,13 +2,14 @@
 
 {% load activity_tags %}
 {% load avatar_tags %}
+{% load licensing %}
 {% load mptt_tags %}
 {% load static %}
 
 {% load commonrepo_tags %}
 
 {% block title %}ELOs - {{object.name}}{% endblock %}
-{% block page_title %}ELOs Detail{% endblock %}
+{% block page_title %}{{object.name}}{% endblock %}
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
 {% block page_breadcrumb %}ELO Detail{% endblock %}
 
@@ -25,69 +26,147 @@
 {% block og_description %}Detail of {{object.name}}{% endblock og_description %}
 
 {% block content %}
+<!-- Function bar -->
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-info">
+      <div class="box-body">
+        {% if object.author == request.user or user.is_staff %}
+        <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
+        <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
+        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new ELO</a>
+        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
+        <a href="{% url 'elos:elos-alllist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to All ELOs List</a>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+<!-- /.Function bar -->
+
 <div class="row">
   <!-- col -->
-  <div class="col-md-12">
+  <div class="col-md-4">
+    <!-- Profile Image -->
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Info</h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
+        <h3 class="box-title">About Author</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" src="{% avatar_url object.author %}" alt="User {{ object.author.username }} profile picture">
+
+        <h3 class="profile-username text-center">{{ object.author.username }}</h3>
+
+        <h4 class="profile-username text-center">{{ object.author.get_full_name }}</h4>
+
+        <p class="text-muted text-center">{{ object.author.organization }}</p>
+
+        <p class="text-muted text-center"><small>Member since {{ object.author.date_joined }}</small></p>
+
+        {% if object.author == request.user %}
+        <a href="#" class="btn btn-primary btn-block"><b>It's You!</b></a>
+        {% else %}
+          {% if has_followed %}
+          <a href="#" class="btn btn-primary btn-block"><b>Followed</b></a>
+          {% else %}
+          <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+          {% endif %}
+        {% endif %}
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    
+    <!-- ELO Info -->
+    <div class="box box-primary">
       <div class="box-body">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Author</th>
-                <th>Description</th>
-                <th>Create Date</th>
-                <th>Update Date</th>
-                <th>Fork Count</th>
-                <th>Version</th>
-                <th>Parent ELO</th>
-                <th>Parent ELO version</th>
-                <th>Type</th>
-                <th>Public</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><a href="{% url 'elos:elos-detail' object.id %}">{{object.id}}</a></td>
-                <td itemprop="name">{{object.name}}</td>
-                <td>
-                  <a href="{% url 'users:detail' object.author %}">
-                    <div itemprop="author" itemscope itemtype="http://schema.org/Person">
-                    {{object.author}}
-                    </div>
-                  </a>
-                </td>
-                <td itemprop="description">{{object.description}}</td>
-                <td>{{object.create_date}}</td>
-                <td>{{object.update_date}}</td>
-                <td><a href="{% url 'elos:elos-network' object.id %}">{{fork_count}}</a></td>
-                <td>{{object.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a></td>
-                <td>{{object.parent_elo_version}}</td>
-                <td>{{object.original_type}}</td>
-                <td>                
-                  {% if object.is_public %}
-                  Yes
-                  {% else %}
-                  No
-                  {% endif %}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
+        <strong><i class="fa fa-font margin-r-5"></i> Description</strong>
+        <p class="text-muted">
+          {{ object.description }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-copyright margin-r-5"></i> License</strong>
+        <p class="text-muted">
+        {% if object.license %}
+          {{ object.license | license_logo }}<br>
+          {{ object.license | license_link }}<br>
+          {{ object.license | license_short_link }}<br>
+          {{ object.license.description }}
+        {% else %}
+          {{ object.license }}
+        {% endif %}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clock-o margin-r-5"></i> Create Date</strong>
+        <p class="text-muted">
+          {{ object.create_date }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clock-o margin-r-5"></i> Update Date</strong>
+        <p class="text-muted">
+          {{ object.update_date }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-code-fork margin-r-5"></i> Forks</strong>
+        <p class="text-muted">
+          {{fork_count}} (<a href="{% url 'elos:elos-network' object.id %}">check detail</a>)
+        </p>
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <div class="g-plusone" data-annotation="inline" data-width="300"></div>
+    </div><!-- /.box -->
+
+    <!-- ELO Additional Info -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Additional Info</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <strong><i class="fa fa-clone margin-r-5"></i> Version</strong>
+        <p class="text-muted">
+          {{ object.version }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-book margin-r-5"></i> Parent ELO</strong>
+        <p class="text-muted">
+          <a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo}}</a>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clone margin-r-5"></i> Parent ELO Version</strong>
+        <p class="text-muted">
+          {{ object.parent_elo.version }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clone margin-r-5"></i> Type</strong>
+        <p class="text-muted">
+          {{ object.original_type }}
+        </p>
+
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+  </div><!-- /.col -->
+
+  <!-- Social -->
+  <div class="col-md-8">
+    <div class="box box-info">
+      <div class="box-body">
+        <div class="g-plusone pull-left" data-annotation="inline" data-width="300"></div>
         <div id="shareELOonGooglePlus">
           <button
             class="g-interactivepost btn btn-default"
@@ -100,19 +179,13 @@
               Invite your friends on Google Plus
           </button>
         </div>
-        <div class="addthis_sharing_toolbox"></div>
-        <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
-        <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
-        <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
-        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new ELO</a>
-        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
+        <div class="addthis_sharing_toolbox pull-right"></div>
+      </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
 
   <!-- Activity -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Activity</h3>
@@ -131,14 +204,50 @@
           {% endfor %}
           </ul>
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
 
+  <!-- Reusability Tree -->
+  <div class="col-md-8">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Reusability Tree</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% if object.reusability_tree %}
+          <ul class="root">
+            {% recursetree nodes %}
+              <li>
+                <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                {% if node.elo == object %}
+                (Base node)
+                {% else %}
+                (S: {{ node.elo_similarity }}, D: {{ node.elo_diversity }})
+                {% endif %}
+                {% if not node.is_leaf_node %}
+                  <ul class="children">
+                      {{ children }}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endrecursetree %}
+          </ul>
+        {% else %}
+          <tr>
+            <td>Reusability Tree is not exist</td>
+          </tr>
+        {% endif %}
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+  <!-- /.Reusability Tree-->
+
   <!-- Metadata -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata</h3>
@@ -441,10 +550,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata -->
+  </div><!-- /. col -->
+  <!-- /.Metadata -->
 
   <!-- Metadata - Precise criteria (mandatory) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precise criteria (mandatory)</h3>
@@ -548,10 +658,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata - Precise criteria (mandatory) -->
+  </div><!-- /. col -->
+  <!-- /.Metadata - Precise criteria (mandatory) -->
 
   <!-- Metadata - Incremental criteria (rewritable) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Incremental criteria (rewritable)</h3>
@@ -639,10 +750,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata - Incremental criteria (rewritable) -->
+  </div><!-- /. col -->
+  <!-- /.Metadata - Incremental criteria (rewritable) -->
 
   <!-- Metadata Precedence criteria (rewritable) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precedence criteria (rewritable)</h3>
@@ -695,10 +807,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata Precedence criteria (rewritable) -->
+  </div><!-- /. col -->
+  <!-- /.Metadata Precedence criteria (rewritable) -->
 
   <!-- Metadata Time/duration criteria (rewritable) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Time/duration criteria (rewritable)</h3>
@@ -776,10 +889,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata Time/duration criteria (rewritable) -->
+  </div><!-- /. col -->
+  <!-- /.Metadata Time/duration criteria (rewritable) -->
 
   <!-- Metadata - Single-choice criteria (rewritable) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Single-choice criteria (rewritable)</h3>
@@ -887,10 +1001,11 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata - Single-choice criteria (rewritable) -->
+  </div><!-- /. col -->
+  <!-- /.Metadata - Single-choice criteria (rewritable) -->
 
   <!-- Metadata - Many-choice criteria (rewritable) -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Many-choice criteria (rewritable)</h3>
@@ -943,56 +1058,27 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /.Metadata - Many-choice criteria (rewritable)-->
-
-  <!-- Reusability Tree -->
-  <div class="col-md-12">
-    <div class="box box-info collapsed-box">
-      <div class="box-header with-border">
-        <h3 class="box-title">Reusability Tree</h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="table-bordered">
-          <table class="table no-margin">
-            <thead>
-            </thead>
-            <tbody>
-              {% if object.reusability_tree %}
-                <ul class="root">
-                  {% recursetree nodes %}
-                    <li>
-                      <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
-                      {% if node.elo == object %}
-                      (Base node)
-                      {% else %}
-                      (S: {{ node.elo_similarity }}, D: {{ node.elo_diversity }})
-                      {% endif %}
-                      {% if not node.is_leaf_node %}
-                        <ul class="children">
-                            {{ children }}
-                        </ul>
-                      {% endif %}
-                    </li>
-                  {% endrecursetree %}
-                </ul>
-              {% else %}
-                <tr>
-                  <td>Reusability Tree is not exist</td>
-                </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
-      </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
-    </div><!-- /.box -->
-  </div><!-- /.Reusability Tree-->
+  </div><!-- /. col -->
+  <!-- /.Metadata - Many-choice criteria (rewritable)-->
 
 </div><!-- /.row -->
+
+<!-- Function bar -->
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-info">
+      <div class="box-body">
+        {% if object.author == request.user or user.is_staff %}
+        <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
+        <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
+        <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new ELO</a>
+        <a href="{% url 'elos:elos-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My ELOs List</a>
+        <a href="{% url 'elos:elos-alllist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to All ELOs List</a>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+<!-- /.Function bar -->
 {% endblock content %}
