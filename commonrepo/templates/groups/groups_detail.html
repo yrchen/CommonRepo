@@ -1,17 +1,62 @@
 {% extends "starter.html" %}
 
 {% load activity_tags %}
+{% load avatar_tags %}
 
 {% block title %}Groups - {{object.name}}{% endblock %}
-{% block page_title %}Groups Detail{% endblock %}
+{% block page_title %}{{object.name}}{% endblock %}
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
 {% block page_breadcrumb %}Group Detail{% endblock %}
 
 {% block content %}
+<!-- Function bar -->
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-info">
+      <div class="box-body">
+        {% if object.creator == request.user or user.is_staff %}
+        <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
+        {% endif %}
+        <a href="{% url 'groups:groups-abort' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Abort this Group</a>
+        <a href="{% url 'groups:groups-join' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
+        <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new Group</a>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+<!-- /.Function bar -->
 
 <div class="row">
-  <!-- col -->
-  <div class="col-md-12">
+  <div class="col-md-4">
+    <!-- Group Creator Info -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">About Creator</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body box-profile">
+        <img class="profile-user-img img-responsive img-circle" src="{% avatar_url object.creator %}" alt="User {{ object.creator.username }} profile picture">
+
+        <h3 class="profile-username text-center">{{ object.creator.get_full_name }}</h3>
+
+        <p class="text-muted text-center">{{ object.creator.organization }}</p>
+
+        <p class="text-muted text-center"><small>Member since {{ object.creator.date_joined }}</small></p>
+
+        {% if object.creator == request.user %}
+        <a href="#" class="btn btn-primary btn-block"><b>It's You!</b></a>
+        {% else %}
+          {% if has_followed %}
+          <a href="#" class="btn btn-primary btn-block"><b>Followed</b></a>
+          {% else %}
+          <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+          {% endif %}
+        {% endif %}
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <!-- /.Group Creator Info -->
+
+    <!-- Group Info -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Groups - {{object.name}}</h3>
@@ -70,9 +115,10 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
+  <!-- /.Group Info-->
 
   <!-- Activity -->
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Activity</h3>
