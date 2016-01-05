@@ -133,14 +133,14 @@
 
         <strong><i class="fa fa-clock-o margin-r-5"></i> Create Date</strong>
         <p class="text-muted">
-          {{ object.create_date }}
+          {{ object.create_date }} ({{ object.create_date|timesince }} ago)
         </p>
 
         <hr>
 
         <strong><i class="fa fa-clock-o margin-r-5"></i> Update Date</strong>
         <p class="text-muted">
-          {{ object.update_date }}
+          {{ object.update_date }} ({{ object.update_date|timesince }} ago)
         </p>
 
         <hr>
