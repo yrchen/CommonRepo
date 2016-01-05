@@ -65,6 +65,24 @@
 
         <p class="text-muted text-center"><small>Member since {{ object.author.date_joined }}</small></p>
 
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item">
+            <b>Followers</b> <a class="pull-right">{% get_user_followers_count object.author %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Following</b> <a class="pull-right">{% get_user_following_count object.author %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Friends</b> <a class="pull-right">{% get_user_friends_count object.author %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count object.author %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Groups</b> <a class="pull-right">{% get_user_group_count object.author %}</a>
+          </li>
+        </ul>
+
         {% if object.author == request.user %}
         <a href="#" class="btn btn-primary btn-block"><b>It's You!</b></a>
         {% else %}
