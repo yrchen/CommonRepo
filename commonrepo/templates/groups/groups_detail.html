@@ -3,6 +3,8 @@
 {% load activity_tags %}
 {% load avatar_tags %}
 
+{% load commonrepo_tags %}
+
 {% block title %}Groups - {{object.name}}{% endblock %}
 {% block page_title %}{{object.name}}{% endblock %}
 {% block page_description %}Detail of "{{object.name}}"{% endblock %}
@@ -48,6 +50,24 @@
 
         <p class="text-muted text-center"><small>Member since {{ object.creator.date_joined }}</small></p>
 
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item">
+            <b>Followers</b> <a class="pull-right">{% get_user_followers_count object.creator %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Following</b> <a class="pull-right">{% get_user_following_count object.creator %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Friends</b> <a class="pull-right">{% get_user_friends_count object.creator %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count object.creator %}</a>
+          </li>
+          <li class="list-group-item">
+            <b>Groups</b> <a class="pull-right">{% get_user_group_count object.creator %}</a>
+          </li>
+        </ul>
+
         {% if object.creator == request.user %}
         <a href="#" class="btn btn-primary btn-block"><b>It's You!</b></a>
         {% else %}
@@ -66,7 +86,11 @@
       <div class="box-body">
         <strong><i class="fa fa-font margin-r-5"></i> Description</strong>
         <p class="text-muted">
-          {{ object.description }}
+          {% if object.description%}
+            {{ object.description }}
+          {% else %}
+            None
+          {% endif %}
         </p>
 
         <hr>
