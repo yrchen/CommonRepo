@@ -35,3 +35,14 @@ def get_user_followers_count(username):
     followers_count = user.followed_by.all().count()
 
     return followers_count
+
+@register.simple_tag
+def get_user_following_count(username):
+    try:
+        user = User.objects.get_by_natural_key(username)
+    except DoesNotExist:
+        return 0
+
+    following_count = user.userprofile.follows.all().count()
+
+    return following_count
