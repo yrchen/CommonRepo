@@ -50,7 +50,7 @@ drf-tracking==0.2.4
 # Django tools
 django-filter==0.11.0
 django-mptt==0.8.0
-django-avatar
+django-avatar==2.2.0
 django-annoying
 django-messages-extends
 django-notifications-hq
