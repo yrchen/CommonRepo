@@ -45,7 +45,7 @@
                 <td>{{elo.name|truncatechars:30}}</td>
                 <td><a href="{% url 'users:detail' elo.author %}">{{elo.author}}</a></td>
                 <td>{{elo.create_date|date:"SHORT_DATE_FORMAT"}}</td>
-                <td>{{elo.update_date}}</td>
+                <td>{{elo.update_date|timesince}} ago</td>
                 <td>{{elo.version}}</td>
                 <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
                 <td>{{elo.parent_elo_version}}</td>
