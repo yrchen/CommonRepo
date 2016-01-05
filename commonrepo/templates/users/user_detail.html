@@ -71,11 +71,7 @@
         <strong><i class="fa fa-graduation-cap margin-r-5"></i> Education</strong>
 
         <p class="text-muted">
-          {% if user.education %}
-            {{ user.education }}
-          {% else %}
-            None
-          {% endif %}
+          {{ user.education|default:"None" }}
         </p>
 
         <hr>
@@ -83,21 +79,13 @@
         <strong><i class="fa fa-book margin-r-5"></i> Teaching Category</strong>
 
         <p class="text-muted">
-          {% if user.teaching_category %}
-            {{ user.teaching_category }}
-          {% else %}
-            None
-          {% endif %}
+          {{ user.teaching_category|default:"None" }}
         </p>
 
         <strong><i class="fa fa-book margin-r-5"></i> Teaching Subject Area</strong>
 
         <p class="text-muted">
-          {% if user.teaching_subject_area %}
-            {{ user.teaching_subject_area }}
-          {% else %}
-            None
-          {% endif %}
+          {{ user.teaching_subject_area|default:"None" }}
         </p>
 
         <hr>
@@ -105,11 +93,7 @@
         <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
         <p class="text-muted">
-          {% if user.area %}
-            {{ user.area }}
-          {% else %}
-            None
-          {% endif %}
+          {{ user.area|default:"None" }}
         </p>
 
         <hr>
@@ -129,11 +113,7 @@
         <strong><i class="fa fa-user margin-r-5"></i> About Me</strong>
 
         <p>
-          {% if user.about %}
-            {{ user.about }}
-          {% else %}
-            None
-          {% endif %}
+          {{ user.about|default:"None" }}
         </p>
       </div>
       <!-- /.box-body -->
