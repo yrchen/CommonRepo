@@ -62,7 +62,7 @@ django-licenses==0.2.5
 
 # Authentication
 djoser==0.4.0
-django-oauth-toolkit
+django-oauth-toolkit==0.10.0
 
 # MongoDB
 pymongo
