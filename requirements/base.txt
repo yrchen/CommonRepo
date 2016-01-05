@@ -48,7 +48,7 @@ drf-tracking==0.2.4
 
 # Django tools
 django-filter==0.11.0
-django-mptt
+django-mptt==0.8.0
 django-avatar
 django-annoying
 django-messages-extends
