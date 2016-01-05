@@ -55,7 +55,7 @@ django-annoying==0.8.5
 django-messages-extends==0.4
 django-notifications-hq==1.0
 django-activity-stream==0.6.0
-django-bootstrap-pagination
+django-bootstrap-pagination==1.5.1
 django-reversion
 django-reversion-compare
 django-licenses==0.2.5
