@@ -39,7 +39,7 @@
               {% for group in object_list %}
                 <tr>
                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                  <td>{{group.name}}</td>
+                  <td>{{group.name|truncatechars:30}}</td>
                   <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
                   <td>{{group.create_date}}</td>
                   <td>{{group.update_date}}</td>
@@ -50,7 +50,7 @@
                     No
                     {% endif %}
                   </td>
-                  <td>{{group.description}}</td>
+                  <td>{{group.description|truncatechars:120}}</td>
                   <td>
                   {% for member in group.members.all %}
                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
@@ -98,7 +98,7 @@
               {% for group in request.user.commonrepo_groups_members.all %}
                 <tr>
                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
-                  <td>{{group.name}}</td>
+                  <td>{{group.name|truncatechars:30}}</td>
                   <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
                   <td>{{group.create_date}}</td>
                   <td>{{group.update_date}}</td>
@@ -109,7 +109,7 @@
                     No
                     {% endif %}
                   </td>
-                  <td>{{group.description}}</td>
+                  <td>{{group.description|truncatechars:120}}</td>
                   <td>
                   {% for member in group.members.all %}
                     <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
