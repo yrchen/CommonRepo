@@ -51,6 +51,11 @@ class ELOMetadataSerializer(serializers.ModelSerializer):
         model = ELOMetadata
         exclude = ('id',)
 
+class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ELOType
+        fields = ('id', 'name',)
+
 class ELOSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ELO
@@ -65,6 +70,7 @@ class ELOSerializer(serializers.HyperlinkedModelSerializer):
 class ELOSerializerV2(serializers.ModelSerializer):
     license = ELOLicenseSerializer(many=False, read_only=True)
     metadata = ELOMetadataSerializer(many=False, read_only=True)
+    original_type = ELOTypeSerializer(many=False, read_only=True)
     reusability_tree = ReusabilityTreeSerializer(many=False, read_only=True)
 
     class Meta:
@@ -85,12 +91,6 @@ class ELOLiteSerializer(serializers.ModelSerializer):
             'id', 'name', 'author',
             # Metadata
             'original_type', 'is_public', 'init_file',)
-
-
-class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ELOType
-        fields = ('name', 'type_id' )
 
 class ELOFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.SlugRelatedField(
