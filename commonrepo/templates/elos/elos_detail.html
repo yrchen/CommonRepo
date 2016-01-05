@@ -57,7 +57,9 @@
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" src="{% avatar_url object.author %}" alt="User {{ object.author.username }} profile picture">
 
-        <h3 class="profile-username text-center">{{ object.author.get_full_name }}</h3>
+        <h3 class="profile-username text-center">{{ object.author.username }}</h3>
+
+        <h4 class="profile-username text-center">{{ object.author.get_full_name }}</h4>
 
         <p class="text-muted text-center">{{ object.author.organization }}</p>
 
@@ -89,10 +91,14 @@
 
         <strong><i class="fa fa-copyright margin-r-5"></i> License</strong>
         <p class="text-muted">
+        {% if object.license %}
           {{ object.license | license_logo }}<br>
           {{ object.license | license_link }}<br>
           {{ object.license | license_short_link }}<br>
           {{ object.license.description }}
+        {% else %}
+          {{ object.license }}
+        {% endif %}
         </p>
 
         <hr>
