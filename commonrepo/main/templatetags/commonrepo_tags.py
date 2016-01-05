@@ -15,6 +15,17 @@ def get_settings_value(name):
     return getattr(settings, name, "")
 
 @register.simple_tag
+def get_user_friends_count(username):
+    try:
+        user = User.objects.get_by_natural_key(username)
+    except DoesNotExist:
+        return 0
+
+    friends_count = user.userprofile.friends.all().count()
+
+    return friends_count
+
+@register.simple_tag
 def get_user_followers_count(username):
     try:
         user = User.objects.get_by_natural_key(username)
