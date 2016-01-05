@@ -3,6 +3,9 @@ from __future__ import absolute_import, unicode_literals
 
 from django import template
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
+from commonrepo.users.models import User as User
 
 register = template.Library()
 
@@ -10,3 +13,14 @@ register = template.Library()
 @register.simple_tag
 def get_settings_value(name):
     return getattr(settings, name, "")
+
+@register.simple_tag
+def get_user_followers_count(username):
+    try:
+        user = User.objects.get_by_natural_key(username)
+    except DoesNotExist:
+        return 0
+
+    followers_count = user.followed_by.all().count()
+
+    return followers_count
