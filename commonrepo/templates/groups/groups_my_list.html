@@ -41,7 +41,7 @@
                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
                   <td>{{group.name|truncatechars:30}}</td>
                   <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
-                  <td>{{group.create_date}}</td>
+                  <td>{{group.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                   <td>{{group.update_date}}</td>
                   <td>
                     {% if group.is_public %}
@@ -100,7 +100,7 @@
                   <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
                   <td>{{group.name|truncatechars:30}}</td>
                   <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
-                  <td>{{group.create_date}}</td>
+                  <td>{{group.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                   <td>{{group.update_date}}</td>
                   <td>
                     {% if group.is_public %}
