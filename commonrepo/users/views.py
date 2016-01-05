@@ -23,17 +23,10 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         user = User.objects.get(username=self.kwargs['username'])
 
         # Count Friends and Followers
-        context['friends_count'] = user.userprofile.friends.all().count()
-        context['followers_count'] = user.followed_by.all().count()
-        context['following_count'] = user.userprofile.follows.all().count()
         context['has_followed'] = user.userprofile.follows.filter(username=self.request.user.username)
 
         # ELOs
-        context['elo_count'] = ELO.objects.filter(author=user).count()
         context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)
-
-        # Groups
-        context['group_count'] = Group.objects.filter(creator=user).count()
 
         return context
 

@@ -4,6 +4,8 @@
 {% load avatar_tags %}
 {% load activity_tags %}
 
+{% load commonrepo_tags %}
+
 {% block title %}Users - {{ user.username }}{% endblock %}
 {% block page_title %}Users {{ user.username }}'s Profile{% endblock %}
 {% block page_description %}User information{% endblock %}
@@ -29,19 +31,19 @@
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Followers</b> <a class="pull-right">{{ followers_count }}</a>
+            <b>Followers</b> <a class="pull-right">{% get_user_followers_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>Following</b> <a class="pull-right">{{ following_count }}</a>
+            <b>Following</b> <a class="pull-right">{% get_user_following_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>Friends</b> <a class="pull-right">{{ friends_count }}</a>
+            <b>Friends</b> <a class="pull-right">{% get_user_friends_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>ELOs</b> <a class="pull-right">{{ elo_count }}</a>
+            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>Groups</b> <a class="pull-right">{{ group_count }}</a>
+            <b>Groups</b> <a class="pull-right">{% get_user_group_count user %}</a>
           </li>
         </ul>
 
