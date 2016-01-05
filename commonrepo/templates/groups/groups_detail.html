@@ -20,6 +20,8 @@
         <a href="{% url 'groups:groups-abort' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Abort this Group</a>
         <a href="{% url 'groups:groups-join' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
         <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new Group</a>
+        <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Groups List</a>
+        <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to All Groups List</a>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
@@ -27,8 +29,9 @@
 <!-- /.Function bar -->
 
 <div class="row">
+  <!-- Group Info -->
   <div class="col-md-4">
-    <!-- Group Creator Info -->
+    <!-- Group Creator Info Box -->
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">About Creator</h3>
@@ -37,7 +40,9 @@
       <div class="box-body box-profile">
         <img class="profile-user-img img-responsive img-circle" src="{% avatar_url object.creator %}" alt="User {{ object.creator.username }} profile picture">
 
-        <h3 class="profile-username text-center">{{ object.creator.get_full_name }}</h3>
+        <h3 class="profile-username text-center">{{ object.creator.username }}</h3>
+
+        <h4 class="profile-username text-center">{{ object.creator.get_full_name }}</h4>
 
         <p class="text-muted text-center">{{ object.creator.organization }}</p>
 
@@ -54,66 +59,35 @@
         {% endif %}
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-    <!-- /.Group Creator Info -->
+    <!-- /.Group Creator Info Box -->
 
-    <!-- Group Info -->
-    <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title">Groups - {{object.name}}</h3>
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
+    <!-- Group Info Box -->
+    <div class="box box-primary">
       <div class="box-body">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Creator</th>
-                <th>Create Date</th>
-                <th>Update Date</th>
-                <th>Public</th>
-                <th>Description</th>
-                <th>Members</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><a href="{% url 'groups:groups-detail' object.id %}">{{object.id}}</a></td>
-                <td>{{object.name}}</td>
-                <td>{{object.creator}}</td>
-                <td>{{object.create_date}}</td>
-                <td>{{object.update_date}}</td>
-                <td>
-                  {% if object.is_public %}
-                  Yes
-                  {% else %}
-                  No
-                  {% endif %}
-                </td>
-                <td>{{object.description}}</td>
-                <td>
-                {% for member in group.members.all %}
-                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
-                {% endfor %}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
+        <strong><i class="fa fa-font margin-r-5"></i> Description</strong>
+        <p class="text-muted">
+          {{ object.description }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clock-o margin-r-5"></i> Create Date</strong>
+        <p class="text-muted">
+          {{ object.create_date }}
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-clock-o margin-r-5"></i> Update Date</strong>
+        <p class="text-muted">
+          {{ object.update_date }}
+        </p>
+
+        <hr>
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
-        <a href="{% url 'groups:groups-abort' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Abort this Group</a>
-        <a href="{% url 'groups:groups-join' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
-        <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new Group</a>
-        <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Groups List</a>
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
     </div><!-- /.box -->
+    <!-- /.Group Info Box -->
+
   </div><!-- /.col -->
   <!-- /.Group Info-->
 
@@ -137,11 +111,51 @@
           {% endfor %}
           </ul>
       </div><!-- /.box-body -->
-      <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
-      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+
+  <!-- Members -->
+  <div class="col-md-8">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Members</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <ul class="users-list clearfix">
+          {% for member in object.members.all %}
+            <li>
+                <img src="{% avatar_url member %}" alt="User {{ member.username }} profile picture"/>
+                <a href="{% url 'users:detail' member %}"><span class="users-list-date">{{ member.username }}</span></a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
 
 </div><!-- /.row -->
+
+<!-- Function bar -->
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-info">
+      <div class="box-body">
+        {% if object.creator == request.user or user.is_staff %}
+        <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
+        {% endif %}
+        <a href="{% url 'groups:groups-abort' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Abort this Group</a>
+        <a href="{% url 'groups:groups-join' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Join this Group</a>
+        <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create a new Group</a>
+        <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to My Groups List</a>
+        <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-default btn-flat pull-right">Back to All Groups List</a>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+<!-- /.Function bar -->
+
 {% endblock content %}
