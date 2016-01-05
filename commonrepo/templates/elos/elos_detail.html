@@ -112,11 +112,7 @@
       <div class="box-body">
         <strong><i class="fa fa-font margin-r-5"></i> Description</strong>
         <p class="text-muted">
-          {% if object.description %}
-            {{ object.description }}
-          {% else %}
-            None
-          {% endif %}
+          {{ object.description|default:"None" }}
         </p>
 
         <hr>
