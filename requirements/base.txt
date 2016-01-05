@@ -2,7 +2,7 @@
 django==1.8.4
 
 # Configuration
-django-environ==0.3.0
+django-environ==0.4.0
 django-secure==1.0.1
 whitenoise==2.0.3
 
