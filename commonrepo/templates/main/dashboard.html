@@ -132,13 +132,25 @@
         <div class="box-body no-padding">
             <div id="activities">
                 {% activity_stream 'user' request.user with_user_activity=True %}
-                  <ul>
-                  {% for action in stream %}
-                      <li>{% display_action action %}</li>
-                    {% empty %}
-                    No actions yet.
+                <ul class="timeline timeline-inverse">
+                  {% for action in stream|slice:":10"%}
+                  <!-- timeline item -->
+                  <li>
+                    <!-- timeline icon -->
+                    <i class="fa fa-envelope bg-blue"></i>
+                    <div class="timeline-item">
+                      <div class="timeline-body">
+                        {% display_action action %}
+                      </div>
+                    </div>
+                  </li>
+                  <!-- /.timeline item -->
                   {% endfor %}
-                  </ul>
+                  <!-- END timeline item -->
+                  <li>
+                    <i class="fa fa-clock-o bg-gray"></i>
+                  </li>
+                </ul>
             </div>
         </div><!-- /.box-body -->
         <div class="box-footer text-center">
