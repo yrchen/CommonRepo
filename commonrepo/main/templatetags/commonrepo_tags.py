@@ -5,6 +5,7 @@ from django import template
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
+from commonrepo.elos.models import ELO
 from commonrepo.users.models import User as User
 
 register = template.Library()
@@ -46,3 +47,14 @@ def get_user_following_count(username):
     following_count = user.userprofile.follows.all().count()
 
     return following_count
+
+@register.simple_tag
+def get_user_elo_count(username):
+    try:
+        user = User.objects.get_by_natural_key(username)
+    except DoesNotExist:
+        return 0
+
+    elo_count = ELO.objects.filter(author=user).count()
+
+    return elo_count
