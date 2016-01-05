@@ -39,6 +39,7 @@ celery==3.1.18
 # Your custom requirements go here
 Pygments==2.0.2
 markdown
+diff-match-patch
 
 # Django REST Framework
 djangorestframework==3.3.2
