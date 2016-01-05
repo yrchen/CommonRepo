@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from licenses.models import License
 from mptt.templatetags import mptt_tags
 
 from rest_framework import serializers
@@ -40,6 +41,11 @@ class ReusabilityTreeSerializer(serializers.Serializer):
 
         return result
 
+class ELOLicenseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = License
+        exclude = ('is_active', 'organization')
+
 class ELOMetadataSerializer(serializers.ModelSerializer):
     class Meta:
         model = ELOMetadata
@@ -57,6 +63,7 @@ class ELOSerializer(serializers.HyperlinkedModelSerializer):
             'version', 'parent_elo', 'parent_elo_version' )
 
 class ELOSerializerV2(serializers.ModelSerializer):
+    license = ELOLicenseSerializer(many=False, read_only=True)
     metadata = ELOMetadataSerializer(many=False, read_only=True)
     reusability_tree = ReusabilityTreeSerializer(many=False, read_only=True)
 
