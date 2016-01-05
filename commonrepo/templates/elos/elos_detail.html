@@ -31,6 +31,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
+        <a href="{% follow_url object %}?next={{ request.path }}" class="btn btn-sm btn-info btn-flat pull-left">
+          {% if request.user|is_following:object %}
+              Unfollow this ELO
+          {% else %}
+              Follow this ELO
+          {% endif %}
+        </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
         {% endif %}
@@ -105,11 +112,7 @@
       <div class="box-body">
         <strong><i class="fa fa-font margin-r-5"></i> Description</strong>
         <p class="text-muted">
-          {% if object.description %}
-            {{ object.description }}
-          {% else %}
-            None
-          {% endif %}
+          {{ object.description|default:"None" }}
         </p>
 
         <hr>
@@ -130,14 +133,14 @@
 
         <strong><i class="fa fa-clock-o margin-r-5"></i> Create Date</strong>
         <p class="text-muted">
-          {{ object.create_date }}
+          {{ object.create_date }} ({{ object.create_date|timesince }} ago)
         </p>
 
         <hr>
 
         <strong><i class="fa fa-clock-o margin-r-5"></i> Update Date</strong>
         <p class="text-muted">
-          {{ object.update_date }}
+          {{ object.update_date }} ({{ object.update_date|timesince }} ago)
         </p>
 
         <hr>
@@ -247,7 +250,7 @@
           <ul class="root">
             {% recursetree nodes %}
               <li>
-                <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name }}</a>
+                <a href="{% url 'elos:elos-detail' node.elo.id %}">{{ node.elo.name|truncatechars:30 }}</a>
                 {% if node.elo == object %}
                 (Base node)
                 {% else %}
@@ -1093,6 +1096,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
+        <a href="{% follow_url object %}?next={{ request.path }}" class="btn btn-sm btn-info btn-flat pull-left">
+          {% if request.user|is_following:object %}
+              Unfollow this ELO
+          {% else %}
+              Follow this ELO
+          {% endif %}
+        </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
         {% endif %}

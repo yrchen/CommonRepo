@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 from django import template
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.template.loader import render_to_string
 
 from commonrepo.elos.models import ELO
 from commonrepo.groups.models import Group
@@ -70,3 +71,9 @@ def get_user_group_count(username):
     group_count = Group.objects.filter(creator=user).count()
 
     return group_count
+
+@register.simple_tag
+def commonrepo_display_action(action_instance):
+    templates = 'misc/action.html'
+
+    return render_to_string(templates, {'action': action_instance})
