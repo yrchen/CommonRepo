@@ -5,10 +5,11 @@ from django.contrib import admin
 
 from mptt.admin import MPTTModelAdmin
 from reversion.admin import VersionAdmin
+from reversion_compare.admin import CompareVersionAdmin
 
 from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityTree
 
-class ELOAdmin(VersionAdmin):
+class ELOAdmin(CompareVersionAdmin):
     fieldsets = [
         ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'description', 'uuid']}),
         ('ELO Metadata',     {'fields': ['original_type', 'metadata', 'license']}),
@@ -17,7 +18,7 @@ class ELOAdmin(VersionAdmin):
     
 admin.site.register(ELO, ELOAdmin)
 
-class ELOTypeAdmin(VersionAdmin):
+class ELOTypeAdmin(CompareVersionAdmin):
     fieldsets = [
         ('Type Name',         {'fields': ['name']}),
         ('Type ID',           {'fields': ['type_id']}),
@@ -25,7 +26,7 @@ class ELOTypeAdmin(VersionAdmin):
     
 admin.site.register(ELOType, ELOTypeAdmin)
 
-class ELOMetadataAdmin(VersionAdmin):
+class ELOMetadataAdmin(CompareVersionAdmin):
     fieldsets = [
         (
             'Gerneral', {
