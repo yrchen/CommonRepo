@@ -31,6 +31,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
+        <a href="{% follow_url object %}?next={{ request.path }}" class="btn btn-sm btn-info btn-flat pull-left">
+          {% if request.user|is_following:object %}
+              Unfollow this ELO
+          {% else %}
+              Follow this ELO
+          {% endif %}
+        </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
         {% endif %}
@@ -1093,6 +1100,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
+        <a href="{% follow_url object %}?next={{ request.path }}" class="btn btn-sm btn-info btn-flat pull-left">
+          {% if request.user|is_following:object %}
+              Unfollow this ELO
+          {% else %}
+              Follow this ELO
+          {% endif %}
+        </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
         {% endif %}
