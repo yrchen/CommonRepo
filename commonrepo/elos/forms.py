@@ -16,7 +16,7 @@ from .models import ELO
 class ELOForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'author', 'description', 'original_type', 'license']
+        fields = ['name', 'author', 'description', 'original_type', 'license', 'init_file']
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -80,7 +80,7 @@ class ELOForkForm(ModelForm):
 class ELOUpdateForm(ModelForm):
     class Meta:
         model = ELO
-        fields = ['name', 'description', 'original_type', 'license', 'is_public', 'metadata']
+        fields = ['name', 'description', 'original_type', 'license', 'metadata', 'is_public', 'init_file']
 
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)
