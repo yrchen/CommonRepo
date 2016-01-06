@@ -41,7 +41,7 @@ class DashboardView(TemplateView):
 @csrf_exempt
 def follow_user(request, username):
     """
-    Creates or deletes the follow relationship between ``request.user`` and the ``user``
+    Creates the follow relationship between ``request.user`` and the ``user``
     """
     user = get_object_or_404(User, username=username)
 
@@ -49,3 +49,16 @@ def follow_user(request, username):
     user.userprofile.follower.add(request.user)
 
     return respond(request, 201)   # CREATED
+
+@login_required
+@csrf_exempt
+def unfollow_user(request, username):
+    """
+    Deletes the follow relationship between ``request.user`` and the ``user``
+    """
+    user = get_object_or_404(User, username=username)
+
+    actions.unfollow(request.user, user)
+    user.userprofile.follower.remove(request.user)
+
+    return respond(request, 204)   # NO CONTENT
