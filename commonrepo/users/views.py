@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+
+from actstream import actions
+from actstream.views import respond
 
 from braces.views import LoginRequiredMixin
 
@@ -69,3 +75,29 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
     slug_url_kwarg = "username"
+
+@login_required
+@csrf_exempt
+def follow_user(request, username):
+    """
+    Creates the follow relationship between ``request.user`` and the ``user``
+    """
+    user = get_object_or_404(User, username=username)
+
+    actions.follow(request.user, user, actor_only=False)
+    request.user.userprofile.follows.add(user)
+
+    return respond(request, 201)   # CREATED
+
+@login_required
+@csrf_exempt
+def unfollow_user(request, username):
+    """
+    Deletes the follow relationship between ``request.user`` and the ``user``
+    """
+    user = get_object_or_404(User, username=username)
+
+    actions.unfollow(request.user, user)
+    request.user.userprofile.follows.remove(user)
+
+    return respond(request, 204)   # NO CONTENT
