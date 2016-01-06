@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
 
 from actstream import actions
+from actstream.views import respond
+
 from braces.views import LoginRequiredMixin
 
 from commonrepo.elos.models import ELO
@@ -83,7 +85,7 @@ def follow_user(request, username):
     user = get_object_or_404(User, username=username)
 
     actions.follow(request.user, user, actor_only=False)
-    user.userprofile.follower.add(request.user)
+    request.user.userprofile.follows.add(user)
 
     return respond(request, 201)   # CREATED
 
@@ -96,6 +98,6 @@ def unfollow_user(request, username):
     user = get_object_or_404(User, username=username)
 
     actions.unfollow(request.user, user)
-    user.userprofile.follower.remove(request.user)
+    request.user.userprofile.follows.remove(user)
 
     return respond(request, 204)   # NO CONTENT
