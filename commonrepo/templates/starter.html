@@ -133,6 +133,8 @@
       {% block sidebar_main %}
       {% if request.user.is_authenticated %}
         {% include "widgets/sidebar-main.html" %}
+      {% else %}
+        {% include "widgets/sidebar-default.html" %}
       {% endif%}
       {% endblock sidebar_main %}
 
