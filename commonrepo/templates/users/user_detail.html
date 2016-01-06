@@ -50,10 +50,10 @@
         {% if object == request.user %}
         <a href="#" class="btn btn-primary btn-block"><b>It's You!</b></a>
         {% else %}
-          {% if has_followed %}
-          <a href="#" class="btn btn-primary btn-block"><b>Followed</b></a>
+          {% if request.user|is_following:object %}
+          <a href="{% url 'users:unfollow' object %}?next={{ request.path }}" class="btn btn-primary btn-block"><b>Unfollow</b></a>
           {% else %}
-          <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+          <a href="{% url 'users:follow' object %}?next={{ request.path }}" class="btn btn-primary btn-block"><b>Follow</b></a>
           {% endif %}
         {% endif %}
       </div>
