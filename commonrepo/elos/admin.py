@@ -11,7 +11,7 @@ from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityT
 
 class ELOAdmin(CompareVersionAdmin):
     fieldsets = [
-        ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'description', 'uuid']}),
+        ('ELO Info',         {'fields': ['name', 'fullname', 'author', 'description', 'uuid', 'is_public', 'init_file']}),
         ('ELO Metadata',     {'fields': ['original_type', 'metadata', 'license']}),
         ('ELO Version',      {'fields': ['version', 'parent_elo', 'parent_elo_uuid', 'parent_elo_version']}),
     ]
