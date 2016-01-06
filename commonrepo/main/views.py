@@ -45,7 +45,7 @@ def follow_user(request, username):
     """
     user = get_object_or_404(User, username=username)
 
-    actions.follow(request.user, user, actor_only=actor_only)
+    actions.follow(request.user, user, actor_only=False)
     user.userprofile.follower.add(request.user)
 
     return respond(request, 201)   # CREATED
