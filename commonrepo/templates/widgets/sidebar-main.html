@@ -39,22 +39,23 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li class="header">Main</li>
+      <li class="header">Main Navigation</li>
       <!-- Optionally, you can add icons to the links -->
-      <li class="treeview">
+      <li class="active treeview">
         <a href="#"><i class="fa fa-link"></i> <span>ELOs</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="{% url 'elos:elos-mylist' %}"><i class="fa fa-link"></i> <span>My ELOs</span></a></li>
           <li><a href="{% url 'elos:elos-alllist' %}"><i class="fa fa-link"></i> <span>All ELOs</span></a></li>
         </ul>
       </li>
-      <li class="treeview">
+      <li class="active treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Groups</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
           <li><a href="{% url 'groups:groups-mylist' %}"><i class="fa fa-link"></i> <span>My Groups</span></a></li>
           <li><a href="{% url 'groups:groups-alllist' %}"><i class="fa fa-link"></i> <span>All Groups</span></a></li>
         </ul>
       </li>
+      <li><a href="{% url 'about' %}"><i class="fa fa-flag"></i> <span>About</span></a></li>
     </ul><!-- /.sidebar-menu -->
   </section>
   <!-- /.sidebar -->
