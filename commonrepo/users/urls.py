@@ -30,7 +30,20 @@ urlpatterns = [
     # URL pattern for the UserUpdateView
     url(
         regex=r'^~update/$',
-        view=views.UserUpdateView.as_view(),
+        view=views.follow_user,
         name='update'
     ),
+
+    # URL for follow and unfollow user
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/follow/$',
+        view=views.follow_user,
+        name='follow'
+    ),
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/unfollow/$',
+        view=views.unfollow_user,
+        name='unfollow'
+    ),
+
 ]
