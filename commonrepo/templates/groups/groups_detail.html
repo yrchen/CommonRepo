@@ -159,7 +159,7 @@
         <ul class="users-list clearfix">
           {% for member in object.members.all %}
             <li>
-                <img src="{% avatar_url member %}" alt="User {{ member.username }} profile picture"/>
+                <a href="{% url 'users:detail' member %}"><img src="{% avatar_url member %}" alt="User {{ member.username }} profile picture"/></a>
                 <a href="{% url 'users:detail' member %}"><span class="users-list-date">{{ member.username }}</span></a>
             </li>
           {% endfor %}
