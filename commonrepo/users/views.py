@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -75,6 +76,7 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
     slug_url_kwarg = "username"
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
 @login_required
 @csrf_exempt

@@ -1,6 +1,7 @@
 {% extends "starter.html" %}
 
 {% load avatar_tags %}
+{% load bootstrap_pagination %}
 
 {% block title %}Users{% endblock %}
 {% block page_title %}All Users{% endblock %}
@@ -31,6 +32,9 @@
         </ul>
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
