@@ -23,6 +23,7 @@ class GroupForm(ModelForm):
         self.fields["creator"].initial = self.request_user
         self.fields["creator"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
@@ -40,6 +41,7 @@ class GroupAddForm(ModelForm):
         super(GroupAddForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
@@ -56,6 +58,7 @@ class GroupUpdateForm(ModelForm):
         self.request_user = kwargs.pop("request_user")
         super(GroupUpdateForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
@@ -73,6 +76,7 @@ class GroupLeaveForm(ModelForm):
         super(GroupLeaveForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
