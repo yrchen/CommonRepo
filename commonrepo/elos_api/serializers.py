@@ -90,7 +90,9 @@ class ELOLiteSerializer(serializers.ModelSerializer):
             # Basic information
             'id', 'name', 'author',
             # Metadata
-            'original_type', 'is_public', 'init_file',)
+            'original_type', 'is_public', 'init_file', 
+            # Version
+            'parent_elo' )
 
 class ELOFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.SlugRelatedField(
