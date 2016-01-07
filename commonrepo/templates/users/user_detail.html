@@ -31,7 +31,7 @@
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Followers</b> <a href="{% url 'users:follower' user %}" class="pull-right">{% get_user_followers_count user %}</a>
+            <b>Followers</b> <a href="{% url 'users:followers' user %}" class="pull-right">{% get_user_followers_count user %}</a>
           </li>
           <li class="list-group-item">
             <b>Following</b> <a class="pull-right">{% get_user_following_count user %}</a>

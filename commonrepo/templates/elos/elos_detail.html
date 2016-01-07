@@ -74,7 +74,7 @@
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Followers</b> <a href="{% url 'users:follower' object.author %}" class="pull-right">{% get_user_followers_count object.author %}</a>
+            <b>Followers</b> <a href="{% url 'users:followers' object.author %}" class="pull-right">{% get_user_followers_count object.author %}</a>
           </li>
           <li class="list-group-item">
             <b>Following</b> <a class="pull-right">{% get_user_following_count object.author %}</a>

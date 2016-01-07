@@ -50,6 +50,6 @@ urlpatterns = [
     url(
         regex=r'^(?P<username>[\w.@+-]+)/follower/$',
         view=views.UserFollowerView.as_view(),
-        name='follower'
-    )
+        name='followers'
+    ),
 ]
