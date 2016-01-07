@@ -1,0 +1,55 @@
+{% extends "starter.html" %}
+
+{% load activity_tags %}
+{% load avatar_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}User {{ user.username }}'s followers{% endblock %}
+{% block page_title %}Followers of {{ user.username }}{% endblock %}
+{% block page_description %}All followers of user {{ user.username }}{% endblock %}
+{% block page_breadcrumb %}Users followers{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Followers</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <ul class="users-list clearfix">
+          {% for follower in object_list %}
+            <li>
+                <a href="{% url 'users:detail' follower.user.username %}"><img src="{% avatar_url follower.user %}" alt="User {{ follower.user.username }} profile picture"/></a>
+                <a href="{% url 'users:detail' follower.user.username %}"><span class="users-list-date">{{ follower.user.get_full_name }}</span></a>
+                <a href="{% url 'users:detail' follower.user.username %}"><span class="users-list-date">{{ follower.user.username }}</span></a>
+                {% if follower.user == request.user %}
+                <a href="#"><b>It's You!</b></a>
+                {% else %}
+                  {% if request.user|is_following:follower.user %}
+                  <a href="{% url 'users:unfollow' follower.user %}?next={{ request.path }}"><b>Unfollow</b></a>
+                  {% else %}
+                  <a href="{% url 'users:follow' follower.user %}?next={{ request.path }}"><b>Follow</b></a>
+                  {% endif %}
+                {% endif %}
+            </li>
+          {% empty %}
+            <p>Be the first one?</p>
+            <a href="{% url 'users:follow' user %}?next={{ request.path }}" class="btn btn-primary btn-block"><b>Follow {{ user.username }}</b></a>
+          {% endfor %}
+        </ul>
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endblock content %}

@@ -59,16 +59,16 @@
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Followers</b> <a class="pull-right">{% get_user_followers_count object.creator %}</a>
+            <b>Followers</b> <a href="{% url 'users:followers' object.creator %}" class="pull-right">{% get_user_followers_count object.creator %}</a>
           </li>
           <li class="list-group-item">
-            <b>Following</b> <a class="pull-right">{% get_user_following_count object.creator %}</a>
+            <b>Following</b> <a href="{% url 'users:following' object.creator %}" class="pull-right">{% get_user_following_count object.creator %}</a>
           </li>
           <li class="list-group-item">
             <b>Friends</b> <a class="pull-right">{% get_user_friends_count object.creator %}</a>
           </li>
           <li class="list-group-item">
-            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count object.creator %}</a>
+            <b>ELOs</b> <a href="{% url 'users:elos' object.creator %}" class="pull-right">{% get_user_elo_count object.creator %}</a>
           </li>
           <li class="list-group-item">
             <b>Groups</b> <a class="pull-right">{% get_user_group_count object.creator %}</a>
@@ -159,7 +159,7 @@
         <ul class="users-list clearfix">
           {% for member in object.members.all %}
             <li>
-                <img src="{% avatar_url member %}" alt="User {{ member.username }} profile picture"/>
+                <a href="{% url 'users:detail' member %}"><img src="{% avatar_url member %}" alt="User {{ member.username }} profile picture"/></a>
                 <a href="{% url 'users:detail' member %}"><span class="users-list-date">{{ member.username }}</span></a>
             </li>
           {% endfor %}

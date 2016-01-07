@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.views.generic.base import TemplateView
 
 from actstream import actions
 from actstream.views import respond
@@ -32,7 +34,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['has_followed'] = user.userprofile.follows.filter(username=self.request.user.username)
 
         # ELOs
-        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)
+        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)[:settings.USERS_MAX_ELOS_PER_PAGE]
 
         return context
 
@@ -75,6 +77,55 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
     slug_url_kwarg = "username"
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+class UserFollowerView(LoginRequiredMixin, ListView):
+    template_name='users/user_followers.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return user.followed_by.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowerView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
+
+class UserFollowingView(LoginRequiredMixin, ListView):
+    template_name='users/user_following.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return user.userprofile.follows.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowingView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
+
+class UserELOsListView(LoginRequiredMixin, ListView):
+    template_name='users/user_elos.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return ELO.objects.filter(author=user)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserELOsListView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
 
 @login_required
 @csrf_exempt
@@ -97,7 +148,7 @@ def unfollow_user(request, username):
     """
     user = get_object_or_404(User, username=username)
 
-    actions.unfollow(request.user, user)
+    actions.unfollow(request.user, user, send_action=True)
     request.user.userprofile.follows.remove(user)
 
     return respond(request, 204)   # NO CONTENT

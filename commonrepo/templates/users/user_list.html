@@ -1,5 +1,8 @@
 {% extends "starter.html" %}
 
+{% load avatar_tags %}
+{% load bootstrap_pagination %}
+
 {% block title %}Users{% endblock %}
 {% block page_title %}All Users{% endblock %}
 {% block page_description %}All users on Common Repository{% endblock %}
@@ -18,26 +21,20 @@
         </div>
       </div><!-- /.box-header -->
       <div class="box-body">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for user in user_list %}
-              <tr>
-                <td><a href="{% url 'users:detail' user.username %}">{{user.username}}</a></td>
-                <td>{{user.get_full_name}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div><!-- /.table-responsive -->
+        <ul class="users-list clearfix">
+          {% for user in user_list %}
+            <li>
+                <a href="{% url 'users:detail' user.username %}"><img src="{% avatar_url user %}" alt="User {{ user.username }} profile picture"/></a>
+                <a href="{% url 'users:detail' user.username %}"><span class="users-list-date">{{ user.get_full_name }}</span></a>
+                <a href="{% url 'users:detail' user.username %}"><span class="users-list-date">{{ user.username }}</span></a>
+            </li>
+          {% endfor %}
+        </ul>
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->

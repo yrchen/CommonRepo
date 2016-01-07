@@ -46,4 +46,22 @@ urlpatterns = [
         name='unfollow'
     ),
 
+    # URL for check user's follower and following list
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/followers/$',
+        view=views.UserFollowerView.as_view(),
+        name='followers'
+    ),
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/following/$',
+        view=views.UserFollowingView.as_view(),
+        name='following'
+    ),
+
+    # URL for check user's ELOs
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/elos/$',
+        view=views.UserELOsListView.as_view(),
+        name='elos'
+    ),
 ]

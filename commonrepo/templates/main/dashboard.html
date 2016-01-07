@@ -71,7 +71,7 @@
                 <ul class="users-list clearfix">
                 {% for elo in elos_my_list %}
                     <li>
-                        <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
+                        <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}"><img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/></a>
                         <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name|truncatechars:30}}</a>
                         <a href="{% url 'users:detail' elo.author %}"><span class="users-list-date">{{elo.author.username}}</span></a>
                     </li>
@@ -102,7 +102,7 @@
                 <ul class="users-list clearfix">
                 {% for elo in elos_all_list %}
                     <li>
-                        <img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/>
+                        <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}"><img src="{% static "ELOs/img/1.png" %}" alt="ELOs Image"/></a>
                         <a class="users-list-name" href="{% url 'elos:elos-detail' elo.id %}">{{elo.name|truncatechars:30}}</a>
                         <a href="{% url 'users:detail' elo.author %}"><span class="users-list-date">{{elo.author.username}}</span></a>
                     </li>

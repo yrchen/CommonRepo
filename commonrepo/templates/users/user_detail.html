@@ -31,16 +31,16 @@
 
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Followers</b> <a class="pull-right">{% get_user_followers_count user %}</a>
+            <b>Followers</b> <a href="{% url 'users:followers' user %}" class="pull-right">{% get_user_followers_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>Following</b> <a class="pull-right">{% get_user_following_count user %}</a>
+            <b>Following</b> <a href="{% url 'users:following' user %}" class="pull-right">{% get_user_following_count user %}</a>
           </li>
           <li class="list-group-item">
             <b>Friends</b> <a class="pull-right">{% get_user_friends_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count user %}</a>
+            <b>ELOs</b> <a href="{% url 'users:elos' user %}" class="pull-right">{% get_user_elo_count user %}</a>
           </li>
           <li class="list-group-item">
             <b>Groups</b> <a class="pull-right">{% get_user_group_count user %}</a>
@@ -237,6 +237,9 @@
           </table>
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'users:elos' user.username %}" class="btn btn-sm btn-default btn-flat pull-right">All ELOs created by {{ user.username }}</a>
+      </div><!-- /.box-footer -->
     </div><!-- /.box -->
   </div><!-- /.col -->
 
