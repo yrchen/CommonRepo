@@ -95,6 +95,22 @@ class UserFollowerView(LoginRequiredMixin, ListView):
 
         return context
 
+class UserFollowingView(LoginRequiredMixin, ListView):
+    template_name='users/user_following.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return user.userprofile.follows.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowerView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
+
 @login_required
 @csrf_exempt
 def follow_user(request, username):
