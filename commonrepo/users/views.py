@@ -111,6 +111,22 @@ class UserFollowingView(LoginRequiredMixin, ListView):
 
         return context
 
+class UserELOsListView(LoginRequiredMixin, ListView):
+    template_name='users/user_elos.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return ELO.objects.filter(author=user)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserELOsListView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
+
 @login_required
 @csrf_exempt
 def follow_user(request, username):

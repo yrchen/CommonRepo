@@ -1,0 +1,75 @@
+{% extends "starter.html" %}
+
+{% load avatar_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Users {{ user.username }}'s ELOs {% endblock %}
+{% block page_title %}Users {{ user.username }} owns ELOs {% endblock %}
+{% block page_description %}All ELOs created by {{ user.username }}{% endblock %}
+{% block page_breadcrumb %}User's ELOs{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">All ELOs</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
+                <th>Version</th>
+                <th>Parent ELO</th>
+                <th>Parent ELO version</th>
+                <th>Type</th>
+                <th>License</th>
+                <th>Public</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for elo in object_list %}
+              <tr>
+                <td><a href="{% url 'elos:elos-detail' elo.id %}">{{elo.id}}</a></td>
+                <td>{{elo.name|truncatechars:30}}</td>
+                <td><a href="{% url 'users:detail' elo.author %}">{{elo.author}}</a></td>
+                <td>{{elo.create_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{elo.update_date|timesince}} ago</td>
+                <td>{{elo.version}}</td>
+                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
+                <td>{{elo.parent_elo_version}}</td>
+                <td>{{elo.original_type}}</td>
+                <td>{{elo.license.abbreviation}}</td>
+                <td>
+                  {% if elo.is_public %}
+                  Yes
+                  {% else %}
+                  No
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endblock content %}

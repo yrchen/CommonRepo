@@ -57,4 +57,11 @@ urlpatterns = [
         view=views.UserFollowingView.as_view(),
         name='following'
     ),
+
+    # URL for check user's ELOs
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/elos/$',
+        view=views.UserELOsListView.as_view(),
+        name='elos'
+    ),
 ]
