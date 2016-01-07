@@ -40,7 +40,7 @@
             <b>Friends</b> <a class="pull-right">{% get_user_friends_count user %}</a>
           </li>
           <li class="list-group-item">
-            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count user %}</a>
+            <b>ELOs</b> <a href="{% url 'users:elos' user %}" class="pull-right">{% get_user_elo_count user %}</a>
           </li>
           <li class="list-group-item">
             <b>Groups</b> <a class="pull-right">{% get_user_group_count user %}</a>
