@@ -68,7 +68,7 @@
             <b>Friends</b> <a class="pull-right">{% get_user_friends_count object.creator %}</a>
           </li>
           <li class="list-group-item">
-            <b>ELOs</b> <a class="pull-right">{% get_user_elo_count object.creator %}</a>
+            <b>ELOs</b> <a href="{% url 'users:elos' object.creator %}" class="pull-right">{% get_user_elo_count object.creator %}</a>
           </li>
           <li class="list-group-item">
             <b>Groups</b> <a class="pull-right">{% get_user_group_count object.creator %}</a>
