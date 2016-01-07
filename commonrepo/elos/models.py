@@ -360,8 +360,14 @@ class ELO(models.Model):
     parent_elo2_uuid = models.UUIDField(_("Parent ELO2 UUID"), blank=True, default=uuid4)
     parent_elo2_version = models.PositiveIntegerField(_("Parent ELO2 version"), blank=True, default=0)
 
-    def __str__(self):
+    def get_name(self):
+        return "ELO - " + self.name
+
+    def get_short_name(self):
         return self.name
+
+    def __str__(self):
+        return self.get_name()
 
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
