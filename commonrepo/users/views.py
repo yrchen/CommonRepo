@@ -34,7 +34,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['has_followed'] = user.userprofile.follows.filter(username=self.request.user.username)
 
         # ELOs
-        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)
+        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)[:settings.USERS_MAX_ELOS_PER_PAGE]
 
         return context
 
