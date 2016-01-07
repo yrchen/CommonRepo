@@ -104,7 +104,7 @@ class UserFollowingView(LoginRequiredMixin, ListView):
         return user.userprofile.follows.all()
 
     def get_context_data(self, **kwargs):
-        context = super(UserFollowerView, self).get_context_data(**kwargs)
+        context = super(UserFollowingView, self).get_context_data(**kwargs)
         user = User.objects.get(username=self.kwargs['username'])
 
         context['user'] = user

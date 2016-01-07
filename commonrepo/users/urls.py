@@ -48,8 +48,13 @@ urlpatterns = [
 
     # URL for check user's follower and following list
     url(
-        regex=r'^(?P<username>[\w.@+-]+)/follower/$',
+        regex=r'^(?P<username>[\w.@+-]+)/followers/$',
         view=views.UserFollowerView.as_view(),
         name='followers'
+    ),
+    url(
+        regex=r'^(?P<username>[\w.@+-]+)/following/$',
+        view=views.UserFollowingView.as_view(),
+        name='following'
     ),
 ]
