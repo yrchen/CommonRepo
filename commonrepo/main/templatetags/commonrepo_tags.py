@@ -57,7 +57,7 @@ def get_user_elo_count(username):
     except DoesNotExist:
         return 0
 
-    elo_count = ELO.objects.filter(author=user).count()
+    elo_count = ELO.objects.filter(author=user).filter(is_public=1).count()
 
     return elo_count
 
