@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.views.generic.base import TemplateView
 
 from actstream import actions
 from actstream.views import respond
@@ -77,6 +78,22 @@ class UserListView(LoginRequiredMixin, ListView):
     slug_field = "username"
     slug_url_kwarg = "username"
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+class UserFollowerView(LoginRequiredMixin, ListView):
+    template_name='users/user_followers.html'
+    paginate_by = settings.USERS_MAX_USERS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return user.followed_by.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowerView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['username'])
+
+        context['user'] = user
+
+        return context
 
 @login_required
 @csrf_exempt
