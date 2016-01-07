@@ -97,7 +97,7 @@ def unfollow_user(request, username):
     """
     user = get_object_or_404(User, username=username)
 
-    actions.unfollow(request.user, user)
+    actions.unfollow(request.user, user, send_action=True)
     request.user.userprofile.follows.remove(user)
 
     return respond(request, 204)   # NO CONTENT
