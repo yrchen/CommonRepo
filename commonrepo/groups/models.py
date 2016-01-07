@@ -24,8 +24,14 @@ class Group(models.Model):
     update_date = models.DateTimeField('date updated', auto_now=True)
     is_public = models.SmallIntegerField(default=0)
 
-    def __str__(self):
+    def get_name(self):
+        return "Group - " + self.name
+
+    def get_short_name(self):
         return self.name
+
+    def __str__(self):
+        return self.get_name()
 
     def get_absolute_url(self):
         return reverse('groups:groups-detail', kwargs={'pk': self.pk})
