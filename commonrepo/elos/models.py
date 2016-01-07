@@ -487,7 +487,7 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
 
 @python_2_unicode_compatible
 class ReusabilityTree(models.Model):
-    name = models.CharField(max_length=50, unique=False)
+    name = models.CharField(max_length=260, unique=False)   # ELO.name's max_length=255
     base_elo = models.OneToOneField(ELO, blank=True, null=True, related_name='reusability_tree')
     root_node = models.ForeignKey(ReusabilityTreeNode, blank=True)
     
