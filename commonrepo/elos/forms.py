@@ -31,6 +31,7 @@ class ELOForm(ModelForm):
         self.fields["author"].empty_label = None
 
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
@@ -70,6 +71,7 @@ class ELOForkForm(ModelForm):
         self.fields["parent_elo_version"].initial = elo_original.version
         self.fields["parent_elo_version"].widget.attrs['readonly'] = True
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
@@ -85,6 +87,7 @@ class ELOUpdateForm(ModelForm):
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_action = "."
         self.helper.layout.append(
             FormActions(
                 HTML("""<a role="button" class="btn btn-default"
