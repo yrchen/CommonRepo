@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import render
@@ -37,10 +38,11 @@ class GroupsAbortView(LoginRequiredMixin, UpdateView):
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
-class GroupsCreateView(LoginRequiredMixin, CreateView):
+class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Group
     form_class = GroupForm
     template_name = "groups/groups_create.html"
+    success_message = "%(name)s was created successfully"
 
     def get_form_kwargs(self):
         kwargs = super(GroupsCreateView, self).get_form_kwargs()
