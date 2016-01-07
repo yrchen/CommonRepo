@@ -23,18 +23,18 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <ul class="users-list clearfix">
-          {% for folower in object_list %}
+          {% for follower in object_list %}
             <li>
-                <a href="{% url 'users:detail' folower.user.username %}"><img src="{% avatar_url folower.user %}" alt="User {{ folower.user.username }} profile picture"/></a>
-                <a href="{% url 'users:detail' folower.user.username %}"><span class="users-list-date">{{ folower.user.get_full_name }}</span></a>
-                <a href="{% url 'users:detail' folower.user.username %}"><span class="users-list-date">{{ folower.user.username }}</span></a>
-                {% if folower.user == request.user %}
+                <a href="{% url 'users:detail' follower.user.username %}"><img src="{% avatar_url follower.user %}" alt="User {{ follower.user.username }} profile picture"/></a>
+                <a href="{% url 'users:detail' follower.user.username %}"><span class="users-list-date">{{ follower.user.get_full_name }}</span></a>
+                <a href="{% url 'users:detail' follower.user.username %}"><span class="users-list-date">{{ follower.user.username }}</span></a>
+                {% if follower.user == request.user %}
                 <a href="#"><b>It's You!</b></a>
                 {% else %}
-                  {% if request.user|is_following:folower.user %}
-                  <a href="{% url 'users:unfollow' folower.user %}?next={{ request.path }}"><b>Unfollow</b></a>
+                  {% if request.user|is_following:follower.user %}
+                  <a href="{% url 'users:unfollow' follower.user %}?next={{ request.path }}"><b>Unfollow</b></a>
                   {% else %}
-                  <a href="{% url 'users:follow' folower.user %}?next={{ request.path }}"><b>Follow</b></a>
+                  <a href="{% url 'users:follow' follower.user %}?next={{ request.path }}"><b>Follow</b></a>
                   {% endif %}
                 {% endif %}
             </li>
