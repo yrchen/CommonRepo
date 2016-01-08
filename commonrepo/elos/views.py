@@ -44,6 +44,19 @@ class ELOsDetailView(DetailView):
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        # Check the ELO is public or not
+        if not elo.is_public:
+            if not elo.author == request.user or not request.user.is_staff:
+                messages.error(request, 'Permission denied.')
+                return redirect('elos:elos-alllist')
+            else:
+                return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
+        else:
+            return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
         elo = get_object_or_404(ELO, id=self.kwargs['pk'])
@@ -138,7 +151,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
         elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
 
         if not elo.author == request.user or not request.user.is_staff:
-            messages.error(request, 'Document deleted.')
+            messages.error(request, 'Permission denied.')
             return redirect('elos:elos-alllist')
         else:
             return super(ELOsUpdateView, self).dispatch(request, *args, **kwargs)
