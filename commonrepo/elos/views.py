@@ -3,8 +3,9 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
+from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from braces.views import LoginRequiredMixin
@@ -132,6 +133,15 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ELOUpdateForm
     query_pk_and_slug = True
     template_name = 'elos/elos_update.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        if not elo.author == request.user or not request.user.is_staff:
+            messages.error(request, 'Document deleted.')
+            return redirect('elos:elos-alllist')
+        else:
+            return super(ELOsUpdateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object.version += 1
