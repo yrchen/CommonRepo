@@ -96,11 +96,17 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
             form.instance.metadata = elo_new_metadata
             form.save()
 
+        # if parent ELO in not public, send a warning message
+        if not form.instance.parent_elo.is_public:
+            messages.warning(self.request, 'Please be careful, You forked an unpublic ELO!')
+
         return super(ELOsForkView, self).form_valid(form)
 
     def get_success_url(self):
-        # send action to action stream
-        action.send(self.request.user, verb='forked', target=self.object)
+        # send action to action stream only when parent ELO is public
+        if form.instance.parent_elo.is_public:
+            action.send(self.request.user, verb='forked', target=self.object)
+
         return super(ELOsForkView, self).get_success_url()
 
 class ELOsListView(ListView):
