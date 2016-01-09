@@ -26,6 +26,20 @@
 {% block og_description %}Detail of {{object.name}}{% endblock og_description %}
 
 {% block content %}
+<!-- Status bar -->
+{% if not object.is_public %}
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-warning">
+      <div class="box-body">
+        <button class="btn btn-block btn-flat btn-warning">This ELO is unpublic, other people can't see this!</button>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endif %}
+<!-- /.Status bar -->
+
 <!-- Function bar -->
 <div class="row">
   <div class="col-sm-12 ">
