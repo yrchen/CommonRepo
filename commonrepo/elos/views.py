@@ -148,11 +148,12 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
         context['child_elos'] = ELO.objects.filter(parent_elo=self.kwargs['pk'])
         return context
 
-class ELOsUpdateView(LoginRequiredMixin, UpdateView):
+class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = ELO
     form_class = ELOUpdateForm
     query_pk_and_slug = True
     template_name = 'elos/elos_update.html'
+    success_message = "%(name)s was updated successfully"
 
     def dispatch(self, request, *args, **kwargs):
         elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
