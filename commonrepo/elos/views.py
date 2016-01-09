@@ -132,6 +132,19 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = True
     template_name = 'elos/elos_network.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        # Check the ELO is public or not
+        if not elo.is_public:
+            if not elo.author == request.user and not request.user.is_staff:
+                messages.error(request, 'Permission denied. The target ELO is private.')
+                return redirect('elos:elos-alllist')
+            else:
+                return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
+        else:
+            return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
