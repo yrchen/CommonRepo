@@ -104,7 +104,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         # send action to action stream only when parent ELO is public
-        if form.instance.parent_elo.is_public:
+        if self.object.parent_elo.is_public:
             action.send(self.request.user, verb='forked', target=self.object)
 
         return super(ELOsForkView, self).get_success_url()
