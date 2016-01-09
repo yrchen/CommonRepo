@@ -156,7 +156,7 @@ class ELOsUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
 
-        if not elo.author == request.user or not request.user.is_staff:
+        if not elo.author == request.user and not request.user.is_staff:
             messages.error(request, 'Permission denied.')
             return redirect('elos:elos-alllist')
         else:
