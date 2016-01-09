@@ -50,7 +50,7 @@ class ELOsDetailView(DetailView):
         # Check the ELO is public or not
         if not elo.is_public:
             if not elo.author == request.user or not request.user.is_staff:
-                messages.error(request, 'Permission denied.')
+                messages.error(request, 'Permission denied. The target ELO is private.')
                 return redirect('elos:elos-alllist')
             else:
                 return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
