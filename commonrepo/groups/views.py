@@ -2,9 +2,10 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from braces.views import LoginRequiredMixin
@@ -100,6 +101,15 @@ class GroupsUpdateView(LoginRequiredMixin, UpdateView):
     form_class = GroupUpdateForm
     query_pk_and_slug = True
     template_name = 'groups/groups_update.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        group = get_object_or_404(Group, pk=self.kwargs['pk'])
+
+        if not group.creator == request.user or not request.user.is_staff:
+            messages.error(request, 'Permission denied.')
+            return redirect('groups:groups-alllist')
+        else:
+            return super(GroupsUpdateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
     #    self.object.version += 1
