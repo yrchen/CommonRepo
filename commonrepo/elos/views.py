@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
 from django.shortcuts import redirect, render, get_object_or_404
 
@@ -13,11 +14,11 @@ from braces.views import LoginRequiredMixin
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
-class ELOsCreateView(LoginRequiredMixin, CreateView):
+class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
-    #success_url = "/elos"
+    success_message = "%(name)s was created successfully"
 
     def get_form_kwargs(self):
         kwargs = super(ELOsCreateView, self).get_form_kwargs()
