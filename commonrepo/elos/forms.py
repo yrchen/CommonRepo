@@ -55,7 +55,7 @@ class ELOForkForm(ModelForm):
         # If original ELO is not public
         if not elo_original.is_public:
             # and request.user is not author or staff, use Root ELO to replace
-            if not self.request_user == elo_original.author or not self.request_user.is_staff:
+            if not self.request_user == elo_original.author and not self.request_user.is_staff:
                 elo_source = get_object_or_404(ELO, id=settings.ELO_ROOT_ID)
 
         self.fields["name"].initial = elo_source.name + " (Fork from author " + elo_source.author.username + ")"
