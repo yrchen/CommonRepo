@@ -15,11 +15,12 @@ from .models import Group
 from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
 from django.db.models import Q
 
-class GroupsAbortView(LoginRequiredMixin, UpdateView):
+class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
     form_class = GroupLeaveForm
     query_pk_and_slug = True
     template_name = 'groups/groups_abort.html'
+    success_message = "You was aborted Group %(name)s successfully"
 
     def form_valid(self, form):
         # remove request user from the members of group
