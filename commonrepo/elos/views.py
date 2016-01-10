@@ -214,6 +214,9 @@ def publish_elo(request, pk):
         elo.is_public = 1
         elo.save()
         action.send(request.user, verb='published', target=elo)
+        messages.success(request, 'Successed, the target ELO is public now.')
+    else:
+        messages.error(request, 'Permission denied.')
 
     return redirect('elos:elos-detail', pk)
 
@@ -229,5 +232,8 @@ def unpublish_elo(request, pk):
     if elo.author == request.user or request.user.is_staff:
         elo.is_public = 0
         elo.save()
+        messages.warning(request, 'Successed, the target ELO is private now.')
+    else:
+        messages.error(request, 'Permission denied.')
 
     return redirect('elos:elos-detail', pk)
