@@ -29,6 +29,10 @@ class DashboardView(TemplateView):
 
         # ELOs
         context['elos_my_list'] = ELO.objects.filter(author=self.request.user)[:settings.DASHBOARD_MAX_ELOS_MY_PER_PAGE]
-        context['elos_all_list'] = ELO.objects.all()[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
+
+        if self.request.user.is_staff:
+            context['elos_all_list'] = ELO.objects.all()[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
+        else:
+            context['elos_all_list'] = ELO.objects.filter(is_public=1)[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
 
         return context

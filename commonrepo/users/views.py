@@ -117,7 +117,12 @@ class UserELOsListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs['username'])
-        return ELO.objects.filter(author=user).filter(is_public=1)
+
+        # Staff can view all ELOs even it's unpublic
+        if self.request.user.is_staff:
+            return ELO.objects.filter(author=user)
+        else:
+            return ELO.objects.filter(author=user).filter(is_public=1)
 
     def get_context_data(self, **kwargs):
         context = super(UserELOsListView, self).get_context_data(**kwargs)

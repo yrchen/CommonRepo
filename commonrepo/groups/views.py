@@ -2,9 +2,11 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from braces.views import LoginRequiredMixin
@@ -13,11 +15,12 @@ from .models import Group
 from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
 from django.db.models import Q
 
-class GroupsAbortView(LoginRequiredMixin, UpdateView):
+class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
     form_class = GroupLeaveForm
     query_pk_and_slug = True
     template_name = 'groups/groups_abort.html'
+    success_message = "You aborted Group %(name)s successfully"
 
     def form_valid(self, form):
         # remove request user from the members of group
@@ -37,10 +40,11 @@ class GroupsAbortView(LoginRequiredMixin, UpdateView):
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
-class GroupsCreateView(LoginRequiredMixin, CreateView):
+class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Group
     form_class = GroupForm
     template_name = "groups/groups_create.html"
+    success_message = "%(name)s was created successfully"
 
     def get_form_kwargs(self):
         kwargs = super(GroupsCreateView, self).get_form_kwargs()
@@ -57,11 +61,12 @@ class GroupsDetailView(LoginRequiredMixin, DetailView):
     query_pk_and_slug = True
     template_name = 'groups/groups_detail.html'
 
-class GroupsJoinView(LoginRequiredMixin, UpdateView):
+class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
     form_class = GroupAddForm
     query_pk_and_slug = True
     template_name = 'groups/groups_join.html'
+    success_message = "You joined Group %(name)s successfully"
 
     def form_valid(self, form):
         # add request user to the members of group
@@ -95,11 +100,21 @@ class GroupsMyListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Group.objects.filter(creator=self.request.user)
 
-class GroupsUpdateView(LoginRequiredMixin, UpdateView):
+class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
     form_class = GroupUpdateForm
     query_pk_and_slug = True
     template_name = 'groups/groups_update.html'
+    success_message = "%(name)s was updated successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        group = get_object_or_404(Group, pk=self.kwargs['pk'])
+
+        if not group.creator == request.user and not request.user.is_staff:
+            messages.error(request, 'Permission denied.')
+            return redirect('groups:groups-alllist')
+        else:
+            return super(GroupsUpdateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
     #    self.object.version += 1

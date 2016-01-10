@@ -3,8 +3,10 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
+from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from braces.views import LoginRequiredMixin
@@ -12,11 +14,11 @@ from braces.views import LoginRequiredMixin
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
-class ELOsCreateView(LoginRequiredMixin, CreateView):
+class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
-    #success_url = "/elos"
+    success_message = "%(name)s was created successfully"
 
     def get_form_kwargs(self):
         kwargs = super(ELOsCreateView, self).get_form_kwargs()
@@ -42,6 +44,19 @@ class ELOsDetailView(DetailView):
     model = ELO
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        # Check the ELO is public or not
+        if not elo.is_public:
+            if not elo.author == request.user and not request.user.is_staff:
+                messages.error(request, 'Permission denied. The target ELO is private.')
+                return redirect('elos:elos-alllist')
+            else:
+                return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
+        else:
+            return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
@@ -82,11 +97,17 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
             form.instance.metadata = elo_new_metadata
             form.save()
 
+        # if parent ELO in not public, send a warning message
+        if not form.instance.parent_elo.is_public:
+            messages.warning(self.request, 'Please be careful, You forked an unpublic ELO!')
+
         return super(ELOsForkView, self).form_valid(form)
 
     def get_success_url(self):
-        # send action to action stream
-        action.send(self.request.user, verb='forked', target=self.object)
+        # send action to action stream only when parent ELO is public
+        if self.object.parent_elo.is_public:
+            action.send(self.request.user, verb='forked', target=self.object)
+
         return super(ELOsForkView, self).get_success_url()
 
 class ELOsListView(ListView):
@@ -94,7 +115,10 @@ class ELOsListView(ListView):
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
 
     def get_queryset(self):
-        return ELO.objects.all()
+        if self.request.user.is_staff:
+            return ELO.objects.all()
+        else:
+            return ELO.objects.filter(is_public=1)
 
 class ELOsMyListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
@@ -107,6 +131,19 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
     model = ELO
     query_pk_and_slug = True
     template_name = 'elos/elos_network.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        # Check the ELO is public or not
+        if not elo.is_public:
+            if not elo.author == request.user and not request.user.is_staff:
+                messages.error(request, 'Permission denied. The target ELO is private.')
+                return redirect('elos:elos-alllist')
+            else:
+                return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
+        else:
+            return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
@@ -124,11 +161,21 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
         context['child_elos'] = ELO.objects.filter(parent_elo=self.kwargs['pk'])
         return context
 
-class ELOsUpdateView(LoginRequiredMixin, UpdateView):
+class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = ELO
     form_class = ELOUpdateForm
     query_pk_and_slug = True
     template_name = 'elos/elos_update.html'
+    success_message = "%(name)s was updated successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        if not elo.author == request.user and not request.user.is_staff:
+            messages.error(request, 'Permission denied.')
+            return redirect('elos:elos-alllist')
+        else:
+            return super(ELOsUpdateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object.version += 1

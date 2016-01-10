@@ -26,6 +26,20 @@
 {% block og_description %}Detail of {{object.name}}{% endblock og_description %}
 
 {% block content %}
+<!-- Status bar -->
+{% if not object.is_public %}
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-warning">
+      <div class="box-body">
+        <button class="btn btn-block btn-flat btn-warning">This ELO is unpublic, other people can't see this!</button>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endif %}
+<!-- /.Status bar -->
+
 <!-- Function bar -->
 <div class="row">
   <div class="col-sm-12 ">
@@ -190,8 +204,8 @@
 
   </div><!-- /.col -->
 
-  <!-- Social -->
   <div class="col-md-8">
+    <!-- Social -->
     <div class="box box-info">
       <div class="box-body">
         <div class="g-plusone pull-left" data-annotation="inline" data-width="300"></div>
@@ -210,10 +224,9 @@
         <div class="addthis_sharing_toolbox pull-right"></div>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
+    <!-- /.Social -->
 
-  <!-- Activity -->
-  <div class="col-md-8">
+    <!-- Activity -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Activity</h3>
@@ -233,10 +246,9 @@
           </ul>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
+    <!-- /.Activity -->
 
-  <!-- Reusability Tree -->
-  <div class="col-md-8">
+    <!-- Reusability Tree -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Reusability Tree</h3>
@@ -271,11 +283,9 @@
         {% endif %}
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
-  <!-- /.Reusability Tree-->
+    <!-- /.Reusability Tree-->
 
-  <!-- Metadata -->
-  <div class="col-md-8">
+    <!-- Metadata -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata</h3>
@@ -578,11 +588,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata -->
+    <!-- /.Metadata -->
 
-  <!-- Metadata - Precise criteria (mandatory) -->
-  <div class="col-md-8">
+    <!-- Metadata - Precise criteria (mandatory) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precise criteria (mandatory)</h3>
@@ -686,11 +694,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Precise criteria (mandatory) -->
+    <!-- /.Metadata - Precise criteria (mandatory) -->
 
-  <!-- Metadata - Incremental criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Incremental criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Incremental criteria (rewritable)</h3>
@@ -778,11 +784,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Incremental criteria (rewritable) -->
+    <!-- /.Metadata - Incremental criteria (rewritable) -->
 
-  <!-- Metadata Precedence criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata Precedence criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precedence criteria (rewritable)</h3>
@@ -835,11 +839,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata Precedence criteria (rewritable) -->
+    <!-- /.Metadata Precedence criteria (rewritable) -->
 
-  <!-- Metadata Time/duration criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata Time/duration criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Time/duration criteria (rewritable)</h3>
@@ -917,11 +919,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata Time/duration criteria (rewritable) -->
+    <!-- /.Metadata Time/duration criteria (rewritable) -->
 
-  <!-- Metadata - Single-choice criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Single-choice criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Single-choice criteria (rewritable)</h3>
@@ -1029,11 +1029,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Single-choice criteria (rewritable) -->
+    <!-- /.Metadata - Single-choice criteria (rewritable) -->
 
-  <!-- Metadata - Many-choice criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Many-choice criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Many-choice criteria (rewritable)</h3>
@@ -1086,8 +1084,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
+    <!-- /.Metadata - Many-choice criteria (rewritable)-->
+
   </div><!-- /. col -->
-  <!-- /.Metadata - Many-choice criteria (rewritable)-->
 
 </div><!-- /.row -->
 
