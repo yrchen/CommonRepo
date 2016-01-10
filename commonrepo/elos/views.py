@@ -2,14 +2,18 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
 from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
+from actstream.views import respond
 from braces.views import LoginRequiredMixin
+from rest_framework import status
 
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
@@ -196,3 +200,19 @@ class ELOTypesDetailView(LoginRequiredMixin, DetailView):
     model = ELOType
     query_pk_and_slug = True
     template_name = 'elos/elotypes_detail.html'
+
+@login_required
+@csrf_exempt
+def publish_elo(request, pk):
+    """
+    Publish the ``ELO``
+    """
+    elo = get_object_or_404(ELO, id=pk)
+
+    # If request.user is author or staff
+    if elo.author == request.user or request.user.is_staff:
+        elo.is_public = 1
+        elo.save()
+        action.send(request.user, verb='published', target=elo)
+
+    return redirect('elos:elos-detail', pk)
