@@ -32,6 +32,7 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
+    'grappelli', # django-grappelli
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
@@ -379,6 +380,10 @@ AVATAR_STORAGE_DIR = 'avatar'
 
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
+
+# Django Grappelli
+GRAPPELLI_ADMIN_TITLE = "Common Repository | Administration"
+GRAPPELLI_SWITCH_USER = True
 
 #
 # System config variables

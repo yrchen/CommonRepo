@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
