@@ -216,3 +216,18 @@ def publish_elo(request, pk):
         action.send(request.user, verb='published', target=elo)
 
     return redirect('elos:elos-detail', pk)
+
+@login_required
+@csrf_exempt
+def unpublish_elo(request, pk):
+    """
+    Unpublish the ``ELO``
+    """
+    elo = get_object_or_404(ELO, id=pk)
+
+    # If request.user is author or staff
+    if elo.author == request.user or request.user.is_staff:
+        elo.is_public = 0
+        elo.save()
+
+    return redirect('elos:elos-detail', pk)
