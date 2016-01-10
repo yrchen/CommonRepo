@@ -30,9 +30,9 @@
 {% if not object.is_public %}
 <div class="row">
   <div class="col-sm-12 ">
-    <div class="box box-warning">
+    <div class="box box-info">
       <div class="box-body">
-        <button class="btn btn-block btn-flat btn-warning">This ELO is unpublic, other people can't see this!</button>
+        <button class="btn btn-block btn-flat btn-info">This ELO is private, other people can't see this!</button>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
@@ -54,6 +54,13 @@
         </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        {% if object.author == request.user or user.is_staff %}
+          {% if object.is_public %}
+            <a href="{% url 'elos:elos-unpublish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unpublish the ELO</a>
+          {% else %}
+            <a href="{% url 'elos:elos-publish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Publish the ELO</a>
+          {% endif %}
         {% endif %}
         <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
         <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
@@ -1104,6 +1111,13 @@
         </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        {% if object.author == request.user or user.is_staff %}
+          {% if object.is_public %}
+            <a href="{% url 'elos:elos-unpublish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unpublish the ELO</a>
+          {% else %}
+            <a href="{% url 'elos:elos-publish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Publish the ELO</a>
+          {% endif %}
         {% endif %}
         <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
         <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
