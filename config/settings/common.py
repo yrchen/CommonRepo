@@ -381,6 +381,10 @@ AVATAR_STORAGE_DIR = 'avatar'
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 
+# Django Grappelli
+GRAPPELLI_ADMIN_TITLE = "Common Repository | Administration"
+GRAPPELLI_SWITCH_USER = True
+
 #
 # System config variables
 GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
