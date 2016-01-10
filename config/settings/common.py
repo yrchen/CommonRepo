@@ -32,6 +32,7 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
+    'grappelli', # django-grappelli
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
