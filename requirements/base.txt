@@ -65,6 +65,9 @@ django-grappelli==2.7.2
 djoser==0.4.0
 django-oauth-toolkit==0.10.0
 
+# Comments
+django-contrib-comments==1.6.2
+
 # MongoDB
 pymongo
 djangotoolbox
