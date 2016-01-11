@@ -382,6 +382,9 @@ ACTSTREAM_SETTINGS = {
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
 
+# Comments
+COMMENTS_APP = 'threadedcomments'
+
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 
