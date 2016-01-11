@@ -67,6 +67,7 @@ django-oauth-toolkit==0.10.0
 
 # Comments
 django-contrib-comments==1.6.2
+django-threadedcomments==1.0.1
 
 # MongoDB
 pymongo
