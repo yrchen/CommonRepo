@@ -1,6 +1,8 @@
 {% load avatar_tags %}
 {% load static %}
 
+{% load commonrepo_tags %}
+
 <li class="dropdown user user-menu">
   <!-- Menu Toggle Button -->
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -31,14 +33,11 @@
     <!-- Menu Body -->
     <li class="user-body">
       {% if request.user.is_authenticated %}
-      <div class="col-xs-4 text-center">
-        <a href="#">Followers</a>
+      <div class="col-xs-6 text-center">
+        <a href="{% url 'users:followers' request.user %}">{% get_user_followers_count request.user %} Followers</a>
       </div>
-      <div class="col-xs-4 text-center">
-        <a href="#">Sales</a>
-      </div>
-      <div class="col-xs-4 text-center">
-        <a href="#">Friends</a>
+      <div class="col-xs-6 text-center">
+        <a href="#">{% get_user_friends_count request.user %} Friends</a>
       </div>
       {% endif %}
     </li>
