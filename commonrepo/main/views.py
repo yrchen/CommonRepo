@@ -23,7 +23,11 @@ class DashboardView(TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         # information
-        context['elos_total_count'] = ELO.objects.all().count()
+        if self.request.user.is_staff:
+            context['elos_total_count'] = ELO.objects.all().count()
+        # only staff can check all ELOs
+        else:
+            context['elos_total_count'] = ELO.objects.filter(is_public=1).count()
         context['elos_my_total_count'] = ELO.objects.filter(author=self.request.user).count()
         context['users_total_count'] = User.objects.all().count()
 
