@@ -17,7 +17,11 @@
       </div>
       <div class="pull-left info">
         {% if request.user.is_authenticated %}
-        <p>{{ request.user.name }}</p>
+          {% if request.user.name%}
+            <p>{{ request.user.name }}</p>
+          {% else %}
+            <p>{{ request.user.username }}</p>
+          {% endif %}
         {% else %}
         <p>Guest</p>
         {% endif %}
