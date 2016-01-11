@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = (
     'djoser', # authentication
 
     # Comments
+    'threadedcomments', # django-threadedcomments
     'django_comments', # django-contrib-comments
 
     # Other tools
