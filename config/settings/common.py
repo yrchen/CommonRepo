@@ -53,6 +53,9 @@ THIRD_PARTY_APPS = (
     'rest_framework_tracking', # DRF tracking
     'djoser', # authentication
 
+    # Comments
+    'django_comments', # django-contrib-comments
+
     # Other tools
     'mptt', # django-mptt
     'avatar', # django-avatar
