@@ -38,7 +38,7 @@
             </thead>
             <tbody>
               {% for parent_elo in parent_elos %}
-                {% if request.user.is_staff or parent_elo.author == request.user or parent_elo.is_public %}
+                {% if parent_elo.is_public %}
                 <tr>
                   <td><a href="{% url 'elos:elos-detail' parent_elo.id %}">{{parent_elo.id}}</a></td>
                   <td>{{parent_elo.name|truncatechars:30}}</td>
@@ -46,8 +46,18 @@
                   <td>{{parent_elo.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                   <td>{{parent_elo.update_date|timesince}}</td>
                   <td>{{parent_elo.version}}</td>
-                  <td><a href="{% url 'elos:elos-detail' parent_elo.parent_elo_id %}">{{parent_elo.parent_elo|truncatechars:30}}</a></td>
-                  <td>{{parent_elo.parent_elo_version}}</td>
+                  {% if elo.parent_elo.is_public %}
+                    <td><a href="{% url 'elos:elos-detail' parent_elo.parent_elo_id %}">{{parent_elo.parent_elo|truncatechars:30}}</a></td>
+                    <td>{{parent_elo.parent_elo_version}}</td>
+                  {% else %}
+                    {% if not elo.parent_elo.author == request.user and not request.user.is_staff %}
+                      <td><span class="label bg-red">Private ELO</span></td>
+                      <td><span class="label bg-red">Private ELO</span></td>
+                    {% else %}
+                      <td><a href="{% url 'elos:elos-detail' parent_elo.parent_elo.id %}">{{parent_elo.parent_elo|truncatechars:30}}</a></td>
+                      <td>{{parent_elo.parent_elo_version}}</td>
+                    {% endif %}
+                  {% endif %}
                   <td>{{parent_elo.original_type}}</td>
                   <td>
                     {% if parent_elo.is_public %}
@@ -59,7 +69,7 @@
                 </tr>
                 {% else %}
                 <tr>
-                  <span class="label bg-red">The target ELO is private</span>
+                  <td><span class="label bg-red">The target ELO is private</span></td>
                 </tr>
                 {% endif %}
               {% empty %}
@@ -110,8 +120,18 @@
                 <td>{{object.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                 <td>{{object.update_date|timesince}}</td>
                 <td>{{object.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo|truncatechars:30}}</a></td>
-                <td>{{object.parent_elo_version}}</td>
+                {% if object.parent_elo.is_public %}
+                  <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo|truncatechars:30}}</a></td>
+                  <td>{{object.parent_elo_version}}</td>
+                {% else %}
+                  {% if not object.parent_elo.author == request.user and not request.user.is_staff %}
+                    <td><span class="label bg-red">Private ELO</span></td>
+                    <td><span class="label bg-red">Private ELO</span></td>
+                  {% else %}
+                    <td><a href="{% url 'elos:elos-detail' object.parent_elo_id %}">{{object.parent_elo|truncatechars:30}}</a></td>
+                    <td>{{object.parent_elo_version}}</td>
+                  {% endif %}
+                {% endif %}
                 <td>{{object.original_type}}</td>
                 <td>
                   {% if object.is_public %}
@@ -164,7 +184,7 @@
             </thead>
             <tbody>
               {% for child_elo in child_elos %}
-                {% if request.user.is_staff or child_elo.author == request.user or child_elo.is_public %}
+                {% if child_elo.is_public %}
                 <tr>
                   <td><a href="{% url 'elos:elos-detail' child_elo.id %}">{{child_elo.id}}</a></td>
                   <td>{{child_elo.name|truncatechars:30}}</td>
@@ -172,8 +192,18 @@
                   <td>{{child_elo.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                   <td>{{child_elo.update_date|timesince}}</td>
                   <td>{{child_elo.version}}</td>
-                  <td><a href="{% url 'elos:elos-detail' child_elo.parent_elo_id %}">{{child_elo.parent_elo|truncatechars:30}}</a></td>
-                  <td>{{child_elo.parent_elo_version}}</td>
+                  {% if child_elo.parent_elo.is_public %}
+                    <td><a href="{% url 'elos:elos-detail' child_elo.parent_elo_id %}">{{child_elo.parent_elo|truncatechars:30}}</a></td>
+                    <td>{{child_elo.parent_elo_version}}</td>
+                  {% else %}
+                    {% if not child_elo.parent_elo.author == request.user and not request.user.is_staff %}
+                      <td><span class="label bg-red">Private ELO</span></td>
+                      <td><span class="label bg-red">Private ELO</span></td>
+                    {% else %}
+                      <td><a href="{% url 'elos:elos-detail' child_elo.parent_elo_id %}">{{child_elo.parent_elo|truncatechars:30}}</a></td>
+                      <td>{{child_elo.parent_elo_version}}</td>
+                    {% endif %}
+                  {% endif %}
                   <td>{{child_elo.original_type}}</td>
                   <td>
                     {% if child_elo.is_public %}
@@ -185,7 +215,7 @@
                 </tr>
                 {% else %}
                 <tr>
-                  <span class="label bg-red">The target ELO is private</span>
+                  <td><span class="label bg-red">The target ELO is private</span></td>
                 </tr>
                 {% endif %}
               {% empty %}
