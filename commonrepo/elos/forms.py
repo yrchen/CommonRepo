@@ -74,21 +74,22 @@ class ELOForkForm(ModelForm):
         self.fields["version"].initial = 1
         self.fields["version"].widget.attrs['readonly'] = True
 
-        # Even if parent ELO is not public, author and staff still can fork
+        # If original ELO is not public
         if not elo_original.is_public:
+            # author and staff still can fork
             if self.request_user == elo_original.author or self.request_user.is_staff:
                 self.fields["parent_elo"].queryset = ELO.objects.filter(id=elo_original.id)
                 self.fields["parent_elo_uuid"].initial = elo_original.uuid
                 self.fields["parent_elo_version"].initial = elo_original.version
+            # others will force to use Root ELO
             else:
                 self.fields["parent_elo"].queryset = ELO.objects.filter(id=settings.ELO_ROOT_ID)
                 self.fields["parent_elo_uuid"].initial = elo_source.uuid
                 self.fields["parent_elo_version"].initial = elo_source.version
-        # others will force to use Root ELO
         else:
-            self.fields["parent_elo"].queryset = ELO.objects.filter(id=settings.ELO_ROOT_ID)
-            self.fields["parent_elo_uuid"].initial = elo_source.uuid
-            self.fields["parent_elo_version"].initial = elo_source.version
+            self.fields["parent_elo"].queryset = ELO.objects.filter(id=elo_original.id)
+            self.fields["parent_elo_uuid"].initial = elo_original.uuid
+            self.fields["parent_elo_version"].initial = elo_original.version
 
         self.fields["parent_elo"].empty_label = None
         self.fields["parent_elo"].widget.attrs['readonly'] = True
