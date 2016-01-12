@@ -2,8 +2,11 @@
 
 <div class="box-comment">
     <h3 class="box-title">Post a comment</h3>
-    <form action="{% url 'comments-post-comment' %}" method="post">{% csrf_token %}
-        {{ form|crispy }}{# just to keep the example simple. Consider using django-crispy-forms in real life #}
+    <form action="{% url 'comments-post-comment' %}" method="post">
+        {% csrf_token %}
+        <input type='hidden' name='next' value='{{ request.path }}' />
+
+        {{ form|crispy }}
 
         <p>
             <a href="#c0" id="cancel_reply" role="button" class="btn btn-default">Cancel Reply</a>
