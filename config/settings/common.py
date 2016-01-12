@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = (
     'djoser', # authentication
 
     # Comments
+    'fluent_comments', # django-fluent-comments
     'threadedcomments', # django-threadedcomments
     'django_comments', # django-contrib-comments
 
@@ -383,7 +384,17 @@ ACTSTREAM_SETTINGS = {
 AVATAR_STORAGE_DIR = 'avatar'
 
 # Comments
-COMMENTS_APP = 'threadedcomments'
+COMMENTS_APP = 'fluent_comments'
+
+FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url', 'title')
+AKISMET_API_KEY = "your-api-key"
+#AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
+AKISMET_IS_TEST = False                         # Enable to make test runs
+
+FLUENT_CONTENTS_USE_AKISMET = True              # Enabled by default when AKISMET_API_KEY is set.
+FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None         # Auto-close comments after N days
+FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None      # Auto-moderate comments after N days.
+FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'     # Set to 'moderate' or 'delete'
 
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
