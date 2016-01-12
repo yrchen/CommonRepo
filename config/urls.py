@@ -62,7 +62,7 @@ urlpatterns = [
     url('^activity/', include('actstream.urls')), # django-activity-stream
 
     # Comments
-    url(r'^comments/', include('django_comments.urls')), # django-contrib-comments
+    url(r'^comments/', include('fluent_comments.urls')), # django-contrib-comments
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
