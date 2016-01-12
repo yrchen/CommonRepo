@@ -395,6 +395,7 @@ FLUENT_CONTENTS_USE_AKISMET = True              # Enabled by default when AKISME
 FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None         # Auto-close comments after N days
 FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None      # Auto-moderate comments after N days.
 FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'     # Set to 'moderate' or 'delete'
+FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
 
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
