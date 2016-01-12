@@ -56,7 +56,7 @@ urlpatterns = [
     url(r'^messages/', include('messages_extends.urls')), # django-messages-extends
 
     # Notifications
-    url(r'^notifications-api/', include('notifications.urls', namespace='notifications')),
+    url(r'^notifications/', include('notifications.urls', namespace='notifications')),
 
     # Activity
     url('^activity/', include('actstream.urls')), # django-activity-stream
