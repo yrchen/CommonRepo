@@ -53,6 +53,10 @@ THIRD_PARTY_APPS = (
     'rest_framework_tracking', # DRF tracking
     'djoser', # authentication
 
+    # Comments
+    'threadedcomments', # django-threadedcomments
+    'django_comments', # django-contrib-comments
+
     # Other tools
     'mptt', # django-mptt
     'avatar', # django-avatar
@@ -377,6 +381,9 @@ ACTSTREAM_SETTINGS = {
 
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
+
+# Comments
+COMMENTS_APP = 'threadedcomments'
 
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'

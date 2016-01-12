@@ -5,6 +5,7 @@
 {% load licensing %}
 {% load mptt_tags %}
 {% load static %}
+{% load threadedcomments_tags %}
 
 {% load commonrepo_tags %}
 
@@ -1092,6 +1093,30 @@
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata - Many-choice criteria (rewritable)-->
+
+    <!-- Comments -->
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Comments</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% get_comment_count for object as comments_count %}
+        <span class="pull-right text-muted">{{ comments_count }} comments have been posted</span>
+      </div>
+      <div class="box-body">
+        <div class="box-comments">
+          {% render_comment_list for object %}
+        </div>
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+        {% render_comment_form for object %}
+      </div>
+    </div><!-- /.box -->
+    <!-- /.Comments -->
 
   </div><!-- /. col -->
 
