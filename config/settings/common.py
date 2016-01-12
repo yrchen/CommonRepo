@@ -386,7 +386,7 @@ AVATAR_STORAGE_DIR = 'avatar'
 # Comments
 COMMENTS_APP = 'fluent_comments'
 
-FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
+FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url', 'title')
 AKISMET_API_KEY = "your-api-key"
 #AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
 AKISMET_IS_TEST = False                         # Enable to make test runs
