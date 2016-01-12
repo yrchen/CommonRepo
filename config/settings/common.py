@@ -32,6 +32,7 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
+    'grappelli', # django-grappelli
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
@@ -51,6 +52,11 @@ THIRD_PARTY_APPS = (
     'rest_framework.authtoken', # REST framework Token-based authentication
     'rest_framework_tracking', # DRF tracking
     'djoser', # authentication
+
+    # Comments
+    'fluent_comments', # django-fluent-comments
+    'threadedcomments', # django-threadedcomments
+    'django_comments', # django-contrib-comments
 
     # Other tools
     'mptt', # django-mptt
@@ -368,7 +374,7 @@ REST_FRAMEWORK = {
 # Django Activity Stream
 ACTSTREAM_SETTINGS = {
     'MANAGER': 'actstream.managers.ActionManager',
-    'FETCH_RELATIONS': True,
+    'FETCH_RELATIONS': False,
     'USE_PREFETCH': True,
     'USE_JSONFIELD': True,
     'GFK_FETCH_DEPTH': 1,
@@ -377,8 +383,26 @@ ACTSTREAM_SETTINGS = {
 # Avatar
 AVATAR_STORAGE_DIR = 'avatar'
 
+# Comments
+COMMENTS_APP = 'fluent_comments'
+
+FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url', 'title')
+AKISMET_API_KEY = "your-api-key"
+#AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
+AKISMET_IS_TEST = False                         # Enable to make test runs
+
+FLUENT_CONTENTS_USE_AKISMET = True              # Enabled by default when AKISMET_API_KEY is set.
+FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None         # Auto-close comments after N days
+FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None      # Auto-moderate comments after N days.
+FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'     # Set to 'moderate' or 'delete'
+FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
+
 # Message
 MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
+
+# Django Grappelli
+GRAPPELLI_ADMIN_TITLE = "Common Repository | Administration"
+GRAPPELLI_SWITCH_USER = True
 
 #
 # System config variables

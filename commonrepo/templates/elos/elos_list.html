@@ -35,7 +35,9 @@
                 <th>Parent ELO version</th>
                 <th>Type</th>
                 <th>License</th>
-                <th>Public</th>
+                {% if request.user.is_staff %}
+                  <th>Public</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -47,17 +49,29 @@
                 <td>{{elo.create_date|date:"SHORT_DATE_FORMAT"}}</td>
                 <td>{{elo.update_date|timesince}} ago</td>
                 <td>{{elo.version}}</td>
-                <td><a href="{% url 'elos:elos-detail' elo.parent_elo_id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
-                <td>{{elo.parent_elo_version}}</td>
+                {% if elo.parent_elo.is_public %}
+                  <td><a href="{% url 'elos:elos-detail' elo.parent_elo.id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
+                  <td>{{elo.parent_elo_version}}</td>
+                {% else %}
+                  {% if not elo.parent_elo.author == request.user and not request.user.is_staff %}
+                    <td><span class="label bg-red">Private ELO</span></td>
+                    <td><span class="label bg-red">Private ELO</span></td>
+                  {% else %}
+                    <td><a href="{% url 'elos:elos-detail' elo.parent_elo.id %}">{{elo.parent_elo|truncatechars:30}}</a></td>
+                    <td>{{elo.parent_elo_version}}</td>
+                  {% endif %}
+                {% endif %}
                 <td>{{elo.original_type}}</td>
                 <td>{{elo.license.abbreviation}}</td>
-                <td>
-                  {% if elo.is_public %}
-                  Yes
-                  {% else %}
-                  No
-                  {% endif %}
-                </td>
+                {% if request.user.is_staff %}
+                  <td>
+                    {% if elo.is_public %}
+                    <span class="label label-primary">Yes</span>
+                    {% else %}
+                    <span class="label bg-red">No</span>
+                    {% endif %}
+                  </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>

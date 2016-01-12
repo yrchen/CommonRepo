@@ -1,0 +1,24 @@
+{% comment %}
+  This template replaces the default "comments/list.html" of "django.contrib.comments",
+  to allow rendering the comments as tree.
+{% endcomment %}
+
+{% load avatar_tags %}
+{% load threadedcomments_tags %}
+
+<div id="comments">
+    {% for comment in comment_list|fill_tree|annotate_tree %}
+        <div class="box-comment" id="c{{ comment.id }}">
+        <img class="img-circle img-sm" src="{% avatar_url comment.user %}" alt="User Image">
+            <div class="comment-text">
+                <span class="username">{{ comment.user }}</span>
+                <span class="text-muted pull-right">{{ comment.submit_date }}</span>
+                <p>
+                    {{ comment.comment|linebreaks }}
+                </p>
+            </div>
+        </div>
+    {% empty %}
+        <span>No comment yet. Be the first one?</span>
+    {% endfor %}
+</div>

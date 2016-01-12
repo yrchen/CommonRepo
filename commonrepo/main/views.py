@@ -23,12 +23,20 @@ class DashboardView(TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         # information
-        context['elos_total_count'] = ELO.objects.all().count()
+        if self.request.user.is_staff:
+            context['elos_total_count'] = ELO.objects.all().count()
+        # only staff can check all ELOs
+        else:
+            context['elos_total_count'] = ELO.objects.filter(is_public=1).count()
         context['elos_my_total_count'] = ELO.objects.filter(author=self.request.user).count()
         context['users_total_count'] = User.objects.all().count()
 
         # ELOs
         context['elos_my_list'] = ELO.objects.filter(author=self.request.user)[:settings.DASHBOARD_MAX_ELOS_MY_PER_PAGE]
-        context['elos_all_list'] = ELO.objects.all()[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
+
+        if self.request.user.is_staff:
+            context['elos_all_list'] = ELO.objects.all()[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
+        else:
+            context['elos_all_list'] = ELO.objects.filter(is_public=1)[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]
 
         return context

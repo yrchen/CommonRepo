@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
@@ -59,6 +60,9 @@ urlpatterns = [
 
     # Activity
     url('^activity/', include('actstream.urls')), # django-activity-stream
+
+    # Comments
+    url(r'^comments/', include('fluent_comments.urls')), # django-contrib-comments
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),

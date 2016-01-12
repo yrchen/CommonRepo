@@ -2,6 +2,7 @@
 
 {% load activity_tags %}
 {% load avatar_tags %}
+{% load threadedcomments_tags %}
 
 {% load commonrepo_tags %}
 
@@ -122,8 +123,9 @@
   </div><!-- /.col -->
   <!-- /.Group Info-->
 
-  <!-- Activity -->
   <div class="col-md-8">
+
+    <!-- Activity -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Activity</h3>
@@ -143,10 +145,33 @@
           </ul>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
+    <!-- /.Activity -->
 
-  <!-- Members -->
-  <div class="col-md-8">
+    <!-- Comments -->
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Comments</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% get_comment_count for object as comments_count %}
+        <span class="pull-right text-muted">{{ comments_count }} comments have been posted</span>
+      </div>
+      <div class="box-body">
+        <div class="box-comments">
+          {% render_comment_list for object %}
+        </div>
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+        {% render_comment_form for object %}
+      </div>
+    </div><!-- /.box -->
+    <!-- /.Comments -->
+
+    <!-- Members -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Members</h3>
@@ -166,6 +191,8 @@
         </ul>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
+    <!-- /.Members -->
+
   </div><!-- /.col -->
 
 </div><!-- /.row -->

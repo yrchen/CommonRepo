@@ -46,5 +46,18 @@ urlpatterns = [
         regex=r'^type/(?P<pk>[0-9]+)/$',
         view=views.ELOTypesDetailView.as_view(),
         name='elotypes-detail'
-    ),    
+    ),
+
+    # Publish ELO
+    url(
+        regex=r'^publish/(?P<pk>[0-9]+)/$',
+        view=views.publish_elo,
+        name='elos-publish'
+    ),
+    # Unpublish ELO
+    url(
+        regex=r'^unpublish/(?P<pk>[0-9]+)/$',
+        view=views.unpublish_elo,
+        name='elos-unpublish'
+    )    
 ]

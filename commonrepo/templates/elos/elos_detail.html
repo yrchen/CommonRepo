@@ -5,6 +5,7 @@
 {% load licensing %}
 {% load mptt_tags %}
 {% load static %}
+{% load threadedcomments_tags %}
 
 {% load commonrepo_tags %}
 
@@ -26,6 +27,20 @@
 {% block og_description %}Detail of {{object.name}}{% endblock og_description %}
 
 {% block content %}
+<!-- Status bar -->
+{% if not object.is_public %}
+<div class="row">
+  <div class="col-sm-12 ">
+    <div class="box box-info">
+      <div class="box-body">
+        <button class="btn btn-block btn-flat btn-info">This ELO is private, other people can't see this!</button>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+{% endif %}
+<!-- /.Status bar -->
+
 <!-- Function bar -->
 <div class="row">
   <div class="col-sm-12 ">
@@ -40,6 +55,13 @@
         </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        {% if object.author == request.user or user.is_staff %}
+          {% if object.is_public %}
+            <a href="{% url 'elos:elos-unpublish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unpublish the ELO</a>
+          {% else %}
+            <a href="{% url 'elos:elos-publish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Publish the ELO</a>
+          {% endif %}
         {% endif %}
         <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
         <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>
@@ -190,8 +212,8 @@
 
   </div><!-- /.col -->
 
-  <!-- Social -->
   <div class="col-md-8">
+    <!-- Social -->
     <div class="box box-info">
       <div class="box-body">
         <div class="g-plusone pull-left" data-annotation="inline" data-width="300"></div>
@@ -210,10 +232,9 @@
         <div class="addthis_sharing_toolbox pull-right"></div>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
+    <!-- /.Social -->
 
-  <!-- Activity -->
-  <div class="col-md-8">
+    <!-- Activity -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Activity</h3>
@@ -233,10 +254,9 @@
           </ul>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
+    <!-- /.Activity -->
 
-  <!-- Reusability Tree -->
-  <div class="col-md-8">
+    <!-- Reusability Tree -->
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Reusability Tree</h3>
@@ -271,11 +291,9 @@
         {% endif %}
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-  </div><!-- /.col -->
-  <!-- /.Reusability Tree-->
+    <!-- /.Reusability Tree-->
 
-  <!-- Metadata -->
-  <div class="col-md-8">
+    <!-- Metadata -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata</h3>
@@ -578,11 +596,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata -->
+    <!-- /.Metadata -->
 
-  <!-- Metadata - Precise criteria (mandatory) -->
-  <div class="col-md-8">
+    <!-- Metadata - Precise criteria (mandatory) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precise criteria (mandatory)</h3>
@@ -686,11 +702,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Precise criteria (mandatory) -->
+    <!-- /.Metadata - Precise criteria (mandatory) -->
 
-  <!-- Metadata - Incremental criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Incremental criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Incremental criteria (rewritable)</h3>
@@ -778,11 +792,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Incremental criteria (rewritable) -->
+    <!-- /.Metadata - Incremental criteria (rewritable) -->
 
-  <!-- Metadata Precedence criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata Precedence criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Precedence criteria (rewritable)</h3>
@@ -835,11 +847,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata Precedence criteria (rewritable) -->
+    <!-- /.Metadata Precedence criteria (rewritable) -->
 
-  <!-- Metadata Time/duration criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata Time/duration criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Time/duration criteria (rewritable)</h3>
@@ -917,11 +927,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata Time/duration criteria (rewritable) -->
+    <!-- /.Metadata Time/duration criteria (rewritable) -->
 
-  <!-- Metadata - Single-choice criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Single-choice criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Single-choice criteria (rewritable)</h3>
@@ -1029,11 +1037,9 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
-  </div><!-- /. col -->
-  <!-- /.Metadata - Single-choice criteria (rewritable) -->
+    <!-- /.Metadata - Single-choice criteria (rewritable) -->
 
-  <!-- Metadata - Many-choice criteria (rewritable) -->
-  <div class="col-md-8">
+    <!-- Metadata - Many-choice criteria (rewritable) -->
     <div class="box box-info collapsed-box">
       <div class="box-header with-border">
         <h3 class="box-title">Metadata - Many-choice criteria (rewritable)</h3>
@@ -1086,8 +1092,33 @@
         <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
+    <!-- /.Metadata - Many-choice criteria (rewritable)-->
+
+    <!-- Comments -->
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Comments</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        {% get_comment_count for object as comments_count %}
+        <span class="pull-right text-muted">{{ comments_count }} comments have been posted</span>
+      </div>
+      <div class="box-body">
+        <div class="box-comments">
+          {% render_comment_list for object %}
+        </div>
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+        {% render_comment_form for object %}
+      </div>
+    </div><!-- /.box -->
+    <!-- /.Comments -->
+
   </div><!-- /. col -->
-  <!-- /.Metadata - Many-choice criteria (rewritable)-->
 
 </div><!-- /.row -->
 
@@ -1105,6 +1136,13 @@
         </a>
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        {% endif %}
+        {% if object.author == request.user or user.is_staff %}
+          {% if object.is_public %}
+            <a href="{% url 'elos:elos-unpublish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unpublish the ELO</a>
+          {% else %}
+            <a href="{% url 'elos:elos-publish' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Publish the ELO</a>
+          {% endif %}
         {% endif %}
         <a href="{% url 'elos:elos-fork' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Fork this ELO</a>
         <a href="{% url 'elos:elos-network' object.id %}" class="btn btn-sm btn-info btn-flat pull-left">Check this ELO's Network</a>

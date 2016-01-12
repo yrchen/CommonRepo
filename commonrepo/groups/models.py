@@ -25,7 +25,7 @@ class Group(models.Model):
     is_public = models.SmallIntegerField(default=0)
 
     def get_name(self):
-        return "Group - " + self.name
+        return "Group: " + self.name
 
     def get_short_name(self):
         return self.name
