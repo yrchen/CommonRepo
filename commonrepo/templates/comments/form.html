@@ -2,15 +2,19 @@
 
 <div class="box-comment">
     <h3 class="box-title">Post a comment</h3>
-    <form action="{% url 'comments-post-comment' %}" method="post">
-        {% csrf_token %}
-        <input type='hidden' name='next' value='{{ request.path }}' />
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'comments-post-comment' %}" method="post">
+            {% csrf_token %}
+            <input type='hidden' name='next' value='{{ request.path }}' />
 
-        {{ form|crispy }}
+            {{ form|crispy }}
 
-        <p>
-            <a href="#c0" id="cancel_reply" role="button" class="btn btn-default">Cancel Reply</a>
-            <input type="submit" name="save" value="Submit" class="btn btn-primary"/>
-        </p>
-    </form>
+            <p>
+                <a href="#c0" id="cancel_reply" role="button" class="btn btn-default">Cancel Reply</a>
+                <input type="submit" name="save" value="Submit" class="btn btn-primary"/>
+            </p>
+        </form>
+    {% else %}
+        To post a comment, please <a class="btn btn-primary btn-lg" href="{% url 'account_login' %}" role="button">Log in</a> or <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}" role="button">Sign up</a> first
+    {% endif %}
 </div>
