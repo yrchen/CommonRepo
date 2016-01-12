@@ -361,7 +361,7 @@ class ELO(models.Model):
     parent_elo2_version = models.PositiveIntegerField(_("Parent ELO2 version"), blank=True, default=0)
 
     def get_name(self):
-        return "ELO - " + self.name
+        return "ELO: " + self.name
 
     def get_short_name(self):
         return self.name
