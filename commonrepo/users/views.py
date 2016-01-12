@@ -11,8 +11,8 @@ from django.views.generic.base import TemplateView
 
 from actstream import actions
 from actstream.views import respond
-
 from braces.views import LoginRequiredMixin
+from notifications.signals import notify
 
 from commonrepo.elos.models import ELO
 from commonrepo.groups.models import Group
@@ -141,6 +141,7 @@ def follow_user(request, username):
     user = get_object_or_404(User, username=username)
 
     actions.follow(request.user, user, actor_only=False)
+    notify.send(request.user, recipient=user, verb=u'has followed you', level='success')
     request.user.userprofile.follows.add(user)
 
     return respond(request, 201)   # CREATED
