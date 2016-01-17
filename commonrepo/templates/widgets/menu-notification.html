@@ -1,3 +1,4 @@
+{% load avatar_tags %}
 {% load notifications_tags %}
 
 <li class="dropdown notifications-menu">
@@ -7,33 +8,36 @@
     {% notifications_unread as unread_count %}
     {% if unread_count %}
       <span class="label label-warning">{{ unread_count }}</span>
-    {% else %}
-      <span class="label label-warning">0</span>
     {% endif %}
   </a>
   <ul class="dropdown-menu">
     {% if unread_count %}
       <li class="header">You have {{ unread_count }} notifications</li>
-      {% for notice in notifications %}
-        <!-- inner menu: contains the notification -->
+      <!-- inner menu: contains the notification -->
+      <li>
         <ul class="menu">
+        {% for notice in request.user.notifications.unread %}
           <li><!-- start notification -->
             <a href="{% url 'notifications:mark_as_read' notice.slug %}">
+              <div class="pull-left">
+                <img src="{% avatar_url notice.actor 32 %}" class="img-circle" alt="User Image">
+              </div>
+              <div class="pull-right">
+                <small><i class="fa fa-clock-o"></i> {{ notice.timesince }}</small>
+              </div>
               <!-- Notification title and timestamp -->
-              <h4>
-                {{ notice.actor }} 
-                {{ notice.verb }}
-                {% if notice.target %}
-                  of {{ notice.target }}
-                {% endif %}
-                <small><i class="fa fa-clock-o"></i>{{ notice.timesince }}</small>
-              </h4>
+              {{ notice.actor }} 
+              {{ notice.verb }}
+              {% if notice.target %}
+                of {{ notice.target }}
+              {% endif %}
               <!-- The notification -->
               <p>{{ notice.description|linebreaksbr }}</p>
             </a>
           </li><!-- end notification -->
+        {% endfor %}
         </ul><!-- /.menu -->
-      {% endfor %}
+      </li>
     {% else %}
       <li class="header">You have 0 notification</li>
     {% endif %}
