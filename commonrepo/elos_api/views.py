@@ -405,7 +405,7 @@ class ELOFork(LoggingMixin, APIView):
             elo_original = get_object_or_404(ELO, id=pk)
 
             if elo_original.is_public:
-                elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
+                elo_new = ELO.objects.create(name = elo_original.name + " (forked from author " + elo_original.author.username + ")",
                                              author = request.user,
                                              description = elo_original.description,
                                              original_type = elo_original.original_type,
