@@ -5,8 +5,8 @@
 {% load bootstrap_pagination %}
 
 {% block title %}User {{ user.username }}'s following users{% endblock %}
-{% block page_title %}Users followed by {{ user.username }}{% endblock %}
-{% block page_description %}All users followed by {{ user.username }}{% endblock %}
+{% block page_title %}Users been followed by {{ user.username }}{% endblock %}
+{% block page_description %}All users been followed by {{ user.username }}{% endblock %}
 {% block page_breadcrumb %}Users following{% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
   <div class="col-md-12">
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Followed users</h3>
+        <h3 class="box-title">Following users</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -23,18 +23,18 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <ul class="users-list clearfix">
-          {% for followed_user in object_list %}
+          {% for following_user in object_list %}
             <li>
-                <a href="{% url 'users:detail' followed_user.username %}"><img src="{% avatar_url followed_user %}" alt="User {{ followed_user.username }} profile picture"/></a>
-                <a href="{% url 'users:detail' followed_user.username %}"><span class="users-list-date">{{ followed_user.get_full_name }}</span></a>
-                <a href="{% url 'users:detail' followed_user.username %}"><span class="users-list-date">{{ followed_user.username }}</span></a>
-                {% if followed_user == request.user %}
+                <a href="{% url 'users:detail' following_user.username %}"><img src="{% avatar_url following_user %}" alt="User {{ following_user.username }} profile picture"/></a>
+                <a href="{% url 'users:detail' following_user.username %}"><span class="users-list-date">{{ following_user.get_full_name }}</span></a>
+                <a href="{% url 'users:detail' following_user.username %}"><span class="users-list-date">{{ following_user.username }}</span></a>
+                {% if following_user == request.user %}
                 <a href="#"><b>It's You!</b></a>
                 {% else %}
-                  {% if request.user|is_following:followed_user %}
-                  <a href="{% url 'users:unfollow' followed_user %}?next={{ request.path }}"><b>Unfollow</b></a>
+                  {% if request.user|is_following:following_user %}
+                  <a href="{% url 'users:unfollow' following_user %}?next={{ request.path }}"><b>Unfollow</b></a>
                   {% else %}
-                  <a href="{% url 'users:follow' followed_user %}?next={{ request.path }}"><b>Follow</b></a>
+                  <a href="{% url 'users:follow' following_user %}?next={{ request.path }}"><b>Follow</b></a>
                   {% endif %}
                 {% endif %}
             </li>
