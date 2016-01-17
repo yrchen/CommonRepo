@@ -13,6 +13,11 @@ urlpatterns = [
         name='elos-mylist'
     ),
     url(
+        regex=r'^following/$',
+        view=views.ELOsFollowingListView.as_view(),
+        name='elos-followinglist'
+        ),    
+    url(
         regex=r'^(?P<pk>[0-9]+)/$',
         view=views.ELOsDetailView.as_view(),
         name='elos-detail'

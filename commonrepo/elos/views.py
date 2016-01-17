@@ -15,6 +15,8 @@ from actstream.views import respond
 from braces.views import LoginRequiredMixin
 from rest_framework import status
 
+from commonrepo.users.models import User as User
+
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
@@ -130,6 +132,19 @@ class ELOsMyListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return ELO.objects.filter(author=self.request.user)
+
+class ELOsFollowingListView(LoginRequiredMixin, ListView):
+    template_name = 'elos/elos_following_list.html'
+    paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.request.user.username)
+
+        # Staff can access all ELOs
+        if self.request.user.is_staff:
+            return user.userprofile.follow_elos.all()
+        else:
+            return user.userprofile.follow_elos.filter(is_public=1)
 
 class ELOsNetworkView(LoginRequiredMixin, DetailView):
     model = ELO
