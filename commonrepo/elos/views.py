@@ -249,7 +249,9 @@ def follow_elo(request, pk):
     if elo.is_public or request.user.is_staff:
         actions.follow(request.user, elo, send_action=True)
         request.user.userprofile.follow_elos.add(elo)
-        messages.success(request, 'Successed, you are following this ELO')
+        messages.success(request, 'Successed, you are following this ELO.')
+    else:
+        messages.error(request, 'Permission denied.')
 
     return redirect('elos:elos-detail', pk)
 
@@ -263,5 +265,6 @@ def unfollow_elo(request, pk):
 
     actions.unfollow(request.user, elo, send_action=False)
     request.user.userprofile.follow_elos.remove(elo)
+    messages.warning(request, 'Successed, you are not follow this ELO anymore.')
 
     return redirect('elos:elos-detail', pk)
