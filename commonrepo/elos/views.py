@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
 from django.shortcuts import redirect, render, get_object_or_404
 
-from actstream import action
+from actstream import actions
 from actstream.views import respond
 from braces.views import LoginRequiredMixin
 from rest_framework import status
@@ -235,5 +235,33 @@ def unpublish_elo(request, pk):
         messages.warning(request, 'Successed, the target ELO is private now.')
     else:
         messages.error(request, 'Permission denied.')
+
+    return redirect('elos:elos-detail', pk)
+
+@login_required
+@csrf_exempt
+def follow_elo(request, pk):
+    """
+    Creates the follow relationship between ``request.user`` and the ``ELO``
+    """
+    elo = get_object_or_404(ELO, id=pk)
+
+    if elo.is_public or request.user.is_staff:
+        actions.follow(request.user, elo, send_action=True)
+        request.user.userprofile.follow_elos.add(elo)
+        messages.success(request, 'Successed, you are following this ELO')
+
+    return redirect('elos:elos-detail', pk)
+
+@login_required
+@csrf_exempt
+def unfollow_elo(request, pk):
+    """
+    Deletes the follow relationship between ``request.user`` and the ``ELO``
+    """
+    elo = get_object_or_404(ELO, id=pk)
+
+    actions.unfollow(request.user, elo, send_action=False)
+    request.user.userprofile.follow_elos.remove(elo)
 
     return redirect('elos:elos-detail', pk)
