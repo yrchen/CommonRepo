@@ -14,6 +14,7 @@ from actstream import action
 from actstream import actions
 from actstream.views import respond
 from braces.views import LoginRequiredMixin
+from notifications.signals import notify
 from rest_framework import status
 
 from commonrepo.users.models import User as User
@@ -264,6 +265,7 @@ def follow_elo(request, pk):
 
     if elo.is_public or request.user.is_staff:
         actions.follow(request.user, elo, send_action=True)
+        notify.send(request.user, recipient=elo.author, verb=u'has followed your ELO', level='success')
         request.user.userprofile.follow_elos.add(elo)
         messages.success(request, 'Successed, you are following this ELO.')
     else:
