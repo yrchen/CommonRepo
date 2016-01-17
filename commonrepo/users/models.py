@@ -45,9 +45,12 @@ class User(AbstractUser):
 
 @python_2_unicode_compatible
 class UserProfile(models.Model):
+    from commonrepo.elos.models import ELO
+
     user = AutoOneToOneField(User, primary_key=True)
     friends = models.ManyToManyField(User, related_name='friend_with')
     follows = models.ManyToManyField(User, related_name='followed_by')
+    follow_elos = models.ManyToManyField(ELO, related_name='followed_by')
 
     def __str__(self):
         return self.user.username
