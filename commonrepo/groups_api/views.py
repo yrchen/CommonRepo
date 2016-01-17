@@ -20,6 +20,7 @@ from rest_framework.views import APIView
 from rest_framework_tracking.mixins import LoggingMixin
 
 from actstream import action
+from notifications.signals import notify
 
 from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
@@ -74,6 +75,7 @@ def groups_member_join(request, pk):
         group.save()
         # send action to action stream
         action.send(request.user, verb="joined", target=group)
+        notify.send(request.user, recipient=group.creator, verb=u'has joined to your Group', level='success')
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -102,6 +104,7 @@ class GroupsMemberJoin(LoggingMixin, APIView):
             group.save()
             # send action to action stream
             action.send(request.user, verb="joined", target=group)
+            notify.send(request.user, recipient=group.creator, verb=u'has joined to your Group', level='success')
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
@@ -121,6 +124,7 @@ def groups_member_abort(request, pk):
         group.save()
         # send action to action stream
         action.send(request.user, verb="aborted", target=group)
+        notify.send(request.user, recipient=group.creator, verb=u'has aborted from your Group', level='success')
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -149,6 +153,7 @@ class GroupsMemberAbort(LoggingMixin, APIView):
             group.save()
             # send action to action stream
             action.send(request.user, verb="aborted", target=group)
+            notify.send(request.user, recipient=group.creator, verb=u'has aborted from your Group', level='success')
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
