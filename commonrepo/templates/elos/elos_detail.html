@@ -1141,6 +1141,11 @@
                 <a href="{% url 'users:detail' follower.user %}"><img src="{% avatar_url follower.user %}" alt="User {{ follower.user.username }} profile picture"/></a>
                 <a href="{% url 'users:detail' follower.user %}"><span class="users-list-date">{{ follower.user.username }}</span></a>
             </li>
+          {% empty %}
+            <span>No follower yet. Be the first one?</span>
+            {% if not request.user|is_following:object and not request.user == object.author%}
+              <a href="{% url 'elos:elos-follow' object.id %}" class="btn btn-sm btn-danger btn-flat">Follow this ELO</a>
+            {% endif %}
           {% endfor %}
         </ul>
       </div><!-- /.box-body -->
