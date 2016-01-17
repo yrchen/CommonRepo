@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -143,6 +144,7 @@ def follow_user(request, username):
     actions.follow(request.user, user, actor_only=False)
     notify.send(request.user, recipient=user, verb=u'has followed you', level='success')
     request.user.userprofile.follows.add(user)
+    messages.success(request, 'Successed, you are following this user.')
 
     return respond(request, 201)   # CREATED
 
@@ -156,5 +158,6 @@ def unfollow_user(request, username):
 
     actions.unfollow(request.user, user, send_action=True)
     request.user.userprofile.follows.remove(user)
+    messages.warning(request, 'Successed, you are not follow this user anymore.')
 
     return respond(request, 204)   # NO CONTENT
