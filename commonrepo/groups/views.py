@@ -10,6 +10,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from braces.views import LoginRequiredMixin
+from notifications.signals import notify
 
 from .models import Group
 from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
@@ -37,6 +38,7 @@ class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         action.send(self.request.user, verb='aborted', target=self.object)
+        notify.send(self.request.user, recipient=self.object.creator, verb=u'has aborted from your Group', level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
@@ -83,6 +85,7 @@ class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         action.send(self.request.user, verb='joined', target=self.object)
+        notify.send(self.request.user, recipient=self.object.creator, verb=u'has joined to your Group', level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
