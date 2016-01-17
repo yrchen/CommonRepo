@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
 from django.shortcuts import redirect, render, get_object_or_404
 
+from actstream import action
 from actstream import actions
 from actstream.views import respond
 from braces.views import LoginRequiredMixin
