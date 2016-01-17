@@ -59,6 +59,9 @@
                   {% endif %}
                 </td>
               </tr>
+              {% empty %}
+                <span>No ELO yet. Create the first one?</span>
+                <a href="{% url 'elos:elos-create' %}" class="btn btn-sm btn-warning btn-flat">Create ELO</a>
               {% endfor %}
             </tbody>
           </table>
