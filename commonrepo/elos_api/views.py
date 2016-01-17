@@ -21,6 +21,7 @@ from rest_framework.views import APIView
 from rest_framework_tracking.mixins import LoggingMixin
 
 from actstream import action
+from notifications.signals import notify
 
 from commonrepo.users.models import User as User
 from commonrepo.elos.models import ELO, ELOType, ELOMetadata
@@ -377,6 +378,7 @@ def elos_fork(request, pk):
 
             # send action to action stream
             action.send(request.user, verb='forked', target=elo_new)
+            notify.send(request.user, recipient=elo_original.author, verb=u'has forked your ELO', level='success')
 
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
@@ -427,7 +429,8 @@ class ELOFork(LoggingMixin, APIView):
                     elo_new.save()
 
                 # send action to action stream
-                action.send(request.user, verb='forked', target=elo_new) 
+                action.send(request.user, verb='forked', target=elo_new)
+                notify.send(request.user, recipient=elo_original.author, verb=u'has forked your ELO', level='success')
 
                 return Response({"code": status.HTTP_201_CREATED,
                                  "status": "ok",
