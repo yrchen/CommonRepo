@@ -57,6 +57,9 @@
                   {% endfor %}
                   </td>
                 </tr>
+              {% empty %}
+                <span>No Group yet. Create the first one?</span>
+                <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat">Create Group</a>
               {% endfor %}
             </tbody>
           </table>
@@ -116,6 +119,10 @@
                   {% endfor %}
                   </td>
                 </tr>
+              {% empty %}
+                <span>No Group yet. Create or Join the first one?</span>
+                <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat">Create Group</a>
+                <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-info btn-flat">View All Groups</a>
               {% endfor %}
             </tbody>
           </table>
