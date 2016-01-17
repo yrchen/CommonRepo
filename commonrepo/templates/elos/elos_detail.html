@@ -207,6 +207,13 @@
           {{ object.original_type }}
         </p>
 
+        <hr>
+
+        <strong><i class="fa fa-user margin-r-5"></i> Followers</strong>
+        <p class="text-muted">
+          <a href="#followers">{{ object.followed_by.all.count }}</a>
+        </p>
+
       </div><!-- /.box-body -->
     </div><!-- /.box -->
 
@@ -1119,7 +1126,7 @@
     <!-- /.Comments -->
 
     <!-- Followers -->
-    <div class="box box-info">
+    <div class="box box-info" id="followers">
       <div class="box-header with-border">
         <h3 class="box-title">Followers</h3>
         <div class="box-tools pull-right">
