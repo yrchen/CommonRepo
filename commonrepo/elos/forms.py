@@ -58,7 +58,7 @@ class ELOForkForm(ModelForm):
             if not self.request_user == elo_original.author and not self.request_user.is_staff:
                 elo_source = get_object_or_404(ELO, id=settings.ELO_ROOT_ID)
 
-        self.fields["name"].initial = elo_source.name + " (Fork from author " + elo_source.author.username + ")"
+        self.fields["name"].initial = elo_source.name + " (forked from author " + elo_source.author.username + ")"
         self.fields["name"].widget.attrs['readonly'] = True
         self.fields["author"].queryset = User.objects.filter(username=self.request_user)
         self.fields["author"].empty_label = None
