@@ -59,5 +59,18 @@ urlpatterns = [
         regex=r'^unpublish/(?P<pk>[0-9]+)/$',
         view=views.unpublish_elo,
         name='elos-unpublish'
-    )    
+    ),
+
+    # Follow ELO
+    url(
+        regex=r'^follow/(?P<pk>[0-9]+)/$',
+        view=views.follow_elo,
+        name='elos-follow'
+    ),
+    # Unfollow ELO
+    url(
+        regex=r'^unfollow/(?P<pk>[0-9]+)/$',
+        view=views.unfollow_elo,
+        name='elos-unfollow'
+    )        
 ]
