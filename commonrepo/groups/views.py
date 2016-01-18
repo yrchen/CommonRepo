@@ -6,18 +6,20 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
 from actstream import actions
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, OrderableListMixin
 from notifications.signals import notify
+
+from commonrepo.users.models import User as User
 
 from .models import Group
 from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
-from django.db.models import Q
 
 class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
@@ -107,6 +109,18 @@ class GroupsMyListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Group.objects.filter(creator=self.request.user)
+
+class GroupsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
+    template_name = 'groups/groups_following_list.html'
+    paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
+    orderable_columns = ("id", "create_update", "update_date")
+    orderable_columns_default = "id"
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.request.user.username)
+        unordered_queryset = user.userprofile.follow_groups.all()
+
+        return self.get_ordered_queryset(unordered_queryset)
 
 class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
