@@ -144,18 +144,22 @@ class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
         unordered_queryset = ELO.objects.filter(author=self.request.user)
         return self.get_ordered_queryset(unordered_queryset)
 
-class ELOsFollowingListView(LoginRequiredMixin, ListView):
+class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
     template_name = 'elos/elos_following_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
+    orderable_columns = ("id", "create_update", "update_date")
+    orderable_columns_default = "id"
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.request.user.username)
 
         # Staff can access all ELOs
         if self.request.user.is_staff:
-            return user.userprofile.follow_elos.all()
+            unordered_queryset = user.userprofile.follow_elos.all()
         else:
-            return user.userprofile.follow_elos.filter(is_public=1)
+            unordered_queryset = user.userprofile.follow_elos.filter(is_public=1)
+
+        return self.get_ordered_queryset(unordered_queryset)
 
 class ELOsNetworkView(LoginRequiredMixin, DetailView):
     model = ELO
