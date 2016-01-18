@@ -88,6 +88,7 @@ class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         action.send(self.request.user, verb='joined', target=self.object)
+        actions.follow(self.request.user, self.object, send_action=True)
         notify.send(self.request.user, recipient=self.object.creator, verb=u'has joined to your Group', level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
@@ -145,12 +146,11 @@ def follow_group(request, pk):
     """
     group = get_object_or_404(Group, id=pk)
 
-    if group.is_public or request.user.is_staff:
+    # Check user is not member of the group
+    if not group.members.filter(id=request.user.id).exists():
         actions.follow(request.user, group, send_action=True)
         notify.send(request.user, recipient=group.creator, verb=u'has followed your Group', level='success')
         request.user.userprofile.follow_groups.add(group)
         messages.success(request, 'Successed, you are following this Group.')
-    else:
-        messages.error(request, 'Permission denied.')
 
     return redirect('groups:groups-detail', pk)
