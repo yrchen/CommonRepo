@@ -3,12 +3,15 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
 from django.shortcuts import redirect, render, get_object_or_404
 
 from actstream import action
+from actstream import actions
 from braces.views import LoginRequiredMixin
 from notifications.signals import notify
 
@@ -133,3 +136,21 @@ class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         action.send(self.request.user, verb='updated', target=self.object)
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
+
+@login_required
+@csrf_exempt
+def follow_group(request, pk):
+    """
+    Creates the follow relationship between ``request.user`` and the ``Group``
+    """
+    group = get_object_or_404(Group, id=pk)
+
+    if group.is_public or request.user.is_staff:
+        actions.follow(request.user, group, send_action=True)
+        notify.send(request.user, recipient=group.creator, verb=u'has followed your Group', level='success')
+        request.user.userprofile.follow_groups.add(group)
+        messages.success(request, 'Successed, you are following this Group.')
+    else:
+        messages.error(request, 'Permission denied.')
+
+    return redirect('groups:groups-detail', pk)

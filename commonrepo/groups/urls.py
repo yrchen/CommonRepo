@@ -42,4 +42,11 @@ urlpatterns = [
         view=views.GroupsUpdateView.as_view(),
         name='groups-update'
     ),
+
+    # Follow Group
+    url(
+        regex=r'^follow/(?P<pk>[0-9]+)/$',
+        view=views.follow_group,
+        name='groups-follow'
+    ),    
 ]
