@@ -152,7 +152,10 @@ def follow_group(request, pk):
         actions.follow(request.user, group, send_action=True)
         notify.send(request.user, recipient=group.creator, verb=u'has followed your Group', level='success')
         request.user.userprofile.follow_groups.add(group)
-        messages.success(request, 'Successed, you are following this Group.')
+        messages.success(request, 'Successed, you are now following this Group.')
+    else:
+        actions.follow(request.user, group, send_action=False)
+        messages.success(request, 'You are the member of this Group and automatically become the follower.')
 
     return redirect('groups:groups-detail', pk)
 
@@ -164,8 +167,14 @@ def unfollow_group(request, pk):
     """
     group = get_object_or_404(Group, id=pk)
 
-    actions.unfollow(request.user, group, send_action=False)
-    request.user.userprofile.follow_groups.remove(group)
-    messages.warning(request, 'Successed, you are not follow this Group anymore.')
+    # Check user is not member of the group
+    if not group.members.filter(id=request.user.id).exists():
+        actions.unfollow(request.user, group, send_action=False)
+        request.user.userprofile.follow_groups.remove(group)
+        messages.warning(request, 'Successed, you are not following this Group anymore.')
+    # the group members can choose not follow the group anymore, but still been the member
+    else:
+        actions.unfollow(request.user, group, send_action=False)
+        messages.warning(request, 'Successed, you are not following this Group anymore. But you are still the one of the members of this group.')
 
     return redirect('groups:groups-detail', pk)
