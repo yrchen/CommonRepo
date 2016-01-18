@@ -116,6 +116,18 @@
         </p>
 
         <hr>
+
+        <strong><i class="fa fa-user margin-r-5"></i> Members</strong>
+        <p class="text-muted">
+          <a href="#members">{{ object.members.all.count }}</a>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-user margin-r-5"></i> Followers</strong>
+        <p class="text-muted">
+          <a href="#followers">{{ object.followed_by.all.count }}</a>
+        </p>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
     <!-- /.Group Info Box -->
@@ -172,7 +184,7 @@
     <!-- /.Comments -->
 
     <!-- Members -->
-    <div class="box box-info">
+    <div class="box box-info" id="members">
       <div class="box-header with-border">
         <h3 class="box-title">Members</h3>
         <div class="box-tools pull-right">
