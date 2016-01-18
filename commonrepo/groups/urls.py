@@ -48,5 +48,11 @@ urlpatterns = [
         regex=r'^follow/(?P<pk>[0-9]+)/$',
         view=views.follow_group,
         name='groups-follow'
-    ),    
+    ),
+    # Unfollow Group
+    url(
+        regex=r'^unfollow/(?P<pk>[0-9]+)/$',
+        view=views.unfollow_group,
+        name='groups-unfollow'
+    ),
 ]

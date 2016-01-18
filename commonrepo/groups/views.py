@@ -41,6 +41,7 @@ class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         action.send(self.request.user, verb='aborted', target=self.object)
+        actions.unfollow(self.request.user, self.object, send_action=False)
         notify.send(self.request.user, recipient=self.object.creator, verb=u'has aborted from your Group', level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
@@ -152,5 +153,19 @@ def follow_group(request, pk):
         notify.send(request.user, recipient=group.creator, verb=u'has followed your Group', level='success')
         request.user.userprofile.follow_groups.add(group)
         messages.success(request, 'Successed, you are following this Group.')
+
+    return redirect('groups:groups-detail', pk)
+
+@login_required
+@csrf_exempt
+def unfollow_group(request, pk):
+    """
+    Deletes the follow relationship between ``request.user`` and the ``Group``
+    """
+    group = get_object_or_404(Group, id=pk)
+
+    actions.unfollow(request.user, group, send_action=False)
+    request.user.userprofile.follow_groups.remove(group)
+    messages.warning(request, 'Successed, you are not follow this Group anymore.')
 
     return redirect('groups:groups-detail', pk)
