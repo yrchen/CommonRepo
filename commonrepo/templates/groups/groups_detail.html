@@ -193,6 +193,33 @@
     </div><!-- /.box -->
     <!-- /.Members -->
 
+    <!-- Followers -->
+    <div class="box box-info" id="followers">
+      <div class="box-header with-border">
+        <h3 class="box-title">Followers</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <ul class="users-list clearfix">
+          {% for follower in object.followed_by.all %}
+            <li>
+                <a href="{% url 'users:detail' follower.user %}"><img src="{% avatar_url follower.user %}" alt="User {{ follower.user.username }} profile picture"/></a>
+                <a href="{% url 'users:detail' follower.user %}"><span class="users-list-date">{{ follower.user.username }}</span></a>
+            </li>
+          {% empty %}
+            <span>No follower yet. Be the first one?</span>
+            {% if not request.user|is_following:object and not request.user == object.author%}
+              <a href="{% url 'elos:elos-follow' object.id %}" class="btn btn-sm btn-danger btn-flat">Follow this ELO</a>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <!-- /.Followers -->
+
   </div><!-- /.col -->
 
 </div><!-- /.row -->
