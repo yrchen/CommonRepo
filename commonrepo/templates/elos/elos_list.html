@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load staticfiles %}
+
 {% load bootstrap_pagination %}
 
 {% block title %}All ELOs{% endblock %}
@@ -8,7 +10,6 @@
 {% block page_breadcrumb %}All ELOs{% endblock %}
 
 {% block content %}
-
 <div class="row">
   <!-- col -->
   <div class="col-md-12">
@@ -22,7 +23,7 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="table-responsive">
-          <table class="table table-hover no-margin">
+          <table id="table-all-elos" class="table table-hover table-striped no-margin">
             <thead>
               <tr>
                 <th>ID</th>
@@ -92,3 +93,23 @@
   </div><!-- /.col -->
 </div><!-- /.row -->
 {% endblock content %}
+
+{% block javascript_extra %}
+<!-- DataTables -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#table-all-elos').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+{% endblock %}
