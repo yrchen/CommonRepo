@@ -130,14 +130,19 @@ class ELOsListView(OrderableListMixin, ListView):
         else:
             unordered_queryset = ELO.objects.filter(is_public=1)
 
+        # Use get_ordered_queryset from OrderableListMixin
         return self.get_ordered_queryset(unordered_queryset)
 
-class ELOsMyListView(LoginRequiredMixin, ListView):
+class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
+    orderable_columns = ("id", "create_update", "update_date")
+    orderable_columns_default = "id"
 
+    # Use get_ordered_queryset from OrderableListMixin
     def get_queryset(self):
-        return ELO.objects.filter(author=self.request.user)
+        unordered_queryset = ELO.objects.filter(author=self.request.user)
+        return self.get_ordered_queryset(unordered_queryset)
 
 class ELOsFollowingListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_following_list.html'
