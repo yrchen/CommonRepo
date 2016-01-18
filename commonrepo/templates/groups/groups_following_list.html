@@ -1,0 +1,100 @@
+{% extends "starter.html" %}
+
+{% load staticfiles %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}My Following Groups{% endblock %}
+{% block page_title %}My Following Groups{% endblock %}
+{% block page_description %}All Groups that I'm following{% endblock %}
+{% block page_breadcrumb %}Following Groups{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">My Following Groups</h3>
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="table-responsive">
+          <table id="table-following-groups" class="table table-hover table-striped no-margin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Creator</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
+                <th>Public</th>
+                <th>Description</th>
+                <th>Members</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for group in object_list %}
+              <tr>
+                <td><a href="{% url 'groups:groups-detail' group.id %}">{{group.id}}</a></td>
+                <td>{{group.name|truncatechars:30}}</td>
+                <td><a href="{% url 'users:detail' group.creator %}">{{group.creator}}</a></td>
+                <td>{{group.create_date|date:"SHORT_DATE_FORMAT"}}</td>
+                <td>{{group.update_date|timesince}} ago</td>
+                <td>
+                  {% if group.is_public %}
+                  Yes
+                  {% else %}
+                  No
+                  {% endif %}
+                </td>
+                <td>{{group.description|truncatechars:120}}</td>
+                <td>
+                {% for member in group.members.all %}
+                   <a href="{% url 'users:detail' member.username %}">{{member.username}}</a>
+                {% endfor %}
+                </td>
+              </tr>
+              {% empty %}
+                <span>No Group yet. Follow the first one?</span>
+                <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-info btn-flat">View All Groups</a>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><!-- /.table-responsive -->
+      </div><!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <a href="{% url 'groups:groups-create' %}" class="btn btn-sm btn-warning btn-flat pull-left">Create Group</a>
+        <a href="{% url 'groups:groups-mylist' %}" class="btn btn-sm btn-info btn-flat pull-left">View My Groups</a>
+        <a href="{% url 'groups:groups-alllist' %}" class="btn btn-sm btn-info btn-flat pull-left">View All Groups</a>
+        <div class="pull-right">
+          {% bootstrap_paginate page_obj %}
+        </div>
+      </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+{% endblock content %}
+
+{% block javascript_extra %}
+<!-- DataTables -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#table-following-groups').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+{% endblock %}

@@ -38,8 +38,26 @@ urlpatterns = [
         name='groups-mylist'
     ),
     url(
+        regex=r'^following/$',
+        view=views.GroupsFollowingListView.as_view(),
+        name='groups-followinglist'
+        ),
+    url(
         regex=r'^update/(?P<pk>[0-9]+)/$',
         view=views.GroupsUpdateView.as_view(),
         name='groups-update'
+    ),
+
+    # Follow Group
+    url(
+        regex=r'^follow/(?P<pk>[0-9]+)/$',
+        view=views.follow_group,
+        name='groups-follow'
+    ),
+    # Unfollow Group
+    url(
+        regex=r'^unfollow/(?P<pk>[0-9]+)/$',
+        view=views.unfollow_group,
+        name='groups-unfollow'
     ),
 ]
