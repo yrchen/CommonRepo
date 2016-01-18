@@ -17,13 +17,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
-        <a href="{% follow_url object %}?next={{ request.path }}" class="btn btn-sm btn-info btn-flat pull-left">
+        {% if not request.user == object.creator %}
           {% if request.user|is_following:object %}
-              Unfollow this Group
+            <a href="{% url 'groups:groups-unfollow' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unfollow this Group</a>
           {% else %}
-              Follow this Group
+            <a href="{% url 'groups:groups-follow' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Follow this Group</a>
           {% endif %}
-        </a>
+        {% endif %}
         {% if object.creator == request.user or user.is_staff %}
         <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
         {% endif %}
@@ -202,6 +202,13 @@
   <div class="col-sm-12 ">
     <div class="box box-info">
       <div class="box-body">
+        {% if not request.user == object.creator %}
+          {% if request.user|is_following:object %}
+            <a href="{% url 'groups:groups-unfollow' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Unfollow this Group</a>
+          {% else %}
+            <a href="{% url 'groups:groups-follow' object.id %}" class="btn btn-sm btn-danger btn-flat pull-left">Follow this Group</a>
+          {% endif %}
+        {% endif %}
         {% if object.creator == request.user or user.is_staff %}
         <a href="{% url 'groups:groups-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this Group</a>
         {% endif %}
