@@ -13,7 +13,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from actstream import action
 from actstream import actions
 from actstream.views import respond
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, OrderableListMixin
 from notifications.signals import notify
 from rest_framework import status
 
@@ -118,22 +118,31 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
         return super(ELOsForkView, self).get_success_url()
 
-class ELOsListView(ListView):
+class ELOsListView(OrderableListMixin, ListView):
     template_name = 'elos/elos_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
+    orderable_columns = ("id", "create_update", "update_date")
+    orderable_columns_default = "id"
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return ELO.objects.all()
+            unordered_queryset = ELO.objects.all()
         else:
-            return ELO.objects.filter(is_public=1)
+            unordered_queryset = ELO.objects.filter(is_public=1)
 
-class ELOsMyListView(LoginRequiredMixin, ListView):
+        # Use get_ordered_queryset from OrderableListMixin
+        return self.get_ordered_queryset(unordered_queryset)
+
+class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
+    orderable_columns = ("id", "create_update", "update_date")
+    orderable_columns_default = "id"
 
+    # Use get_ordered_queryset from OrderableListMixin
     def get_queryset(self):
-        return ELO.objects.filter(author=self.request.user)
+        unordered_queryset = ELO.objects.filter(author=self.request.user)
+        return self.get_ordered_queryset(unordered_queryset)
 
 class ELOsFollowingListView(LoginRequiredMixin, ListView):
     template_name = 'elos/elos_following_list.html'

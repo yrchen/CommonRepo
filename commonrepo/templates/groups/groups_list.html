@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load staticfiles %}
+
 {% load bootstrap_pagination %}
 
 {% block title %}All Groups{% endblock %}
@@ -22,7 +24,7 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="table-responsive">
-          <table class="table no-margin">
+          <table id="table-all-groups" class="table table-hover table-striped no-margin">
             <thead>
               <tr>
                 <th>ID</th>
@@ -75,3 +77,23 @@
     </div><!-- /.box -->
   </div><!-- /.col -->
 {% endblock content %}
+
+{% block javascript_extra %}
+<!-- DataTables -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#table-all-groups').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+{% endblock %}
