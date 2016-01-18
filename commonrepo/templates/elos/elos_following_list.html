@@ -1,5 +1,7 @@
 {% extends "starter.html" %}
 
+{% load staticfiles %}
+
 {% load bootstrap_pagination %}
 
 {% block title %}My Following ELOs{% endblock %}
@@ -22,7 +24,7 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="table-responsive">
-          <table class="table table-hover no-margin">
+          <table id="table-following-elos" class="table table-hover table-striped no-margin">
             <thead>
               <tr>
                 <th>ID</th>
@@ -80,3 +82,23 @@
   </div><!-- /.col -->
 </div><!-- /.row -->
 {% endblock content %}
+
+{% block javascript_extra %}
+<!-- DataTables -->
+<script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+
+<!-- page script -->
+<script>
+  $(function () {
+    $('#table-following-elos').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
+  });
+</script>
+{% endblock %}
