@@ -92,13 +92,6 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
-              {% block navbar_messages %}
-              {% if request.user.is_authenticated %}
-                {% include "widgets/menu-messages.html" %}
-              {% endif %}
-              {% endblock navbar_messages %}
-
               <!-- Notifications Menu -->
               {% block navbar_notifications %}
               {% if request.user.is_authenticated %}
