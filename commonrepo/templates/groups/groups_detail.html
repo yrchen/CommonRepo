@@ -223,8 +223,8 @@
             </li>
           {% empty %}
             <span>No follower yet. Be the first one?</span>
-            {% if not request.user|is_following:object and not request.user == object.author%}
-              <a href="{% url 'elos:elos-follow' object.id %}" class="btn btn-sm btn-danger btn-flat">Follow this ELO</a>
+            {% if not request.user|is_following:object and not request.user == object.creator %}
+              <a href="{% url 'groups:groups-follow' object.id %}" class="btn btn-sm btn-danger btn-flat">Follow this Group</a>
             {% endif %}
           {% endfor %}
         </ul>
