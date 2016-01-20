@@ -89,36 +89,6 @@
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
-          <!-- Navbar Right Menu -->
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
-              {% block navbar_messages %}
-              {% if request.user.is_authenticated %}
-                {% include "widgets/menu-messages.html" %}
-              {% endif %}
-              {% endblock navbar_messages %}
-
-              <!-- Notifications Menu -->
-              {% block navbar_notifications %}
-              {% if request.user.is_authenticated %}
-                {% include "widgets/menu-notification.html" %}
-              {% endif %}
-              {% endblock navbar_notifications %}
-
-              <!-- Tasks Menu -->
-              {% block navbar_tasks %}
-              {% if request.user.is_authenticated %}
-                {% include "widgets/menu-tasks.html" %}
-              {% endif %}
-              {% endblock navbar_tasks %}
-
-              <!-- User Account Menu -->
-              {% block navbar_user %}
-              {% include "widgets/menu-user.html" %}
-              {% endblock navbar_user %}
-            </ul>
-          </div>
         </nav>
       </header>
 
