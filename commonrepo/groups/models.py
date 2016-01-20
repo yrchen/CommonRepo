@@ -17,7 +17,7 @@ class Group(models.Model):
     name = models.CharField(_("Name of Group"), blank=False, max_length=255)
     fullname = models.CharField(_("Full Name of Group"), blank=True, max_length=255)
     creator = models.ForeignKey(User, related_name='commonrepo_groups')
-    members = models.ManyToManyField(User, related_name='commonrepo_groups_members')
+    members = models.ManyToManyField(User, blank=True, related_name='commonrepo_groups_members')
     description = models.CharField(_("Description of Group"), blank=True, max_length=255)
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
