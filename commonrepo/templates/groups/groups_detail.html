@@ -46,7 +46,7 @@
     <div class="box box-primary">
       <div class="box-body box-profile">
         {% if object.logo %}
-          <img class="img-circle" src="{% thumbnail object.logo 250x250 crop %}" alt="Group {{ object.name }} logo">
+          <img class="img-responsive center-block" src="{% thumbnail object.logo 250x250 crop %}" alt="Group {{ object.name }} logo"/>
         {% else %}
           <div class="text-center">
             <i class="fa fa-users fa-5x"></i>
