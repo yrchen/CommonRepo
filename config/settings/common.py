@@ -33,6 +33,7 @@ DJANGO_APPS = (
 
     # Admin
     'grappelli', # django-grappelli
+    'filebrowser', # django-filebrowser
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
