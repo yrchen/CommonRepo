@@ -9,6 +9,8 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from filer.fields.image import FilerImageField
+
 from commonrepo.users.models import User as User
 
 @python_2_unicode_compatible
@@ -19,6 +21,8 @@ class Group(models.Model):
     creator = models.ForeignKey(User, related_name='commonrepo_groups')
     members = models.ManyToManyField(User, blank=True, related_name='commonrepo_groups_members')
     description = models.CharField(_("Description of Group"), blank=True, max_length=255)
+    logo = FilerImageField(null=True, blank=True, related_name="group_logo")
+
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)

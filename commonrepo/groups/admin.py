@@ -9,7 +9,7 @@ from .models import Group
 
 class GroupAdmin(VersionAdmin):
     fieldsets = [
-        ('Group Info',       {'fields': ['name', 'fullname', 'creator', 'description']}),
+        ('Group Info',       {'fields': ['name', 'fullname', 'creator', 'logo', 'description']}),
     ]
     
 admin.site.register(Group, GroupAdmin)
