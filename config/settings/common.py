@@ -60,6 +60,8 @@ THIRD_PARTY_APPS = (
     'django_comments', # django-contrib-comments
 
     # Other tools
+    'easy_thumbnails', # easy-thumbnails (required by django-filer)
+    'filer', # django-filer
     'mptt', # django-mptt
     'avatar', # django-avatar
     'annoying', # django-annoying
