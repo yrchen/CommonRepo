@@ -407,6 +407,9 @@ MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 GRAPPELLI_ADMIN_TITLE = "Common Repository | Administration"
 GRAPPELLI_SWITCH_USER = True
 
+# easy_thumbnails
+THUMBNAIL_HIGH_RESOLUTION = True
+
 #
 # System config variables
 GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
