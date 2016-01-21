@@ -30,7 +30,7 @@ urlpatterns = [
     # URL pattern for the UserUpdateView
     url(
         regex=r'^~update/$',
-        view=views.follow_user,
+        view=views.UserUpdateView.as_view(),
         name='update'
     ),
 
