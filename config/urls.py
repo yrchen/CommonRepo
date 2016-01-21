@@ -69,6 +69,9 @@ urlpatterns = [
     # Comments
     url(r'^comments/', include('fluent_comments.urls')), # django-contrib-comments
 
+    # Files
+    url(r'^files/', include('filer.urls')),
+
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
     url(r'^groups/', include("commonrepo.groups.urls", namespace="groups")),

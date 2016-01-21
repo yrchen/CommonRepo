@@ -60,6 +60,8 @@ THIRD_PARTY_APPS = (
     'django_comments', # django-contrib-comments
 
     # Other tools
+    'easy_thumbnails', # easy-thumbnails (required by django-filer)
+    'filer', # django-filer
     'mptt', # django-mptt
     'avatar', # django-avatar
     'annoying', # django-annoying
@@ -404,6 +406,9 @@ MESSAGE_STORAGE = 'messages_extends.storages.FallbackStorage'
 # Django Grappelli
 GRAPPELLI_ADMIN_TITLE = "Common Repository | Administration"
 GRAPPELLI_SWITCH_USER = True
+
+# easy_thumbnails
+THUMBNAIL_HIGH_RESOLUTION = True
 
 #
 # System config variables
