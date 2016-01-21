@@ -7,6 +7,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+from filebrowser.sites import site
+
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -46,6 +48,7 @@ urlpatterns = [
     url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin
+    url(r'^admin/filebrowser/', include(site.urls)), # django-filebrowser
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 

@@ -60,6 +60,7 @@ django-reversion==1.10.0
 django-reversion-compare==0.5.6
 django-licenses==0.2.5
 django-grappelli==2.7.2
+django-filebrowser==3.6.1
 
 # Authentication
 djoser==0.4.0
