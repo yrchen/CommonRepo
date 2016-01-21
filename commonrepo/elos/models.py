@@ -26,6 +26,11 @@ def elos_get_random_filename(instance, filename):
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('elos/' + str(instance.id), filename)
 
+def elos_get_cover_filename(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (str(uuid4()), ext)
+    return os.path.join('elos-covers/' + str(instance.id), filename)
+
 @python_2_unicode_compatible
 class ELOMetadata(models.Model):
     #
@@ -348,6 +353,8 @@ class ELO(models.Model):
     description = models.CharField(_("Description of ELO"), blank=True, max_length=255)
     author = models.ForeignKey(User, related_name='elos')
     uuid = models.UUIDField(_("UUID"), default=uuid4)
+    cover = models.ImageField(_("Cover of ELO"), blank=True, upload_to=elos_get_cover_filename)
+
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
@@ -356,6 +363,7 @@ class ELO(models.Model):
     original_type = models.ForeignKey(ELOType, to_field='type_id', related_name='elos')
     is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=elos_get_random_filename)
+
     # version control
     version = models.PositiveIntegerField(_("ELO version"), blank=True, default=0)
     parent_elo = models.ForeignKey('self', blank=True, default=1)
