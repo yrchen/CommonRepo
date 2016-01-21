@@ -41,6 +41,8 @@ router_api_v2.register(r'api/v2/users', UserViewSetV2)
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
+    url(r'^download/$', TemplateView.as_view(template_name='pages/download.html'), name="download"),
+
     url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin

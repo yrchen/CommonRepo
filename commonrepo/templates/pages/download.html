@@ -1,0 +1,14 @@
+{% extends "page.html" %}
+
+{% block title %}Welcome to Common Repository{% endblock %}
+
+{% block content %}
+<div class="">
+    <div class="container">
+        <h1>Welcome to Common Repository</h1>
+
+        <p>Common Repository provides a free repostitory service for ELOs.</p>
+        <p>To get start, please <a class="btn btn-primary btn-lg" href="{% url 'account_login' %}" role="button">Log in</a> or <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}" role="button">Sign up</a></p>
+    </div>
+</div>
+{% endblock %}
