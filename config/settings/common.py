@@ -410,6 +410,9 @@ GRAPPELLI_SWITCH_USER = True
 # easy_thumbnails
 THUMBNAIL_HIGH_RESOLUTION = True
 
+# Files (django-filer)
+FILER_CANONICAL_URL = 'sharing/'
+
 #
 # System config variables
 GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
