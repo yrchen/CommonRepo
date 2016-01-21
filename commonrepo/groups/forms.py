@@ -15,7 +15,7 @@ from .models import Group
 class GroupForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'creator', 'description']
+        fields = ['name', 'creator', 'description', 'logo', 'is_public']
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
@@ -52,7 +52,7 @@ class GroupAddForm(ModelForm):
 class GroupUpdateForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'description', 'is_public']
+        fields = ['name', 'description', 'logo', 'is_public']
 
     def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
