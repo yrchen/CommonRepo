@@ -130,12 +130,16 @@ def elos_diversity(request, pk, pk2):
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
 
-        # Check user is authenticated and has setting of elo_similarity_threshold
-        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-            elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
-        # if not, use default setting
+        # Check user has permission to access the ELOs
+        if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+            # If user has setting of elo_similarity_threshold
+            if request.user.elo_similarity_threshold:
+                elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+            # if not, use default setting
+            else:
+                elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
         else:
-            elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -164,12 +168,16 @@ class ELODiversity(LoggingMixin, APIView):
             elo_source = get_object_or_404(ELO, pk=pk)
             elo_target = get_object_or_404(ELO, pk=pk2)
 
-            # Check user is authenticated and has setting of elo_similarity_threshold
-            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-                elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
-            # if not, use default setting
+            # Check user has permission to access the ELOs
+            if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+                # If user has setting of elo_similarity_threshold
+                if request.user.elo_similarity_threshold:
+                    elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+                # if not, use default setting
+                else:
+                    elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
             else:
-                elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
@@ -197,15 +205,20 @@ def elos_diversity_all(request, pk):
         elos_public = ELO.objects.filter(is_public=1)
         elos_result = {}
 
-        # Check user is authenticated and has setting of elo_similarity_threshold
-        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-            threshold = request.user.elo_similarity_threshold
-        # if not, use default setting
+        # Check user has permission to access the ELOs
+        if elo_source.has_permission(request.user):
+            # Check user has setting of elo_similarity_threshold
+            if request.user.elo_similarity_threshold:
+                threshold = request.user.elo_similarity_threshold
+            # if not, use default setting
+            else:
+                threshold = settings.ELO_SIMILARITY_THRESHOLD
         else:
-            threshold = settings.ELO_SIMILARITY_THRESHOLD
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
         for elo in elos_public:
-            elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+            if elo.has_permission(request.user):
+                elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -234,15 +247,20 @@ class ELODiversityAll(LoggingMixin, APIView):
             elos_public = ELO.objects.filter(is_public=1)
             elos_result = {}
 
-            # Check user is authenticated and has setting of elo_similarity_threshold
-            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-                threshold = request.user.elo_similarity_threshold
-            # if not, use default setting
+            # Check user has permission to access the ELOs
+            if elo_source.has_permission(request.user):
+                # Check user has setting of elo_similarity_threshold
+                if request.user.elo_similarity_threshold:
+                    threshold = request.user.elo_similarity_threshold
+                # if not, use default setting
+                else:
+                    threshold = settings.ELO_SIMILARITY_THRESHOLD
             else:
-                threshold = settings.ELO_SIMILARITY_THRESHOLD
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
             for elo in elos_public:
-                elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+                if elo.has_permission(request.user):
+                    elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
@@ -268,12 +286,15 @@ def elos_similarity(request, pk, pk2):
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
 
-        # Check user is authenticated and has setting of elo_similarity_threshold
-        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-            elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
-        # if not, use default setting
+        if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+            # Check user has setting of elo_similarity_threshold
+            if request.user.elo_similarity_threshold:
+                elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+            # if not, use default setting
+            else:
+                elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
         else:
-            elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -302,12 +323,15 @@ class ELOSimilarity(LoggingMixin, APIView):
             elo_source = get_object_or_404(ELO, id=pk)
             elo_target = get_object_or_404(ELO, id=pk2)
 
-            # Check user is authenticated and has setting of elo_similarity_threshold
-            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-                elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
-            # if not, use default setting
+            if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+                # Check user has setting of elo_similarity_threshold
+                if request.user.elo_similarity_threshold:
+                    elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+                # if not, use default setting
+                else:
+                    elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
             else:
-                elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
@@ -335,15 +359,19 @@ def elos_similarity_all(request, pk):
         elos_public = ELO.objects.filter(is_public=1)
         elos_result = {}
 
-        # Check user is authenticated and has setting of elo_similarity_threshold
-        if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-            threshold = request.user.elo_similarity_threshold
-        # if not, use default setting
-        else:
-            threshold = settings.ELO_SIMILARITY_THRESHOLD
+        if elo_source.has_permission(request.user):
+            # Check user has setting of elo_similarity_threshold
+            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                threshold = request.user.elo_similarity_threshold
+            # if not, use default setting
+            else:
+                threshold = settings.ELO_SIMILARITY_THRESHOLD
+            else:
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
         for elo in elos_public:
-            elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+            if elo.has_permission(request.user):
+                elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
 
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -372,15 +400,19 @@ class ELOSimilarityAll(LoggingMixin, APIView):
             elos_public = ELO.objects.filter(is_public=1)
             elos_result = {}
 
-            # Check user is authenticated and has setting of elo_similarity_threshold
-            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
-                threshold = request.user.elo_similarity_threshold
-            # if not, use default setting
-            else:
-                threshold = settings.ELO_SIMILARITY_THRESHOLD
+            if elo_source.has_permission(request.user):
+                # Check user has setting of elo_similarity_threshold
+                if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                    threshold = request.user.elo_similarity_threshold
+                # if not, use default setting
+                else:
+                    threshold = settings.ELO_SIMILARITY_THRESHOLD
+                else:
+                    return Response(status=status.HTTP_403_FORBIDDEN)
 
             for elo in elos_public:
-                elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+                if elo.has_permission(request.user):
+                    elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
 
             return Response({"code": status.HTTP_202_ACCEPTED,
                              "status": "ok",
@@ -405,7 +437,7 @@ def elos_fork(request, pk):
     if request.method == 'POST':
         elo_original = get_object_or_404(ELO, id=pk)
 
-        if elo_original.is_public:
+        if elo_original.has_permission(request.user):
             elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
                                          author = request.user,
                                          description = elo_original.description,
@@ -456,7 +488,7 @@ class ELOFork(LoggingMixin, APIView):
         if request.method == 'POST':
             elo_original = get_object_or_404(ELO, id=pk)
 
-            if elo_original.is_public:
+            if elo_original.has_permission(request.user):
                 elo_new = ELO.objects.create(name = elo_original.name + " (forked from author " + elo_original.author.username + ")",
                                              author = request.user,
                                              description = elo_original.description,
