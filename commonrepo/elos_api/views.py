@@ -394,6 +394,7 @@ class ELOSimilarityAll(LoggingMixin, APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def elos_fork(request, pk):
     """
     This API used to fork the ELOs in the system. (API version 1)
