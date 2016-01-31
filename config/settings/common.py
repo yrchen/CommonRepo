@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = (
     'rest_framework', # REST framework
     'rest_framework.authtoken', # REST framework Token-based authentication
     'rest_framework_tracking', # DRF tracking
+    'rest_framework_swagger', # Django REST Swagger
     'djoser', # authentication
 
     # Comments
