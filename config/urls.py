@@ -69,6 +69,9 @@ urlpatterns = [
     # Comments
     url(r'^comments/', include('fluent_comments.urls')), # django-contrib-comments
 
+    # Documents
+    url(r'^api/docs/', include('rest_framework_swagger.urls')), # django-rest-swagger
+
     # Files
     url(r'^files/', include('filer.urls')),
 
