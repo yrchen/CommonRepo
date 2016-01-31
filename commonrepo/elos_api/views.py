@@ -366,8 +366,8 @@ def elos_similarity_all(request, pk):
             # if not, use default setting
             else:
                 threshold = settings.ELO_SIMILARITY_THRESHOLD
-            else:
-                return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
 
         for elo in elos_public:
             if elo.has_permission(request.user):
@@ -407,8 +407,8 @@ class ELOSimilarityAll(LoggingMixin, APIView):
                 # if not, use default setting
                 else:
                     threshold = settings.ELO_SIMILARITY_THRESHOLD
-                else:
-                    return Response(status=status.HTTP_403_FORBIDDEN)
+            else:
+                return Response(status=status.HTTP_403_FORBIDDEN)
 
             for elo in elos_public:
                 if elo.has_permission(request.user):
