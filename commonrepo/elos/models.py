@@ -489,6 +489,14 @@ class ELO(models.Model):
     def reusability_tree_update(self):
         self.reusability_tree_build()
 
+    # Check request_user have permission to access
+    def has_permission(self, request_user):
+        if request_user.is_staff:
+            return True
+        else:
+            if not self.is_public:
+                return self.author == request_user
+
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
     name = models.CharField(max_length=260, unique=False)   # ELO.name's max_length=255
