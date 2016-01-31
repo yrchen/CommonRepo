@@ -437,7 +437,7 @@ def elos_fork(request, pk):
     if request.method == 'POST':
         elo_original = get_object_or_404(ELO, id=pk)
 
-        if elo_original.is_public:
+        if elo_original.has_permission(request.user):
             elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
                                          author = request.user,
                                          description = elo_original.description,
@@ -488,7 +488,7 @@ class ELOFork(LoggingMixin, APIView):
         if request.method == 'POST':
             elo_original = get_object_or_404(ELO, id=pk)
 
-            if elo_original.is_public:
+            if elo_original.has_permission(request.user):
                 elo_new = ELO.objects.create(name = elo_original.name + " (forked from author " + elo_original.author.username + ")",
                                              author = request.user,
                                              description = elo_original.description,
