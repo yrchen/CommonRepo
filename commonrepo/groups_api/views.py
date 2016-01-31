@@ -30,8 +30,11 @@ from .serializers import GroupSerializer, GroupSerializerV2
 
 class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the Groups in the system.
+    This endpoint presents the Groups in the system. (API version 1)
+
+    * Requires token authentication.
     """
+
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -45,8 +48,11 @@ class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
 
 class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the Groups in the system.
+    This endpoint presents the Groups in the system. (API version 2)
+
+    * Requires token authentication.
     """
+
     queryset = Group.objects.all()
     serializer_class = GroupSerializerV2
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -69,6 +75,12 @@ class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def groups_member_join(request, pk):
+    """
+    This API used to allow user to join the specific Groups in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'POST':
         group = get_object_or_404(Group, id=pk)
         group.members.add(request.user)
@@ -89,11 +101,11 @@ def groups_member_join(request, pk):
 
 class GroupsMemberJoin(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    This API used to allow user to join the specific Groups in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -118,6 +130,12 @@ class GroupsMemberJoin(LoggingMixin, APIView):
 
 @api_view(['POST'])
 def groups_member_abort(request, pk):
+    """
+    This API used to allow user to abort the specific Groups in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'POST':
         group = get_object_or_404(Group, id=pk)
         group.members.remove(request.user)
@@ -138,11 +156,11 @@ def groups_member_abort(request, pk):
 
 class GroupsMemberAbort(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    This API used to allow user to abort the specific Groups in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 

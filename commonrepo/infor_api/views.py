@@ -25,6 +25,12 @@ from .permissions import IsOwnerOrReadOnly
 # ELOs
 @api_view(['GET'])
 def elos_total_count(request):
+    """
+    This API used to get the total ELOs count in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -41,11 +47,11 @@ def elos_total_count(request):
 
 class InforELOTotalCount(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    This API used to get the total ELOs count in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.AllowAny,)
 
@@ -67,6 +73,12 @@ class InforELOTotalCount(LoggingMixin, APIView):
 # Users
 @api_view(['GET'])
 def users_total_count(request):
+    """
+    This API used to get the total users count in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         return Response({"code": status.HTTP_202_ACCEPTED,
                          "status": "ok",
@@ -83,11 +95,11 @@ def users_total_count(request):
 
 class InforUsersTotalCount(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    This API used to get the total users count in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.AllowAny,)
 
