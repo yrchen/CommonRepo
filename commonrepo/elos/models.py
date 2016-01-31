@@ -494,7 +494,10 @@ class ELO(models.Model):
         if request_user.is_staff:
             return True
         else:
-            if not self.is_public:
+            # Only author can access his own private ELOs
+            if self.is_public:
+                return True
+            else:
                 return self.author == request_user
 
 @python_2_unicode_compatible
