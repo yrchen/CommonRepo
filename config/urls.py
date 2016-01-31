@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^files/', include('filer.urls')),
 
     # Search
-    url(r'^search/', include('haystack.urls')), # django-haystack
+    url(r'^search/', include('haystack.urls'), name="search"), # django-haystack
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
