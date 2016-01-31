@@ -78,9 +78,12 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         instance.delete()
 
     def list(self, request):
-        queryset = ELO.objects.all()
-        serializer = ELOLiteSerializer(queryset, many=True)
-        return Response(serializer.data)
+        if request.user and request.user.is_authenticated():
+            queryset = ELO.objects.all()
+            serializer = ELOLiteSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
