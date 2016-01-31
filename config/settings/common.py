@@ -60,6 +60,9 @@ THIRD_PARTY_APPS = (
     'threadedcomments', # django-threadedcomments
     'django_comments', # django-contrib-comments
 
+    # Search
+    'haystack', # django-haystack
+
     # Other tools
     'easy_thumbnails', # easy-thumbnails (required by django-filer)
     'filer', # django-filer
