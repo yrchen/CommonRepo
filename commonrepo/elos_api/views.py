@@ -32,8 +32,11 @@ from .serializers import ELOSerializer, ELOSerializerV2, ELOLiteSerializer, ELOT
 
 class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the ELOs in the system.
+    This endpoint presents the ELOs in the system. (API version 1)
+
+    * Requires token authentication.
     """
+
     queryset = ELO.objects.all()
     serializer_class = ELOSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -47,8 +50,11 @@ class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
 
 class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the ELOs in the system.
+    This endpoint presents the ELOs in the system. (API version 2)
+
+    * Requires token authentication.
     """
+
     queryset = ELO.objects.all()
     serializer_class = ELOSerializerV2
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -78,7 +84,9 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
 
 class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the ELOs in the system.
+    This endpoint presents the type of ELOs in the system. (API version 1 and 2)
+
+    * Requires token authentication.
     """
     queryset = ELOType.objects.all()
     serializer_class = ELOTypeSerializer
@@ -103,6 +111,12 @@ class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def elos_diversity(request, pk, pk2):
+    """
+    Caculate the diversity value of specific ELOs in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
@@ -128,11 +142,11 @@ def elos_diversity(request, pk, pk2):
 
 class ELODiversity(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    Caculate the diversity value of specific ELOs in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -162,6 +176,12 @@ class ELODiversity(LoggingMixin, APIView):
 
 @api_view(['GET'])
 def elos_diversity_all(request, pk):
+    """
+    Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elos_public = ELO.objects.filter(is_public=1)
@@ -190,11 +210,11 @@ def elos_diversity_all(request, pk):
 
 class ELODiversityAll(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -227,6 +247,12 @@ class ELODiversityAll(LoggingMixin, APIView):
 
 @api_view(['GET'])
 def elos_similarity(request, pk, pk2):
+    """
+    Caculate the similarity value of specific ELOs in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
@@ -252,11 +278,11 @@ def elos_similarity(request, pk, pk2):
 
 class ELOSimilarity(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    Caculate the similarity value of specific ELOs in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -286,6 +312,12 @@ class ELOSimilarity(LoggingMixin, APIView):
 
 @api_view(['GET'])
 def elos_similarity_all(request, pk):
+    """
+    Caculate the similarity value of specific ELOs with all ELOs in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elos_public = ELO.objects.filter(is_public=1)
@@ -314,11 +346,11 @@ def elos_similarity_all(request, pk):
 
 class ELOSimilarityAll(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    Caculate the similarity value of specific ELOs with all ELOs in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
+
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -351,6 +383,12 @@ class ELOSimilarityAll(LoggingMixin, APIView):
 
 @api_view(['POST'])
 def elos_fork(request, pk):
+    """
+    This API used to fork the ELOs in the system. (API version 1)
+
+    * Requires token authentication.
+    """
+
     if request.method == 'POST':
         elo_original = get_object_or_404(ELO, id=pk)
 
@@ -394,10 +432,9 @@ def elos_fork(request, pk):
 
 class ELOFork(LoggingMixin, APIView):
     """
-    View to list all users in the system.
+    This API used to fork the ELOs in the system. (API version 2)
 
     * Requires token authentication.
-    * Only admin users are able to access this view.
     """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
