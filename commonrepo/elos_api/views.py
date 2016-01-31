@@ -12,10 +12,11 @@ from rest_framework import renderers
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
-from rest_framework.decorators import api_view, detail_route
+from rest_framework.decorators import api_view, detail_route, permission_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
@@ -78,9 +79,16 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         instance.delete()
 
     def list(self, request):
-        queryset = ELO.objects.all()
-        serializer = ELOLiteSerializer(queryset, many=True)
-        return Response(serializer.data)
+        if request.user and request.user.is_authenticated():
+            if request.user.is_staff:
+                queryset = ELO.objects.all()
+            else:
+                queryset = ELO.objects.filter(is_public=1)
+
+            serializer = ELOLiteSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
@@ -110,6 +118,7 @@ class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
                        datafile=self.request.FILES.get('file'))
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def elos_diversity(request, pk, pk2):
     """
     Caculate the diversity value of specific ELOs in the system. (API version 1)
@@ -175,6 +184,7 @@ class ELODiversity(LoggingMixin, APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def elos_diversity_all(request, pk):
     """
     Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 1)
@@ -246,6 +256,7 @@ class ELODiversityAll(LoggingMixin, APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def elos_similarity(request, pk, pk2):
     """
     Caculate the similarity value of specific ELOs in the system. (API version 1)
@@ -311,6 +322,7 @@ class ELOSimilarity(LoggingMixin, APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def elos_similarity_all(request, pk):
     """
     Caculate the similarity value of specific ELOs with all ELOs in the system. (API version 1)
@@ -382,6 +394,7 @@ class ELOSimilarityAll(LoggingMixin, APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def elos_fork(request, pk):
     """
     This API used to fork the ELOs in the system. (API version 1)

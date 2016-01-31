@@ -360,7 +360,7 @@ class ELO(models.Model):
     update_date = models.DateTimeField('date updated', auto_now=True)
     metadata = models.OneToOneField(ELOMetadata, blank=True, null=True)
     license = models.ForeignKey(License, related_name='elos', blank=True, null=True)
-    original_type = models.ForeignKey(ELOType, to_field='type_id', related_name='elos')
+    original_type = models.ForeignKey(ELOType, to_field='type_id', related_name='elos', blank=True, null=True)
     is_public = models.SmallIntegerField(default=0)
     init_file = models.FileField(blank=True, default='', upload_to=elos_get_random_filename)
 
