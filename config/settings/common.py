@@ -12,6 +12,8 @@ from __future__ import absolute_import, unicode_literals
 
 import environ
 
+from urlparse import urlparse
+
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('commonrepo')
 
@@ -59,6 +61,9 @@ THIRD_PARTY_APPS = (
     'fluent_comments', # django-fluent-comments
     'threadedcomments', # django-threadedcomments
     'django_comments', # django-contrib-comments
+
+    # Search
+    'haystack', # django-haystack
 
     # Other tools
     'easy_thumbnails', # easy-thumbnails (required by django-filer)
@@ -450,6 +455,23 @@ SWAGGER_SETTINGS = {
     #},
     #'doc_expansion': 'none',
 }
+
+# Search (django-haystack)
+es = urlparse(env('SEARCHBOX_URL', default="http://127.0.0.1:9200/"))
+port = es.port or 80
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': es.scheme + '://' + es.hostname + ':' + str(port),
+        'INDEX_NAME': 'documents',
+    },
+}
+
+if es.username:
+    HAYSTACK_CONNECTIONS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 #
 # System config variables
