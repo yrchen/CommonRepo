@@ -33,6 +33,10 @@ from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityT
 
 
 class ELOAdmin(CompareVersionAdmin):
+    """
+    Admin menu of ELO
+    """
+
     fieldsets = [
         ('ELO Info', {
             'fields': [
@@ -66,6 +70,10 @@ admin.site.register(ELO, ELOAdmin)
 
 
 class ELOTypeAdmin(CompareVersionAdmin):
+    """
+    Admin menu of ELO Type
+    """
+
     fieldsets = [
         ('Type Name', {
             'fields': [
@@ -83,6 +91,10 @@ admin.site.register(ELOType, ELOTypeAdmin)
 
 
 class ELOMetadataAdmin(CompareVersionAdmin):
+    """
+    Admin menu of ELO Metadata
+    """
+
     fieldsets = [
         ('Gerneral', {
             'fields': [
@@ -186,10 +198,12 @@ class ELOMetadataAdmin(CompareVersionAdmin):
 
 admin.site.register(ELOMetadata, ELOMetadataAdmin)
 
-admin.site.register(ReusabilityTreeNode, MPTTModelAdmin)
-
 
 class ReusabilityTreeAdmin(admin.ModelAdmin):
+    """
+    Admin menu of Reusability Tree
+    """
+
     fieldsets = [
         ('Reusability Tree Info', {
             'fields': [
@@ -208,3 +222,5 @@ class ReusabilityTreeAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(ReusabilityTree, ReusabilityTreeAdmin)
+
+admin.site.register(ReusabilityTreeNode, MPTTModelAdmin)
