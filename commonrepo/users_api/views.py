@@ -16,7 +16,6 @@ from rest_framework_tracking.mixins import LoggingMixin
 
 from commonrepo.users.models import User as User
 
-#from .models import Snippet
 from .permissions import IsOwnerOrReadOnly
 from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
