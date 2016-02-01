@@ -5,6 +5,7 @@ from django.apps import AppConfig
 
 from actstream import registry
 
+
 class UsersAppConfig(AppConfig):
     name = 'commonrepo.users'
 
