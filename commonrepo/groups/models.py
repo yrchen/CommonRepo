@@ -11,20 +11,32 @@ from django.utils.translation import ugettext_lazy as _
 
 from commonrepo.users.models import User as User
 
+
 def groups_get_random_filename(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('groups/' + str(instance.id), filename)
 
+
 @python_2_unicode_compatible
 class Group(models.Model):
     # basic infor
     name = models.CharField(_("Name of Group"), blank=False, max_length=255)
-    fullname = models.CharField(_("Full Name of Group"), blank=True, max_length=255)
+    fullname = models.CharField(
+        _("Full Name of Group"),
+        blank=True,
+        max_length=255)
     creator = models.ForeignKey(User, related_name='commonrepo_groups')
-    members = models.ManyToManyField(User, blank=True, related_name='commonrepo_groups_members')
-    description = models.CharField(_("Description of Group"), blank=True, max_length=255)
-    logo = models.ImageField(_("Logo of Group"), blank=True, upload_to=groups_get_random_filename)
+    members = models.ManyToManyField(
+        User, blank=True, related_name='commonrepo_groups_members')
+    description = models.CharField(
+        _("Description of Group"),
+        blank=True,
+        max_length=255)
+    logo = models.ImageField(
+        _("Logo of Group"),
+        blank=True,
+        upload_to=groups_get_random_filename)
 
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
