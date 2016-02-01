@@ -33,6 +33,37 @@ from commonrepo.snippets_api.models import Snippet
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            # Basic user information
+            'url',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
+            # Extend user information
+            'teaching_category',
+            'teaching_subject_area',
+            # ELO related information
+            'elo_similarity_threshold',
+            'elos',
+            'elos_published',
+            'elos_forks',
+            'elos_from_others',
+            # Group information
+            'commonrepo_groups',
+            'commonrepo_groups_members',
+            # Misc
+            'snippets', )
+
     # ELOs information
     # elos = ForeignKey relationship from model ELO.author
     elos_published = serializers.SerializerMethodField()
@@ -89,22 +120,49 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+
+class UserSerializerV2(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = (
             # Basic user information
-            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            'url',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
+            # Social informaion
+            'social_facebook',
+            'social_google',
+            'social_linkedin',
+            'social_twitter',
             # Extend user information
-            'teaching_category', 'teaching_subject_area',
+            'teaching_category',
+            'teaching_subject_area',
+            # Social information
+            'friend_with',
+            'followed_by',
             # ELO related information
-            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
+            'elo_similarity_threshold',
+            'elos',
+            'elos_published',
+            'elos_forks',
+            'elos_from_others',
             # Group information
-            'commonrepo_groups', 'commonrepo_groups_members',
+            'commonrepo_groups',
+            'commonrepo_groups_members',
             # Misc
-            'snippets', )
+            'snippets',
+            # Preferences
+            'elo_similarity_threshold',)
 
-
-class UserSerializerV2(serializers.ModelSerializer):
     # ELOs information
     # elos = ForeignKey relationship from model ELO.author
     elos_published = serializers.SerializerMethodField()
@@ -159,26 +217,6 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
-    class Meta:
-        model = User
-        fields = (
-            # Basic user information
-            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
-            # Social informaion
-            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
-            # Extend user information
-            'teaching_category', 'teaching_subject_area',
-            # Social information
-            'friend_with', 'followed_by',
-            # ELO related information
-            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
-            # Group information
-            'commonrepo_groups', 'commonrepo_groups_members',
-            # Misc
-            'snippets',
-            # Preferences
-            'elo_similarity_threshold',)
-
 
 class UserLiteSerializer(serializers.ModelSerializer):
 
@@ -186,8 +224,21 @@ class UserLiteSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             # Basic user information
-            'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
             # Social informaion
-            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
+            'social_facebook',
+            'social_google',
+            'social_linkedin',
+            'social_twitter',
             # Extend user information
-            'teaching_category', 'teaching_subject_area', )
+            'teaching_category',
+            'teaching_subject_area', )
