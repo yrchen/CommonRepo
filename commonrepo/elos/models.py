@@ -609,7 +609,7 @@ class ELO(models.Model):
 
             if self.similarity_reverse(obj_target, threshold):
                 result += math.log(1 /
-                           self.similarity_reverse(obj_target, threshold)) / 2
+                                   self.similarity_reverse(obj_target, threshold)) / 2
 
         return result
 
