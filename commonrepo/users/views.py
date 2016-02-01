@@ -76,11 +76,24 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     fields = [
         # Basic user information
-        'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+        'id',
+        'username',
+        'organization',
+        'education',
+        'url',
+        'phone',
+        'address',
+        'language',
+        'area',
+        'about',
         # Social informaion
-        'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
+        'social_facebook',
+        'social_google',
+        'social_linkedin',
+        'social_twitter',
         # Extend user information
-        'teaching_category', 'teaching_subject_area',
+        'teaching_category',
+        'teaching_subject_area',
         # Preferences
         'elo_similarity_threshold']
 
