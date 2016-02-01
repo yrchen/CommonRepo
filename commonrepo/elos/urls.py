@@ -12,67 +12,73 @@ urlpatterns = [
         view=views.ELOsMyListView.as_view(),
         name='elos-mylist'
     ),
+    # URL pattern for the ELOsFollowingListView
     url(
         regex=r'^following/$',
         view=views.ELOsFollowingListView.as_view(),
         name='elos-followinglist'
     ),
+    # URL pattern for the ELOsDetailView
     url(
         regex=r'^(?P<pk>[0-9]+)/$',
         view=views.ELOsDetailView.as_view(),
         name='elos-detail'
     ),
+    # URL pattern for the ELOsListView
     url(
         regex=r'^all/$',
         view=views.ELOsListView.as_view(),
         name="elos-alllist"
     ),
+    # URL pattern for the ELOsCreateView
     url(
         regex=r'^create/$',
         view=views.ELOsCreateView.as_view(),
         name="elos-create"
     ),
+    # URL pattern for the ELOsForkView
     url(
         regex=r'^fork/(?P<pk>[0-9]+)/$',
         view=views.ELOsForkView.as_view(),
         name="elos-fork"
     ),
+    # URL pattern for the ELOsNetworkView
     url(
         regex=r'^netork/(?P<pk>[0-9]+)/$',
         view=views.ELOsNetworkView.as_view(),
         name="elos-network"
     ),
+    # URL pattern for the ELOsUpdateView
     url(
         regex=r'^update/(?P<pk>[0-9]+)/$',
         view=views.ELOsUpdateView.as_view(),
         name='elos-update'
     ),
+    # URL pattern for the ELOTypesDetailView
     url(
         regex=r'^type/(?P<pk>[0-9]+)/$',
         view=views.ELOTypesDetailView.as_view(),
         name='elotypes-detail'
     ),
-
-    # Publish ELO
+    # URL pattern for the publish ELO action
     url(
         regex=r'^publish/(?P<pk>[0-9]+)/$',
         view=views.publish_elo,
         name='elos-publish'
     ),
-    # Unpublish ELO
+    # URL pattern for the unpublish ELO action
     url(
         regex=r'^unpublish/(?P<pk>[0-9]+)/$',
         view=views.unpublish_elo,
         name='elos-unpublish'
     ),
-
-    # Follow ELO
+    # URL pattern for the follow ELO action
     url(
         regex=r'^follow/(?P<pk>[0-9]+)/$',
         view=views.follow_elo,
         name='elos-follow'
     ),
-    # Unfollow ELO
+    # URL pattern for the unfollow ELO action
     url(
         regex=r'^unfollow/(?P<pk>[0-9]+)/$',
         view=views.unfollow_elo,
