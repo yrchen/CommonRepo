@@ -28,6 +28,7 @@ from commonrepo.groups.models import Group
 from .permissions import IsOwnerOrReadOnly
 from .serializers import GroupSerializer, GroupSerializerV2
 
+
 class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the Groups in the system. (API version 1)
@@ -45,6 +46,7 @@ class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         instance = serializer.save()
+
 
 class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
@@ -73,6 +75,7 @@ class GroupViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         action.send(self.request.user, verb='deleted', target=instance)
         instance.delete()
 
+
 @api_view(['POST'])
 def groups_member_join(request, pk):
     """
@@ -87,17 +90,24 @@ def groups_member_join(request, pk):
         group.save()
         # send action to action stream
         action.send(request.user, verb="joined", target=group)
-        notify.send(request.user, recipient=group.creator, verb=u'has joined to your Group', level='success')
+        notify.send(
+            request.user,
+            recipient=group.creator,
+            verb=u'has joined to your Group',
+            level='success')
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         },
-                         status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
-        return Response({"code": status.HTTP_400_BAD_REQUEST,
-                         "status": "error"
-                         },
-                         status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "code": status.HTTP_400_BAD_REQUEST,
+            "status": "error"
+            },
+            status=status.HTTP_400_BAD_REQUEST)
+
 
 class GroupsMemberJoin(LoggingMixin, APIView):
     """
@@ -116,17 +126,24 @@ class GroupsMemberJoin(LoggingMixin, APIView):
             group.save()
             # send action to action stream
             action.send(request.user, verb="joined", target=group)
-            notify.send(request.user, recipient=group.creator, verb=u'has joined to your Group', level='success')
+            notify.send(
+                request.user,
+                recipient=group.creator,
+                verb=u'has joined to your Group',
+                level='success')
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             },
-                             status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
-            return Response({"code": status.HTTP_400_BAD_REQUEST,
-                             "status": "error"
-                             },
-                             status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "code": status.HTTP_400_BAD_REQUEST,
+                "status": "error"
+                },
+                status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def groups_member_abort(request, pk):
@@ -142,17 +159,24 @@ def groups_member_abort(request, pk):
         group.save()
         # send action to action stream
         action.send(request.user, verb="aborted", target=group)
-        notify.send(request.user, recipient=group.creator, verb=u'has aborted from your Group', level='success')
+        notify.send(
+            request.user,
+            recipient=group.creator,
+            verb=u'has aborted from your Group',
+            level='success')
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         },
-                         status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
-        return Response({"code": status.HTTP_400_BAD_REQUEST,
-                         "status": "error"
-                         },
-                         status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "code": status.HTTP_400_BAD_REQUEST,
+            "status": "error"
+            },
+            status=status.HTTP_400_BAD_REQUEST)
+
 
 class GroupsMemberAbort(LoggingMixin, APIView):
     """
@@ -171,14 +195,20 @@ class GroupsMemberAbort(LoggingMixin, APIView):
             group.save()
             # send action to action stream
             action.send(request.user, verb="aborted", target=group)
-            notify.send(request.user, recipient=group.creator, verb=u'has aborted from your Group', level='success')
+            notify.send(
+                request.user,
+                recipient=group.creator,
+                verb=u'has aborted from your Group',
+                level='success')
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             },
-                             status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
-            return Response({"code": status.HTTP_400_BAD_REQUEST,
-                             "status": "error"
-                             },
-                             status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "code": status.HTTP_400_BAD_REQUEST,
+                "status": "error"
+                },
+                status=status.HTTP_400_BAD_REQUEST)

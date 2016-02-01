@@ -23,6 +23,8 @@ from commonrepo.users.models import User as User
 from .permissions import IsOwnerOrReadOnly
 
 # ELOs
+
+
 @api_view(['GET'])
 def elos_total_count(request):
     """
@@ -36,7 +38,7 @@ def elos_total_count(request):
                          "status": "ok",
                          "result": {
                              "total_elos": ELO.objects.all().count()
-                             }
+                         }
                          },
                         status=status.HTTP_202_ACCEPTED)
     else:
@@ -44,6 +46,7 @@ def elos_total_count(request):
                          "status": "error"
                          },
                         status=status.HTTP_400_BAD_REQUEST)
+
 
 class InforELOTotalCount(LoggingMixin, APIView):
     """
@@ -61,7 +64,7 @@ class InforELOTotalCount(LoggingMixin, APIView):
                              "status": "ok",
                              "result": {
                                  "total_elos": ELO.objects.all().count()
-                                 }
+                             }
                              },
                             status=status.HTTP_202_ACCEPTED)
         else:
@@ -71,6 +74,8 @@ class InforELOTotalCount(LoggingMixin, APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 # Users
+
+
 @api_view(['GET'])
 def users_total_count(request):
     """
@@ -80,18 +85,21 @@ def users_total_count(request):
     """
 
     if request.method == 'GET':
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         "result": {
-                             "total_users": User.objects.all().count()
-                             }
-                         },
-                        status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            "result": {
+                "total_users": User.objects.all().count()
+                }
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
-        return Response({"code": status.HTTP_400_BAD_REQUEST,
-                         "status": "error"
-                         },
-                        status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "code": status.HTTP_400_BAD_REQUEST,
+            "status": "error"
+            },
+            status=status.HTTP_400_BAD_REQUEST)
+
 
 class InforUsersTotalCount(LoggingMixin, APIView):
     """
@@ -105,15 +113,17 @@ class InforUsersTotalCount(LoggingMixin, APIView):
 
     def get(self, request):
         if request.method == 'GET':
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             "result": {
-                                 "total_users": User.objects.all().count()
-                                 }
-                             },
-                            status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                "result": {
+                    "total_users": User.objects.all().count()
+                    }
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
-            return Response({"code": status.HTTP_400_BAD_REQUEST,
-                             "status": "error"
-                             },
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "code": status.HTTP_400_BAD_REQUEST,
+                "status": "error"
+                },
+                status=status.HTTP_400_BAD_REQUEST)

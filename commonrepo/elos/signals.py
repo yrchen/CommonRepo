@@ -9,8 +9,10 @@ from .models import ELO
 
 # ELO has been registered with actstream.registry.register
 
+
 def elo_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')
+
 
 def elo_saved_handler(sender, instance, created, **kwargs):
     if created:

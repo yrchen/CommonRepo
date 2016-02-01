@@ -12,10 +12,13 @@ from commonrepo.users.models import User as User
 
 from .models import ELOFileUpload
 
+
 class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ReusabilityTreeNode
         exclude = ('id',)
+
 
 class ReusabilityTreeSerializer(serializers.Serializer):
     tree = serializers.SerializerMethodField()
@@ -26,7 +29,7 @@ class ReusabilityTreeSerializer(serializers.Serializer):
             'elo_name': node.elo.name,
             'elo_similarity': node.elo_similarity,
             'elo_diversity': node.elo_diversity,
-            'child_elo' : [
+            'child_elo': [
                 self.recursive_node_to_dict(c) for c in node._cached_children
             ]
         }
@@ -34,7 +37,8 @@ class ReusabilityTreeSerializer(serializers.Serializer):
         return result
 
     def get_tree(self, obj):
-        nodes = mptt_tags.cache_tree_children(obj.root_node.get_descendants(include_self=True))
+        nodes = mptt_tags.cache_tree_children(
+            obj.root_node.get_descendants(include_self=True))
         result = []
 
         for node in nodes:
@@ -42,22 +46,30 @@ class ReusabilityTreeSerializer(serializers.Serializer):
 
         return result
 
+
 class ELOLicenseSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = License
         exclude = ('is_active', 'organization')
 
+
 class ELOMetadataSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ELOMetadata
         exclude = ('id',)
 
+
 class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = ELOType
         fields = ('id', 'name',)
 
+
 class ELOSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = ELO
         fields = (
@@ -66,7 +78,8 @@ class ELOSerializer(serializers.HyperlinkedModelSerializer):
             # Metadata
             'create_date', 'update_date', 'original_type', 'is_public', 'init_file',
             # Version control
-            'version', 'parent_elo', 'parent_elo_version' )
+            'version', 'parent_elo', 'parent_elo_version')
+
 
 class ELOSerializerV2(serializers.ModelSerializer):
     license = ELOLicenseSerializer(many=False, read_only=True)
@@ -82,24 +95,28 @@ class ELOSerializerV2(serializers.ModelSerializer):
             # Metadata
             'create_date', 'update_date', 'metadata', 'original_type', 'license', 'is_public', 'init_file', 'reusability_tree',
             # Version control
-            'version', 'parent_elo', 'parent_elo_version' )
+            'version', 'parent_elo', 'parent_elo_version')
+
 
 class ELOLiteSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ELO
         fields = (
             # Basic information
             'id', 'name', 'author',
             # Metadata
-            'original_type', 'is_public', 'init_file', 
+            'original_type', 'is_public', 'init_file',
             # Version
-            'parent_elo' )
+            'parent_elo')
+
 
 class ELOFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.SlugRelatedField(
         read_only=True,
         slug_field='id'
     )
+
     class Meta:
         model = ELOFileUpload
         read_only_fields = ('created', 'datafile', 'owner')

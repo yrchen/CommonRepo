@@ -31,6 +31,7 @@ from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly
 from .serializers import ELOSerializer, ELOSerializerV2, ELOLiteSerializer, ELOTypeSerializer, ELOFileUploadSerializer
 
+
 class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system. (API version 1)
@@ -44,10 +45,13 @@ class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        serializer.save(
+            author=self.request.user,
+            init_file=self.request.FILES.get('file'))
 
     def perform_update(self, serializer):
         instance = serializer.save()
+
 
 class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
@@ -62,14 +66,18 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
 
     def perform_create(self, serializer):
-        elo_instance = serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        elo_instance = serializer.save(
+            author=self.request.user,
+            init_file=self.request.FILES.get('file'))
         # send action to action stream
         action.send(self.request.user, verb='created', target=elo_instance)
 
     def perform_update(self, serializer):
         # bumped version
         elo_instance = serializer.save()
-        serializer.save(author=self.request.user, version=elo_instance.version+1)
+        serializer.save(
+            author=self.request.user,
+            version=elo_instance.version + 1)
         # send action to action stream
         action.send(self.request.user, verb='updated', target=elo_instance)
 
@@ -90,6 +98,7 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+
 class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the type of ELOs in the system. (API version 1 and 2)
@@ -100,11 +109,15 @@ class ELOTypeViewSet(LoggingMixin, viewsets.ModelViewSet):
     serializer_class = ELOTypeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
+
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, init_file=self.request.FILES.get('file'))
+        serializer.save(
+            author=self.request.user,
+            init_file=self.request.FILES.get('file'))
 
     def perform_update(self, serializer):
         instance = serializer.save()
+
 
 class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
@@ -115,7 +128,8 @@ class ELOFileUploadViewSet(LoggingMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user,
-                       datafile=self.request.FILES.get('file'))
+                        datafile=self.request.FILES.get('file'))
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
@@ -131,27 +145,33 @@ def elos_diversity(request, pk, pk2):
         elo_target = get_object_or_404(ELO, id=pk2)
 
         # Check user has permission to access the ELOs
-        if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+        if elo_source.has_permission(
+                request.user) and elo_target.has_permission(
+                request.user):
             # If user has setting of elo_similarity_threshold
             if request.user.elo_similarity_threshold:
-                elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+                elo_diversity = elo_source.diversity(
+                    elo_target, request.user.elo_similarity_threshold)
             # if not, use default setting
             else:
-                elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                elo_diversity = elo_source.diversity(
+                    elo_target, settings.ELO_SIMILARITY_THRESHOLD)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         "result": {
-                             "elo_source": elo_source.id,
-                             "elo_target": elo_target.id,
-                             "diversity": elo_diversity
-                             }
-                         },
-                        status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            "result": {
+                "elo_source": elo_source.id,
+                "elo_target": elo_target.id,
+                "diversity": elo_diversity
+                }
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class ELODiversity(LoggingMixin, APIView):
     """
@@ -169,27 +189,33 @@ class ELODiversity(LoggingMixin, APIView):
             elo_target = get_object_or_404(ELO, pk=pk2)
 
             # Check user has permission to access the ELOs
-            if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+            if elo_source.has_permission(
+                    request.user) and elo_target.has_permission(
+                    request.user):
                 # If user has setting of elo_similarity_threshold
                 if request.user.elo_similarity_threshold:
-                    elo_diversity = elo_source.diversity(elo_target, request.user.elo_similarity_threshold)
+                    elo_diversity = elo_source.diversity(
+                        elo_target, request.user.elo_similarity_threshold)
                 # if not, use default setting
                 else:
-                    elo_diversity = elo_source.diversity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                    elo_diversity = elo_source.diversity(
+                        elo_target, settings.ELO_SIMILARITY_THRESHOLD)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             "result": {
-                                 "elo_source": elo_source.id,
-                                 "elo_target": elo_target.id,
-                                 "diversity": elo_diversity
-                                 }
-                             },
-                            status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                "result": {
+                    "elo_source": elo_source.id,
+                    "elo_target": elo_target.id,
+                    "diversity": elo_diversity
+                    }
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
@@ -218,18 +244,21 @@ def elos_diversity_all(request, pk):
 
         for elo in elos_public:
             if elo.has_permission(request.user):
-                elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+                elos_result.update(
+                    {elo.id: elo_source.diversity(elo, threshold)})
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         "result": {
-                             "elo_source": elo_source.id,
-                             "diversity": elos_result
-                             }
-                         },
-                        status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            "result": {
+                "elo_source": elo_source.id,
+                "diversity": elos_result
+                }
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class ELODiversityAll(LoggingMixin, APIView):
     """
@@ -260,18 +289,21 @@ class ELODiversityAll(LoggingMixin, APIView):
 
             for elo in elos_public:
                 if elo.has_permission(request.user):
-                    elos_result.update({elo.id: elo_source.diversity(elo, threshold)})
+                    elos_result.update(
+                        {elo.id: elo_source.diversity(elo, threshold)})
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             "result": {
-                                 "elo_source": elo_source.id,
-                                 "diversity": elos_result
-                                 }
-                             },
-                            status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                "result": {
+                    "elo_source": elo_source.id,
+                    "diversity": elos_result
+                    }
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
@@ -286,27 +318,33 @@ def elos_similarity(request, pk, pk2):
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
 
-        if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+        if elo_source.has_permission(
+                request.user) and elo_target.has_permission(
+                request.user):
             # Check user has setting of elo_similarity_threshold
             if request.user.elo_similarity_threshold:
-                elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+                elo_similarity = elo_source.similarity(
+                    elo_target, request.user.elo_similarity_threshold)
             # if not, use default setting
             else:
-                elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                elo_similarity = elo_source.similarity(
+                    elo_target, settings.ELO_SIMILARITY_THRESHOLD)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         "result": {
-                             "elo_source": elo_source.id,
-                             "elo_target": elo_target.id,
-                             "similarity": elo_similarity
-                             }
-                         },
-                        status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            "result": {
+                "elo_source": elo_source.id,
+                "elo_target": elo_target.id,
+                "similarity": elo_similarity
+                }
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class ELOSimilarity(LoggingMixin, APIView):
     """
@@ -323,27 +361,33 @@ class ELOSimilarity(LoggingMixin, APIView):
             elo_source = get_object_or_404(ELO, id=pk)
             elo_target = get_object_or_404(ELO, id=pk2)
 
-            if elo_source.has_permission(request.user) and elo_target.has_permission(request.user):
+            if elo_source.has_permission(
+                    request.user) and elo_target.has_permission(
+                    request.user):
                 # Check user has setting of elo_similarity_threshold
                 if request.user.elo_similarity_threshold:
-                    elo_similarity = elo_source.similarity(elo_target, request.user.elo_similarity_threshold)
+                    elo_similarity = elo_source.similarity(
+                        elo_target, request.user.elo_similarity_threshold)
                 # if not, use default setting
                 else:
-                    elo_similarity = elo_source.similarity(elo_target, settings.ELO_SIMILARITY_THRESHOLD)
+                    elo_similarity = elo_source.similarity(
+                        elo_target, settings.ELO_SIMILARITY_THRESHOLD)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             "result": {
-                                 "elo_source": elo_source.id,
-                                 "elo_target": elo_target.id,
-                                 "similarity": elo_similarity
-                                 }
-                             },
-                            status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                "result": {
+                    "elo_source": elo_source.id,
+                    "elo_target": elo_target.id,
+                    "similarity": elo_similarity
+                    }
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
@@ -361,7 +405,8 @@ def elos_similarity_all(request, pk):
 
         if elo_source.has_permission(request.user):
             # Check user has setting of elo_similarity_threshold
-            if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+            if request and hasattr(request, "user") and request.user.is_authenticated(
+            ) and request.user.elo_similarity_threshold:
                 threshold = request.user.elo_similarity_threshold
             # if not, use default setting
             else:
@@ -371,18 +416,21 @@ def elos_similarity_all(request, pk):
 
         for elo in elos_public:
             if elo.has_permission(request.user):
-                elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+                elos_result.update(
+                    {elo.id: elo_source.similarity(elo, threshold)})
 
-        return Response({"code": status.HTTP_202_ACCEPTED,
-                         "status": "ok",
-                         "result": {
-                             "elo_source": elo_source.id,
-                             "similarity": elos_result
-                             }
-                         },
-                        status=status.HTTP_202_ACCEPTED)
+        return Response({
+            "code": status.HTTP_202_ACCEPTED,
+            "status": "ok",
+            "result": {
+                "elo_source": elo_source.id,
+                "similarity": elos_result
+                }
+            },
+            status=status.HTTP_202_ACCEPTED)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class ELOSimilarityAll(LoggingMixin, APIView):
     """
@@ -402,7 +450,8 @@ class ELOSimilarityAll(LoggingMixin, APIView):
 
             if elo_source.has_permission(request.user):
                 # Check user has setting of elo_similarity_threshold
-                if request and hasattr(request, "user") and request.user.is_authenticated() and request.user.elo_similarity_threshold:
+                if request and hasattr(request, "user") and request.user.is_authenticated(
+                ) and request.user.elo_similarity_threshold:
                     threshold = request.user.elo_similarity_threshold
                 # if not, use default setting
                 else:
@@ -412,18 +461,21 @@ class ELOSimilarityAll(LoggingMixin, APIView):
 
             for elo in elos_public:
                 if elo.has_permission(request.user):
-                    elos_result.update({elo.id: elo_source.similarity(elo, threshold)})
+                    elos_result.update(
+                        {elo.id: elo_source.similarity(elo, threshold)})
 
-            return Response({"code": status.HTTP_202_ACCEPTED,
-                             "status": "ok",
-                             "result": {
-                                 "elo_source": elo_source.id,
-                                 "similarity": elos_result
-                                 }
-                             },
-                            status=status.HTTP_202_ACCEPTED)
+            return Response({
+                "code": status.HTTP_202_ACCEPTED,
+                "status": "ok",
+                "result": {
+                    "elo_source": elo_source.id,
+                    "similarity": elos_result
+                    }
+                },
+                status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
@@ -438,18 +490,22 @@ def elos_fork(request, pk):
         elo_original = get_object_or_404(ELO, id=pk)
 
         if elo_original.has_permission(request.user):
-            elo_new = ELO.objects.create(name = elo_original.name + " (Fork from author " + elo_original.author.username + ")",
-                                         author = request.user,
-                                         description = elo_original.description,
-                                         original_type = elo_original.original_type,
-                                         init_file = elo_original.init_file,
-                                         version = 1,
-                                         parent_elo = elo_original,
-                                         parent_elo_uuid = elo_original.uuid,
-                                         parent_elo_version = elo_original.version,
-                                         parent_elo2 = elo_original,
-                                         parent_elo2_uuid = elo_original.uuid,
-                                         parent_elo2_version = elo_original.version)
+            elo_new = ELO.objects.create(
+                name=elo_original.name +
+                " (Fork from author " +
+                elo_original.author.username +
+                ")",
+                author=request.user,
+                description=elo_original.description,
+                original_type=elo_original.original_type,
+                init_file=elo_original.init_file,
+                version=1,
+                parent_elo=elo_original,
+                parent_elo_uuid=elo_original.uuid,
+                parent_elo_version=elo_original.version,
+                parent_elo2=elo_original,
+                parent_elo2_uuid=elo_original.uuid,
+                parent_elo2_version=elo_original.version)
 
             if elo_original.metadata:
                 elo_new_metadata = elo_original.metadata
@@ -461,19 +517,24 @@ def elos_fork(request, pk):
 
             # send action to action stream
             action.send(request.user, verb='forked', target=elo_new)
-            notify.send(request.user, recipient=elo_original.author, verb=u'has forked your ELO', level='success')
+            notify.send(
+                request.user,
+                recipient=elo_original.author,
+                verb=u'has forked your ELO',
+                level='success')
 
             return Response({"code": status.HTTP_201_CREATED,
                              "status": "ok",
                              "result": {
                                  "elo_id": elo_new.id
-                                 }
-                            },
+                             }
+                             },
                             status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class ELOFork(LoggingMixin, APIView):
     """
@@ -489,18 +550,22 @@ class ELOFork(LoggingMixin, APIView):
             elo_original = get_object_or_404(ELO, id=pk)
 
             if elo_original.has_permission(request.user):
-                elo_new = ELO.objects.create(name = elo_original.name + " (forked from author " + elo_original.author.username + ")",
-                                             author = request.user,
-                                             description = elo_original.description,
-                                             original_type = elo_original.original_type,
-                                             init_file = elo_original.init_file,
-                                             version = 1,
-                                             parent_elo = elo_original,
-                                             parent_elo_uuid = elo_original.uuid,
-                                             parent_elo_version = elo_original.version,
-                                             parent_elo2 = elo_original,
-                                             parent_elo2_uuid = elo_original.uuid,
-                                             parent_elo2_version = elo_original.version)
+                elo_new = ELO.objects.create(
+                    name=elo_original.name +
+                    " (forked from author " +
+                    elo_original.author.username +
+                    ")",
+                    author=request.user,
+                    description=elo_original.description,
+                    original_type=elo_original.original_type,
+                    init_file=elo_original.init_file,
+                    version=1,
+                    parent_elo=elo_original,
+                    parent_elo_uuid=elo_original.uuid,
+                    parent_elo_version=elo_original.version,
+                    parent_elo2=elo_original,
+                    parent_elo2_uuid=elo_original.uuid,
+                    parent_elo2_version=elo_original.version)
 
                 if elo_original.metadata:
                     elo_new_metadata = elo_original.metadata
@@ -512,14 +577,18 @@ class ELOFork(LoggingMixin, APIView):
 
                 # send action to action stream
                 action.send(request.user, verb='forked', target=elo_new)
-                notify.send(request.user, recipient=elo_original.author, verb=u'has forked your ELO', level='success')
+                notify.send(
+                    request.user,
+                    recipient=elo_original.author,
+                    verb=u'has forked your ELO',
+                    level='success')
 
                 return Response({"code": status.HTTP_201_CREATED,
                                  "status": "ok",
                                  "result": {
                                      "elo_id": elo_new.id
-                                     }
-                                },
+                                 }
+                                 },
                                 status=status.HTTP_201_CREATED)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)

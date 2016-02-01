@@ -9,8 +9,10 @@ from .models import Group
 
 # Group has been registered with actstream.registry.register
 
+
 def group_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')
+
 
 def group_saved_handler(sender, instance, created, **kwargs):
     if created:

@@ -20,6 +20,7 @@ from commonrepo.users.models import User as User
 from .permissions import IsOwnerOrReadOnly
 from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
+
 class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the users in the system.
@@ -30,6 +31,7 @@ class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
 
 class UserViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
@@ -45,4 +47,4 @@ class UserViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     def list(self, request):
         queryset = User.objects.all()
         serializer = UserLiteSerializer(queryset, many=True)
-        return Response(serializer.data)    
+        return Response(serializer.data)

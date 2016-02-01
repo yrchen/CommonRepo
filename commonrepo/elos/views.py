@@ -22,6 +22,7 @@ from commonrepo.users.models import User as User
 from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
+
 class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = ELO
     form_class = ELOForm
@@ -59,12 +60,25 @@ class ELOsDetailView(DetailView):
         # Check the ELO is public or not
         if not elo.is_public:
             if not elo.author == request.user and not request.user.is_staff:
-                messages.error(request, 'Permission denied. The target ELO is private.')
+                messages.error(
+                    request, 'Permission denied. The target ELO is private.')
                 return redirect('elos:elos-alllist')
             else:
-                return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
+                return super(
+                    ELOsDetailView,
+                    self).dispatch(
+                    request,
+                    *
+                    args,
+                    **kwargs)
         else:
-            return super(ELOsDetailView, self).dispatch(request, *args, **kwargs)
+            return super(
+                ELOsDetailView,
+                self).dispatch(
+                request,
+                *
+                args,
+                **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
@@ -80,9 +94,11 @@ class ELOsDetailView(DetailView):
         context['nodes'] = ReusabilityTreeNode.objects.filter(base_elo=elo)
 
         # Count Fork
-        context['fork_count'] = ELO.objects.filter(parent_elo=self.kwargs['pk']).count()
+        context['fork_count'] = ELO.objects.filter(
+            parent_elo=self.kwargs['pk']).count()
 
         return context
+
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
     model = ELO
@@ -107,7 +123,9 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
         # if parent ELO in not public, send a warning message
         if not form.instance.parent_elo.is_public:
-            messages.warning(self.request, 'Please be careful, You forked an unpublic ELO!')
+            messages.warning(
+                self.request,
+                'Please be careful, You forked an unpublic ELO!')
 
         return super(ELOsForkView, self).form_valid(form)
 
@@ -117,6 +135,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
             action.send(self.request.user, verb='forked', target=self.object)
 
         return super(ELOsForkView, self).get_success_url()
+
 
 class ELOsListView(OrderableListMixin, ListView):
     template_name = 'elos/elos_list.html'
@@ -133,6 +152,7 @@ class ELOsListView(OrderableListMixin, ListView):
         # Use get_ordered_queryset from OrderableListMixin
         return self.get_ordered_queryset(unordered_queryset)
 
+
 class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
     template_name = 'elos/elos_my_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
@@ -143,6 +163,7 @@ class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
     def get_queryset(self):
         unordered_queryset = ELO.objects.filter(author=self.request.user)
         return self.get_ordered_queryset(unordered_queryset)
+
 
 class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
     template_name = 'elos/elos_following_list.html'
@@ -157,9 +178,11 @@ class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
         if self.request.user.is_staff:
             unordered_queryset = user.userprofile.follow_elos.all()
         else:
-            unordered_queryset = user.userprofile.follow_elos.filter(is_public=1)
+            unordered_queryset = user.userprofile.follow_elos.filter(
+                is_public=1)
 
         return self.get_ordered_queryset(unordered_queryset)
+
 
 class ELOsNetworkView(LoginRequiredMixin, DetailView):
     model = ELO
@@ -172,12 +195,25 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
         # Check the ELO is public or not
         if not elo.is_public:
             if not elo.author == request.user and not request.user.is_staff:
-                messages.error(request, 'Permission denied. The target ELO is private.')
+                messages.error(
+                    request, 'Permission denied. The target ELO is private.')
                 return redirect('elos:elos-alllist')
             else:
-                return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
+                return super(
+                    ELOsNetworkView,
+                    self).dispatch(
+                    request,
+                    *
+                    args,
+                    **kwargs)
         else:
-            return super(ELOsNetworkView, self).dispatch(request, *args, **kwargs)
+            return super(
+                ELOsNetworkView,
+                self).dispatch(
+                request,
+                *
+                args,
+                **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
@@ -192,8 +228,10 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
                 elo = parent_elo
 
         context['parent_elos'] = parent_elos
-        context['child_elos'] = ELO.objects.filter(parent_elo=self.kwargs['pk'])
+        context['child_elos'] = ELO.objects.filter(
+            parent_elo=self.kwargs['pk'])
         return context
+
 
 class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = ELO
@@ -209,7 +247,13 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             messages.error(request, 'Permission denied.')
             return redirect('elos:elos-alllist')
         else:
-            return super(ELOsUpdateView, self).dispatch(request, *args, **kwargs)
+            return super(
+                ELOsUpdateView,
+                self).dispatch(
+                request,
+                *
+                args,
+                **kwargs)
 
     def form_valid(self, form):
         self.object.version += 1
@@ -226,10 +270,12 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
+
 class ELOTypesDetailView(LoginRequiredMixin, DetailView):
     model = ELOType
     query_pk_and_slug = True
     template_name = 'elos/elotypes_detail.html'
+
 
 @login_required
 @csrf_exempt
@@ -250,6 +296,7 @@ def publish_elo(request, pk):
 
     return redirect('elos:elos-detail', pk)
 
+
 @login_required
 @csrf_exempt
 def unpublish_elo(request, pk):
@@ -268,6 +315,7 @@ def unpublish_elo(request, pk):
 
     return redirect('elos:elos-detail', pk)
 
+
 @login_required
 @csrf_exempt
 def follow_elo(request, pk):
@@ -278,13 +326,18 @@ def follow_elo(request, pk):
 
     if elo.is_public or request.user.is_staff:
         actions.follow(request.user, elo, send_action=True)
-        notify.send(request.user, recipient=elo.author, verb=u'has followed your ELO', level='success')
+        notify.send(
+            request.user,
+            recipient=elo.author,
+            verb=u'has followed your ELO',
+            level='success')
         request.user.userprofile.follow_elos.add(elo)
         messages.success(request, 'Successed, you are following this ELO.')
     else:
         messages.error(request, 'Permission denied.')
 
     return redirect('elos:elos-detail', pk)
+
 
 @login_required
 @csrf_exempt
@@ -296,6 +349,8 @@ def unfollow_elo(request, pk):
 
     actions.unfollow(request.user, elo, send_action=False)
     request.user.userprofile.follow_elos.remove(elo)
-    messages.warning(request, 'Successed, you are not follow this ELO anymore.')
+    messages.warning(
+        request,
+        'Successed, you are not follow this ELO anymore.')
 
     return redirect('elos:elos-detail', pk)
