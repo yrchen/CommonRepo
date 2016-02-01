@@ -9,8 +9,10 @@ from .models import User
 
 # User has been registered with actstream.registry.register
 
+
 def user_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')
+
 
 def user_saved_handler(sender, instance, created, **kwargs):
     if created:
