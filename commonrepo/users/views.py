@@ -32,10 +32,12 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         user = User.objects.get(username=self.kwargs['username'])
 
         # Count Friends and Followers
-        context['has_followed'] = user.userprofile.follows.filter(username=self.request.user.username)
+        context['has_followed'] = user.userprofile.follows.filter(
+            username=self.request.user.username)
 
         # ELOs
-        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)[:settings.USERS_MAX_ELOS_PER_PAGE]
+        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)[
+            :settings.USERS_MAX_ELOS_PER_PAGE]
 
         return context
 
@@ -80,8 +82,9 @@ class UserListView(LoginRequiredMixin, ListView):
     slug_url_kwarg = "username"
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
+
 class UserFollowerView(LoginRequiredMixin, ListView):
-    template_name='users/user_followers.html'
+    template_name = 'users/user_followers.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
     def get_queryset(self):
@@ -96,8 +99,9 @@ class UserFollowerView(LoginRequiredMixin, ListView):
 
         return context
 
+
 class UserFollowingView(LoginRequiredMixin, ListView):
-    template_name='users/user_following.html'
+    template_name = 'users/user_following.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
     def get_queryset(self):
@@ -112,8 +116,9 @@ class UserFollowingView(LoginRequiredMixin, ListView):
 
         return context
 
+
 class UserELOsListView(LoginRequiredMixin, ListView):
-    template_name='users/user_elos.html'
+    template_name = 'users/user_elos.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
     def get_queryset(self):
@@ -133,6 +138,7 @@ class UserELOsListView(LoginRequiredMixin, ListView):
 
         return context
 
+
 @login_required
 @csrf_exempt
 def follow_user(request, username):
@@ -142,11 +148,16 @@ def follow_user(request, username):
     user = get_object_or_404(User, username=username)
 
     actions.follow(request.user, user, actor_only=False)
-    notify.send(request.user, recipient=user, verb=u'has followed you', level='success')
+    notify.send(
+        request.user,
+        recipient=user,
+        verb=u'has followed you',
+        level='success')
     request.user.userprofile.follows.add(user)
     messages.success(request, 'Successed, you are following this user.')
 
     return respond(request, 201)   # CREATED
+
 
 @login_required
 @csrf_exempt
@@ -158,6 +169,8 @@ def unfollow_user(request, username):
 
     actions.unfollow(request.user, user, send_action=True)
     request.user.userprofile.follows.remove(user)
-    messages.warning(request, 'Successed, you are not follow this user anymore.')
+    messages.warning(
+        request,
+        'Successed, you are not follow this user anymore.')
 
     return respond(request, 204)   # NO CONTENT
