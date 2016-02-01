@@ -19,7 +19,8 @@ from notifications.signals import notify
 from commonrepo.users.models import User as User
 
 from .models import Group
-from .forms import GroupForm, GroupUpdateForm, GroupAddForm , GroupLeaveForm
+from .forms import GroupForm, GroupUpdateForm, GroupAddForm, GroupLeaveForm
+
 
 class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
@@ -44,9 +45,14 @@ class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         action.send(self.request.user, verb='aborted', target=self.object)
         actions.unfollow(self.request.user, self.object, send_action=False)
-        notify.send(self.request.user, recipient=self.object.creator, verb=u'has aborted from your Group', level='success')
+        notify.send(
+            self.request.user,
+            recipient=self.object.creator,
+            verb=u'has aborted from your Group',
+            level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
+
 
 class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Group
@@ -64,10 +70,12 @@ class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         action.send(self.request.user, verb='created', target=self.object)
         return super(GroupsCreateView, self).get_success_url()
 
+
 class GroupsDetailView(LoginRequiredMixin, DetailView):
     model = Group
     query_pk_and_slug = True
     template_name = 'groups/groups_detail.html'
+
 
 class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
@@ -92,9 +100,14 @@ class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         action.send(self.request.user, verb='joined', target=self.object)
         actions.follow(self.request.user, self.object, send_action=True)
-        notify.send(self.request.user, recipient=self.object.creator, verb=u'has joined to your Group', level='success')
+        notify.send(
+            self.request.user,
+            recipient=self.object.creator,
+            verb=u'has joined to your Group',
+            level='success')
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
+
 
 class GroupsListView(LoginRequiredMixin, ListView):
     template_name = 'groups/groups_list.html'
@@ -103,6 +116,7 @@ class GroupsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Group.objects.all()
 
+
 class GroupsMyListView(LoginRequiredMixin, ListView):
     template_name = 'groups/groups_my_list.html'
     paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
@@ -110,7 +124,11 @@ class GroupsMyListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Group.objects.filter(creator=self.request.user)
 
-class GroupsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
+
+class GroupsFollowingListView(
+        OrderableListMixin,
+        LoginRequiredMixin,
+        ListView):
     template_name = 'groups/groups_following_list.html'
     paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
     orderable_columns = ("id", "create_update", "update_date")
@@ -121,6 +139,7 @@ class GroupsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
         unordered_queryset = user.userprofile.follow_groups.all()
 
         return self.get_ordered_queryset(unordered_queryset)
+
 
 class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Group
@@ -136,10 +155,16 @@ class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             messages.error(request, 'Permission denied.')
             return redirect('groups:groups-alllist')
         else:
-            return super(GroupsUpdateView, self).dispatch(request, *args, **kwargs)
+            return super(
+                GroupsUpdateView,
+                self).dispatch(
+                request,
+                *
+                args,
+                **kwargs)
 
     def form_valid(self, form):
-    #    self.object.version += 1
+        #    self.object.version += 1
         return super(GroupsUpdateView, self).form_valid(form)
 
     def get_form_kwargs(self):
@@ -153,6 +178,7 @@ class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return reverse("groups:groups-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
+
 @login_required
 @csrf_exempt
 def follow_group(request, pk):
@@ -164,14 +190,23 @@ def follow_group(request, pk):
     # Check user is not member of the group
     if not group.members.filter(id=request.user.id).exists():
         actions.follow(request.user, group, send_action=True)
-        notify.send(request.user, recipient=group.creator, verb=u'has followed your Group', level='success')
+        notify.send(
+            request.user,
+            recipient=group.creator,
+            verb=u'has followed your Group',
+            level='success')
         request.user.userprofile.follow_groups.add(group)
-        messages.success(request, 'Successed, you are now following this Group.')
+        messages.success(
+            request,
+            'Successed, you are now following this Group.')
     else:
         actions.follow(request.user, group, send_action=False)
-        messages.success(request, 'You are the member of this Group and automatically become the follower.')
+        messages.success(
+            request,
+            'You are the member of this Group and automatically become the follower.')
 
     return redirect('groups:groups-detail', pk)
+
 
 @login_required
 @csrf_exempt
@@ -185,10 +220,15 @@ def unfollow_group(request, pk):
     if not group.members.filter(id=request.user.id).exists():
         actions.unfollow(request.user, group, send_action=False)
         request.user.userprofile.follow_groups.remove(group)
-        messages.warning(request, 'Successed, you are not following this Group anymore.')
-    # the group members can choose not follow the group anymore, but still been the member
+        messages.warning(
+            request,
+            'Successed, you are not following this Group anymore.')
+    # the group members can choose not follow the group anymore, but still
+    # been the member
     else:
         actions.unfollow(request.user, group, send_action=False)
-        messages.warning(request, 'Successed, you are not following this Group anymore. But you are still the one of the members of this group.')
+        messages.warning(
+            request,
+            'Successed, you are not following this Group anymore. But you are still the one of the members of this group.')
 
     return redirect('groups:groups-detail', pk)
