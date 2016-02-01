@@ -12,7 +12,9 @@ from commonrepo.users.models import User as User
 
 from .models import Group
 
+
 class GroupForm(ModelForm):
+
     class Meta:
         model = Group
         fields = ['name', 'creator', 'description', 'logo', 'is_public']
@@ -29,14 +31,16 @@ class GroupForm(ModelForm):
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
-        ))
+            ))
+
 
 class GroupAddForm(ModelForm):
+
     class Meta:
         model = Group
-        fields = ['name',]
+        fields = ['name', ]
 
-    def __init__(self, pk=None,*args, **kwargs):
+    def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(GroupAddForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
@@ -47,9 +51,11 @@ class GroupAddForm(ModelForm):
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
-        ))
+            ))
+
 
 class GroupUpdateForm(ModelForm):
+
     class Meta:
         model = Group
         fields = ['name', 'description', 'logo', 'is_public']
@@ -64,14 +70,16 @@ class GroupUpdateForm(ModelForm):
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Confirm'),
-        ))
+            ))
+
 
 class GroupLeaveForm(ModelForm):
+
     class Meta:
         model = Group
-        fields = ['name',]
+        fields = ['name', ]
 
-    def __init__(self, pk=None,*args, **kwargs):
+    def __init__(self, pk=None, *args, **kwargs):
         self.request_user = kwargs.pop("request_user")
         super(GroupLeaveForm, self).__init__(*args, **kwargs)
         group_original = Group.objects.get(id=pk)
@@ -82,4 +90,4 @@ class GroupLeaveForm(ModelForm):
                 HTML("""<a role="button" class="btn btn-default"
                         href="{% url 'groups:groups-mylist' %}">Cancel</a>"""),
                 Submit('save', 'Submit'),
-        ))
+            ))
