@@ -6,7 +6,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # URL pattern for the UserListView
+    # URL pattern for the ELOsMyListView
     url(
         regex=r'^$',
         view=views.ELOsMyListView.as_view(),
@@ -16,17 +16,17 @@ urlpatterns = [
         regex=r'^following/$',
         view=views.ELOsFollowingListView.as_view(),
         name='elos-followinglist'
-        ),    
+    ),
     url(
         regex=r'^(?P<pk>[0-9]+)/$',
         view=views.ELOsDetailView.as_view(),
         name='elos-detail'
-    ),    
+    ),
     url(
         regex=r'^all/$',
         view=views.ELOsListView.as_view(),
         name="elos-alllist"
-    ),    
+    ),
     url(
         regex=r'^create/$',
         view=views.ELOsCreateView.as_view(),
@@ -77,5 +77,5 @@ urlpatterns = [
         regex=r'^unfollow/(?P<pk>[0-9]+)/$',
         view=views.unfollow_elo,
         name='elos-unfollow'
-    )        
+    )
 ]
