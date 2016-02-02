@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Serializer of user information in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from rest_framework import serializers
@@ -33,6 +37,19 @@ from commonrepo.snippets_api.models import Snippet
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer of user information. (API version 1)
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
 
     class Meta:
         model = User
@@ -76,6 +93,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     # Misc
     # snippets = ForeignKey relationship from model snippets.owner
 
+    # Caculate the number of published ELOs of user
     def get_elos_published(self, obj):
         request = self.context.get("request")
 
@@ -87,6 +105,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs of user
     def get_elos_forks(self, obj):
         request = self.context.get("request")
         total_forks = 0
@@ -103,6 +122,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs from other users
     def get_elos_from_others(self, obj):
         request = self.context.get("request")
 
@@ -122,6 +142,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserSerializerV2(serializers.ModelSerializer):
+    """
+    Serializer of user information. (API version 2)
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
 
     class Meta:
         model = User
@@ -175,6 +208,7 @@ class UserSerializerV2(serializers.ModelSerializer):
     # Misc
     # snippets = ForeignKey relationship from model snippets.owner
 
+    # Caculate the number of published ELOs of user
     def get_elos_published(self, obj):
         request = self.context.get("request")
 
@@ -184,6 +218,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs of user
     def get_elos_forks(self, obj):
         request = self.context.get("request")
         total_forks = 0
@@ -200,6 +235,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs from other users
     def get_elos_from_others(self, obj):
         request = self.context.get("request")
 
@@ -219,6 +255,22 @@ class UserSerializerV2(serializers.ModelSerializer):
 
 
 class UserLiteSerializer(serializers.ModelSerializer):
+    """
+    Serializer of lite user information. (API version 2)
+
+    This serializer provides fewer information than the previous serializers.
+    Only been used for user list requests.
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
 
     class Meta:
         model = User
