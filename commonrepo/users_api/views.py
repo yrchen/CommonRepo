@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations of user information for Users APIs in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.http import HttpResponse
@@ -44,7 +48,7 @@ from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
 class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the users in the system.
+    This endpoint presents the users in the system. (API version 1)
 
     As you can see, the collection of snippet instances owned by a user are
     serialized using a hyperlinked representation.
@@ -56,10 +60,10 @@ class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
 
 class UserViewSetV2(LoggingMixin, viewsets.ModelViewSet):
     """
-    This endpoint presents the users in the system.
+    This endpoint presents the users in the system. (API version 2)
 
-    As you can see, the collection of snippet instances owned by a user are
-    serialized using a hyperlinked representation.
+    As you can see, the collection of ELOs and Groups instances owned by a user
+    are serialized using normal model serializer representation.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializerV2
