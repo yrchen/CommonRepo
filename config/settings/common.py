@@ -156,7 +156,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    #'default': env.db("DATABASE_URL", default="postgres:///commonrepo"),
+    # 'default': env.db("DATABASE_URL", default="postgres:///commonrepo")
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db/development.sqlite3',
@@ -164,13 +164,13 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-        #'OPTIONS': {
-        #    'init_command': 'SET storage_engine=InnoDB',
-        #    'charset' : 'utf8',
-        #    'use_unicode' : True,
-        #},
-        #'TEST_CHARSET': 'utf8',
-        #'TEST_COLLATION': 'utf8_general_ci',
+        # 'OPTIONS': {
+        #     'init_command': 'SET storage_engine=InnoDB',
+        #     'charset' : 'utf8',
+        #     'use_unicode' : True,
+        # },
+        # 'TEST_CHARSET': 'utf8',
+        # 'TEST_COLLATION': 'utf8_general_ci',
     },
     'mongodb': {
         'ENGINE': '',
@@ -397,7 +397,7 @@ COMMENTS_APP = 'fluent_comments'
 
 FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url', 'title')
 AKISMET_API_KEY = "your-api-key"
-#AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
+# AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
 AKISMET_IS_TEST = False                         # Enable to make test runs
 
 FLUENT_CONTENTS_USE_AKISMET = True              # Enabled by default when AKISMET_API_KEY is set.
@@ -421,39 +421,39 @@ FILER_CANONICAL_URL = 'sharing/'
 
 # Documents (django-rest-swagger)
 SWAGGER_SETTINGS = {
-    #'exclude_namespaces': [],
-    #'api_version': '0.1',
-    #'api_path': '/',
-    #'enabled_methods': [
-        #'get',
-        #'post',
-        #'put',
-        #'patch',
-        #'delete'
-    #],
-    #'api_key': '',
-    #'is_authenticated': True,
-    #'is_superuser': False,
-    #'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
-    #'permission_denied_handler': None,
-    #'resource_access_handler': None,
-    #'base_path':'www.commonrepo.com/api/docs/',
-    #'info': {
-        #'contact': 'apiteam@wordnik.com',
-        #'description': 'This is a sample server Petstore server. '
-                       #'You can find out more about Swagger at '
-                       #'<a href="http://swagger.wordnik.com">'
-                       #'http://swagger.wordnik.com</a> '
-                       #'or on irc.freenode.net, #swagger. '
-                       #'For this sample, you can use the api key '
-                       #'"special-key" to test '
-                       #'the authorization filters',
-        #'license': 'Apache 2.0',
-        #'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
-        #'termsOfServiceUrl': 'http://helloreverb.com/terms/',
-        #'title': 'Swagger Sample App',
-    #},
-    #'doc_expansion': 'none',
+    # 'exclude_namespaces': [],
+    # 'api_version': '0.1',
+    # 'api_path': '/',
+    # 'enabled_methods': [
+        # 'get',
+        # 'post',
+        # 'put',
+        # 'patch',
+        # 'delete'
+    # ],
+    # 'api_key': '',
+    # 'is_authenticated': True,
+    # 'is_superuser': False,
+    # 'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
+    # 'permission_denied_handler': None,
+    # 'resource_access_handler': None,
+    # 'base_path':'www.commonrepo.com/api/docs/',
+    # 'info': {
+        # 'contact': 'apiteam@wordnik.com',
+        # 'description': 'This is a sample server Petstore server. '
+                       # 'You can find out more about Swagger at '
+                       # '<a href="http://swagger.wordnik.com">'
+                       # 'http://swagger.wordnik.com</a> '
+                       # 'or on irc.freenode.net, #swagger. '
+                       # 'For this sample, you can use the api key '
+                       # '"special-key" to test '
+                       # 'the authorization filters',
+        # 'license': 'Apache 2.0',
+        # 'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+        # 'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+        # 'title': 'Swagger Sample App',
+    # },
+    # 'doc_expansion': 'none',
 }
 
 # Search (django-haystack)
