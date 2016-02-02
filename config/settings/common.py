@@ -34,8 +34,8 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
-    'grappelli', # django-grappelli
-    'filebrowser', # django-filebrowser
+    'grappelli',  # django-grappelli
+    'filebrowser',  # django-filebrowser
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
@@ -46,37 +46,37 @@ THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google', # Google
+    'allauth.socialaccount.providers.google',  # Google
     # OAuth
-    'oauth2_provider', # Django OAuth Toolkit
+    'oauth2_provider',  # Django OAuth Toolkit
 
     # Django REST Framework
-    'rest_framework', # REST framework
-    'rest_framework.authtoken', # REST framework Token-based authentication
-    'rest_framework_tracking', # DRF tracking
-    'rest_framework_swagger', # Django REST Swagger
-    'djoser', # authentication
+    'rest_framework',  # REST framework
+    'rest_framework.authtoken',  # REST framework Token-based authentication
+    'rest_framework_tracking',  # DRF tracking
+    'rest_framework_swagger',  # Django REST Swagger
+    'djoser',  # authentication
 
     # Comments
-    'fluent_comments', # django-fluent-comments
-    'threadedcomments', # django-threadedcomments
-    'django_comments', # django-contrib-comments
+    'fluent_comments',  # django-fluent-comments
+    'threadedcomments',  # django-threadedcomments
+    'django_comments',  # django-contrib-comments
 
     # Search
-    'haystack', # django-haystack
+    'haystack',  # django-haystack
 
     # Other tools
-    'easy_thumbnails', # easy-thumbnails (required by django-filer)
-    'filer', # django-filer
-    'mptt', # django-mptt
-    'avatar', # django-avatar
-    'annoying', # django-annoying
-    'messages_extends', # django-messages-extends
-    'notifications', # django-notifications-hq
-    'bootstrap_pagination', # django-bootstrap-pagination
-    'reversion', # django-reversion
-    'reversion_compare', # django-reversion-compare
-    'licenses', # django-licenses
+    'easy_thumbnails',  # easy-thumbnails (required by django-filer)
+    'filer',  # django-filer
+    'mptt',  # django-mptt
+    'avatar',  # django-avatar
+    'annoying',  # django-annoying
+    'messages_extends',  # django-messages-extends
+    'notifications',  # django-notifications-hq
+    'bootstrap_pagination',  # django-bootstrap-pagination
+    'reversion',  # django-reversion
+    'reversion_compare',  # django-reversion-compare
+    'licenses',  # django-licenses
 )
 
 # Apps specific for this project go here.
@@ -353,8 +353,8 @@ SOCIALACCOUNT_PROVIDERS = {
             # https://developers.google.com/+/web/api/rest/oauth
             'profile', 'email',
             # https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest?fields=auth(oauth2(scopes))
-            'https://www.googleapis.com/auth/plus.login', # Know your basic profile info and list of people in your circles.
-            'https://www.googleapis.com/auth/plus.me', # Know who you are on Google
+            'https://www.googleapis.com/auth/plus.login',  # Know your basic profile info and list of people in your circles.
+            'https://www.googleapis.com/auth/plus.me',  # Know who you are on Google
             ],
         'AUTH_PARAMS': {
             'access_type': 'online'
