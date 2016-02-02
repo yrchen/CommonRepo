@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Permission configurations of user information for Users APIs inCommon Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from rest_framework import permissions
