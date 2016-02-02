@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations for Users in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
@@ -44,6 +48,10 @@ from .models import User
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
+    """
+    View of user details.
+    """
+
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
@@ -65,6 +73,10 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
+    """
+    View of user redirect actions.
+    """
+
     permanent = False
 
     def get_redirect_url(self):
@@ -73,6 +85,9 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    View of user update actions.
+    """
 
     fields = [
         # Basic user information
@@ -111,6 +126,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class UserListView(LoginRequiredMixin, ListView):
+    """
+    View of check user list actions.
+    """
+
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
@@ -119,6 +138,10 @@ class UserListView(LoginRequiredMixin, ListView):
 
 
 class UserFollowerView(LoginRequiredMixin, ListView):
+    """
+    View of check user follower actions.
+    """
+
     template_name = 'users/user_followers.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
@@ -136,6 +159,10 @@ class UserFollowerView(LoginRequiredMixin, ListView):
 
 
 class UserFollowingView(LoginRequiredMixin, ListView):
+    """
+    View of check user followings actions.
+    """
+
     template_name = 'users/user_following.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
@@ -153,6 +180,10 @@ class UserFollowingView(LoginRequiredMixin, ListView):
 
 
 class UserELOsListView(LoginRequiredMixin, ListView):
+    """
+    View of check user owns ELOs list actions.
+    """
+
     template_name = 'users/user_elos.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
