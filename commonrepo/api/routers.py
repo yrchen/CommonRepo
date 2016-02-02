@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#
 # Copyright 2016 edX PDR Lab, National Central University, Taiwan.
 #
 #     http://edxpdrlab.ncu.cc/
@@ -21,6 +20,22 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Common router API for Common Repository project.
+
+This is a replace version of DefaultRouter from Django REST Framework.
+https://github.com/tomchristie/django-rest-framework/blob/master/rest_framework/routers.py
+
+Routers provide a convenient and consistent way of automatically
+determining the URL conf for your API.
+They are used by simply instantiating a Router class, and then registering
+all the required ViewSets with that router.
+For example, you might have a `urls.py` that looks something like this:
+    router = routers.DefaultRouter()
+    router.register('users', UserViewSet, 'user')
+    router.register('accounts', AccountViewSet, 'account')
+    urlpatterns = router.urls
+"""
 from __future__ import unicode_literals
 
 from django.conf.urls import url
