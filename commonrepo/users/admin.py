@@ -36,12 +36,18 @@ from .models import User
 
 
 class MyUserChangeForm(UserChangeForm):
+    """
+    Form for user change in Common Repository project.
+    """
 
     class Meta(UserChangeForm.Meta):
         model = User
 
 
 class MyUserCreationForm(UserCreationForm):
+    """
+    Form for user creation in Common Repository project.
+    """
 
     error_message = UserCreationForm.error_messages.update({
         'duplicate_username': 'This username has already been taken.'
