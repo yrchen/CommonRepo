@@ -74,8 +74,8 @@ urlpatterns = [
     url(r'^dashboard/$', MainViews.DashboardView.as_view(), name="dashboard"),
 
     # Django Admin
-    url(r'^admin/filebrowser/', include(site.urls)), # django-filebrowser
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    url(r'^admin/filebrowser/', include(site.urls)),  # django-filebrowser
+    url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
@@ -84,25 +84,25 @@ urlpatterns = [
     url(r'^avatar/', include('avatar.urls')),
 
     # Message
-    url(r'^messages/', include('messages_extends.urls')), # django-messages-extends
+    url(r'^messages/', include('messages_extends.urls')),  # django-messages-extends
 
     # Notifications
     url(r'^notifications/', include('notifications.urls', namespace='notifications')),
 
     # Activity
-    url('^activity/', include('actstream.urls')), # django-activity-stream
+    url('^activity/', include('actstream.urls')),  # django-activity-stream
 
     # Comments
-    url(r'^comments/', include('fluent_comments.urls')), # django-contrib-comments
+    url(r'^comments/', include('fluent_comments.urls')),  # django-contrib-comments
 
     # Documents
-    url(r'^api/docs/', include('rest_framework_swagger.urls')), # django-rest-swagger
+    url(r'^api/docs/', include('rest_framework_swagger.urls')),  # django-rest-swagger
 
     # Files
     url(r'^files/', include('filer.urls')),
 
     # Search
-    url(r'^search/', include('haystack.urls'), name="search"), # django-haystack
+    url(r'^search/', include('haystack.urls'), name="search"),  # django-haystack
 
     # Your stuff: custom urls includes go here
     url(r'^elos/', include("commonrepo.elos.urls", namespace="elos")),
