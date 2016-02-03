@@ -50,6 +50,8 @@ from .models import User
 class UserDetailView(LoginRequiredMixin, DetailView):
     """
     View of user details.
+
+    * Requires authentication.
     """
 
     model = User
@@ -75,6 +77,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     """
     View of user redirect actions.
+
+    * Requires authentication.
     """
 
     permanent = False
@@ -87,6 +91,8 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     """
     View of user update actions.
+
+    * Requires authentication.
     """
 
     fields = [
@@ -128,6 +134,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class UserListView(LoginRequiredMixin, ListView):
     """
     View of check user list actions.
+
+    * Requires authentication.
     """
 
     model = User
@@ -140,6 +148,8 @@ class UserListView(LoginRequiredMixin, ListView):
 class UserFollowerView(LoginRequiredMixin, ListView):
     """
     View of check user follower actions.
+
+    * Requires authentication.
     """
 
     template_name = 'users/user_followers.html'
@@ -161,6 +171,8 @@ class UserFollowerView(LoginRequiredMixin, ListView):
 class UserFollowingView(LoginRequiredMixin, ListView):
     """
     View of check user followings actions.
+
+    * Requires authentication.
     """
 
     template_name = 'users/user_following.html'
@@ -182,6 +194,8 @@ class UserFollowingView(LoginRequiredMixin, ListView):
 class UserELOsListView(LoginRequiredMixin, ListView):
     """
     View of check user owns ELOs list actions.
+
+    * Requires authentication.
     """
 
     template_name = 'users/user_elos.html'
@@ -210,6 +224,8 @@ class UserELOsListView(LoginRequiredMixin, ListView):
 def follow_user(request, username):
     """
     Creates the follow relationship between ``request.user`` and the ``user``
+
+    * Requires authentication.
     """
     user = get_object_or_404(User, username=username)
 
@@ -230,6 +246,8 @@ def follow_user(request, username):
 def unfollow_user(request, username):
     """
     Deletes the follow relationship between ``request.user`` and the ``user``
+
+    * Requires authentication.
     """
     user = get_object_or_404(User, username=username)
 
