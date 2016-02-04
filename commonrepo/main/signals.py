@@ -38,6 +38,9 @@ from threadedcomments.models import ThreadedComment
 # Comment has been registeded with actstream.registry.register
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 # Handler of comment posted actions
 def comment_was_posted_handler(sender, comment, request, **kwargs):
     action.send(
