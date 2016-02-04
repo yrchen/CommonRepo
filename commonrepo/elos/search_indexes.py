@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Search configurations for ELOs in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from haystack import indexes
