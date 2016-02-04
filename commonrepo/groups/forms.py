@@ -39,6 +39,9 @@ from commonrepo.users.models import User as User
 from .models import Group
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class GroupForm(ModelForm):
     """
     Form of Group.

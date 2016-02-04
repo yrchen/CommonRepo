@@ -34,6 +34,9 @@ from reversion.admin import VersionAdmin
 from .models import Group
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class GroupAdmin(VersionAdmin):
     fieldsets = [
         ('Group Info', {

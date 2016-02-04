@@ -38,6 +38,9 @@ from django.utils.translation import ugettext_lazy as _
 from commonrepo.users.models import User as User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 def groups_get_random_filename(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)
