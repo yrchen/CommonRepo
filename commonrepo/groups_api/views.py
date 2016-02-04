@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations of user information for Groups APIs in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
