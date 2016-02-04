@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Serializer of group information in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from licenses.models import License
