@@ -45,6 +45,12 @@ from .forms import GroupForm, GroupUpdateForm, GroupAddForm, GroupLeaveForm
 
 
 class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    View of group aborting actions.
+
+    * Requires authentication.
+    """
+
     model = Group
     form_class = GroupLeaveForm
     query_pk_and_slug = True
@@ -77,6 +83,12 @@ class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """
+    View of group creating actions.
+
+    * Requires authentication.
+    """
+
     model = Group
     form_class = GroupForm
     template_name = "groups/groups_create.html"
@@ -94,12 +106,24 @@ class GroupsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 
 class GroupsDetailView(LoginRequiredMixin, DetailView):
+    """
+    View of group details.
+
+    * Requires authentication.
+    """
+
     model = Group
     query_pk_and_slug = True
     template_name = 'groups/groups_detail.html'
 
 
 class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    View of group joining actions.
+
+    * Requires authentication.
+    """
+
     model = Group
     form_class = GroupAddForm
     query_pk_and_slug = True
@@ -132,6 +156,12 @@ class GroupsJoinView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class GroupsListView(LoginRequiredMixin, ListView):
+    """
+    View of group list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'groups/groups_list.html'
     paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
 
@@ -140,6 +170,12 @@ class GroupsListView(LoginRequiredMixin, ListView):
 
 
 class GroupsMyListView(LoginRequiredMixin, ListView):
+    """
+    View of user related group list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'groups/groups_my_list.html'
     paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
 
@@ -151,6 +187,12 @@ class GroupsFollowingListView(
         OrderableListMixin,
         LoginRequiredMixin,
         ListView):
+    """
+    View of group following list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'groups/groups_following_list.html'
     paginate_by = settings.GROUPS_MAX_ITEMS_PER_PAGE
     orderable_columns = ("id", "create_update", "update_date")
@@ -164,6 +206,12 @@ class GroupsFollowingListView(
 
 
 class GroupsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    View of group updating actions.
+
+    * Requires authentication.
+    """
+
     model = Group
     form_class = GroupUpdateForm
     query_pk_and_slug = True
