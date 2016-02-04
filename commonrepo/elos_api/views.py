@@ -58,6 +58,9 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import ELOSerializer, ELOSerializerV2, ELOLiteSerializer, ELOTypeSerializer, ELOFileUploadSerializer
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ELOViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the ELOs in the system. (API version 1)

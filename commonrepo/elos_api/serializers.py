@@ -39,6 +39,9 @@ from commonrepo.users.models import User as User
 from .models import ELOFileUpload
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
