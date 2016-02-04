@@ -33,6 +33,9 @@ from commonrepo.groups.models import Group
 from commonrepo.users.models import User as User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     """
     Serializer of group information. (API version 1)

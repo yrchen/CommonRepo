@@ -54,6 +54,9 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import GroupSerializer, GroupSerializerV2
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class GroupViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the Groups in the system. (API version 1)
