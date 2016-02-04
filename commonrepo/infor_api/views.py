@@ -44,7 +44,8 @@ from commonrepo.users.models import User as User
 
 from .permissions import IsOwnerOrReadOnly
 
-# ELOs
+
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 @api_view(['GET'])

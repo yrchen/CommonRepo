@@ -35,6 +35,10 @@ from .models import User
 
 # User has been registered with actstream.registry.register
 
+
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 # Handler of user deleted actions
 def user_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')

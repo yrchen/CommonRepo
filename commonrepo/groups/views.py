@@ -48,6 +48,9 @@ from .models import Group
 from .forms import GroupForm, GroupUpdateForm, GroupAddForm, GroupLeaveForm
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class GroupsAbortView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
     View of group aborting actions.

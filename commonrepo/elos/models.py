@@ -43,6 +43,9 @@ from mptt import models as MPTTmodels
 from commonrepo.users.models import User as User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 def get_random_filename(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)

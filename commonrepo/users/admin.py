@@ -35,6 +35,9 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from .models import User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class MyUserChangeForm(UserChangeForm):
     """
     Form for user change in Common Repository project.

@@ -32,6 +32,9 @@ from haystack import indexes
 from .models import ELO
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ELOIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     author = indexes.CharField(model_attr='author')

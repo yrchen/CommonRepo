@@ -36,6 +36,9 @@ from commonrepo.elos.models import ELO
 from commonrepo.users.models import User as User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class DashboardView(TemplateView):
     """
     View of dashboard.

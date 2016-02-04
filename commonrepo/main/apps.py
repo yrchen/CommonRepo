@@ -30,6 +30,9 @@ from __future__ import absolute_import, unicode_literals
 from django.apps import AppConfig
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class MainAppConfig(AppConfig):
     name = 'commonrepo.main'
 

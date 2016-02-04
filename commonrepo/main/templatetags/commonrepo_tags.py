@@ -35,6 +35,9 @@ from commonrepo.users.models import User as User
 register = template.Library()
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 @register.simple_tag
 def get_settings_value(name):
     '''

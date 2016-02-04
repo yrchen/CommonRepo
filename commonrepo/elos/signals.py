@@ -36,6 +36,9 @@ from .models import ELO
 # ELO has been registered with actstream.registry.register
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 # Handler of ELOs deleted actions
 def elo_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')

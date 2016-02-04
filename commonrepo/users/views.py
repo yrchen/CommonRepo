@@ -47,6 +47,9 @@ from commonrepo.groups.models import Group
 from .models import User
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class UserDetailView(LoginRequiredMixin, DetailView):
     """
     View of user details.

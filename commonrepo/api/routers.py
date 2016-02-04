@@ -44,6 +44,10 @@ from rest_framework.routers import DefaultRouter as RESTDefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
+
 class DefaultRouter(RESTDefaultRouter):
     root_view_name = 'api-root'
     root_view_prefix = 'api' + '^$'

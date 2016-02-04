@@ -36,6 +36,9 @@ from .models import Group
 # Group has been registered with actstream.registry.register
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 # Handler of group deleted actions
 def group_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')

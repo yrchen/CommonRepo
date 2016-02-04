@@ -30,6 +30,10 @@ from django.conf.urls import url
 
 from . import views
 
+
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 urlpatterns = [
     # URL pattern for the UserListView
     url(

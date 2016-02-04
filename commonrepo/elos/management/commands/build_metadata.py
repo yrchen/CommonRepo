@@ -35,6 +35,9 @@ from django.core.management.base import BaseCommand, CommandError
 from commonrepo.elos.models import ELO, ELOMetadata
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class Command(BaseCommand):
     help = 'Build Metadata of ELOs'
 
