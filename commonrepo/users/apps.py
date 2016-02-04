@@ -32,6 +32,9 @@ from django.apps import AppConfig
 from actstream import registry
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class UsersAppConfig(AppConfig):
     name = 'commonrepo.users'
 

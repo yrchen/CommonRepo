@@ -35,6 +35,9 @@ from django.utils.translation import ugettext_lazy as _
 from annoying.fields import AutoOneToOneField
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 @python_2_unicode_compatible
 class User(AbstractUser):
     """
