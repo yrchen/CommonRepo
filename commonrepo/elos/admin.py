@@ -36,6 +36,9 @@ from reversion_compare.admin import CompareVersionAdmin
 from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityTree
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ELOAdmin(CompareVersionAdmin):
     """
     Admin menu of ELO

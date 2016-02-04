@@ -49,6 +49,9 @@ from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     View of ELO creating actions.

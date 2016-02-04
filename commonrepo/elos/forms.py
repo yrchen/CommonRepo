@@ -41,6 +41,9 @@ from commonrepo.users.models import User as User
 from .models import ELO
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class ELOForm(ModelForm):
     """
     Form of ELO
