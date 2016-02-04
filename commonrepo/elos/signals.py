@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Signal configurations for ELOs in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.db.models.signals import pre_delete, post_save
@@ -32,10 +36,12 @@ from .models import ELO
 # ELO has been registered with actstream.registry.register
 
 
+# Handler of ELOs deleted actions
 def elo_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')
 
 
+# Handler of ELOs saved actions
 def elo_saved_handler(sender, instance, created, **kwargs):
     if created:
         action.send(instance, verb='was created')
