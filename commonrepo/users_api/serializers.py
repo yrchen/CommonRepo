@@ -36,6 +36,9 @@ from commonrepo.elos.models import ELO
 from commonrepo.snippets_api.models import Snippet
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     """
     Serializer of user information. (API version 1)

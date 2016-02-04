@@ -30,6 +30,9 @@ from __future__ import absolute_import, unicode_literals
 from rest_framework import permissions
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.

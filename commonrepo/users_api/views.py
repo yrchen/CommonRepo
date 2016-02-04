@@ -46,6 +46,9 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import UserSerializer, UserSerializerV2, UserLiteSerializer
 
 
+__author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
 class UserViewSet(LoggingMixin, viewsets.ModelViewSet):
     """
     This endpoint presents the users in the system. (API version 1)
