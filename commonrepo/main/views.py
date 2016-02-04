@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations for Main app in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
@@ -33,6 +37,11 @@ from commonrepo.users.models import User as User
 
 
 class DashboardView(TemplateView):
+    """
+    View of dashboard.
+
+    * Requires authentication.
+    """
 
     template_name = 'main/dashboard.html'
 
@@ -45,10 +54,10 @@ class DashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
-        # information
+        # Common information
+        # Only staff can check all ELOs
         if self.request.user.is_staff:
             context['elos_total_count'] = ELO.objects.all().count()
-        # only staff can check all ELOs
         else:
             context['elos_total_count'] = ELO.objects.filter(
                 is_public=1).count()
@@ -60,6 +69,7 @@ class DashboardView(TemplateView):
         context['elos_my_list'] = ELO.objects.filter(author=self.request.user).order_by(
             '-update_date')[:settings.DASHBOARD_MAX_ELOS_MY_PER_PAGE]
 
+        # Only staff can check all ELOs
         if self.request.user.is_staff:
             context['elos_all_list'] = ELO.objects.all().order_by(
                 '-update_date')[:settings.DASHBOARD_MAX_ELOS_ALL_PER_PAGE]

@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Model configurations for Groups in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from uuid import uuid4

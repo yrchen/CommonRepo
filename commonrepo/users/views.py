@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations for Users in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
@@ -44,6 +48,12 @@ from .models import User
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
+    """
+    View of user details.
+
+    * Requires authentication.
+    """
+
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
@@ -58,13 +68,19 @@ class UserDetailView(LoginRequiredMixin, DetailView):
             username=self.request.user.username)
 
         # ELOs
-        context['elo_list'] = ELO.objects.filter(author=user).filter(is_public=1)[
-            :settings.USERS_MAX_ELOS_PER_PAGE]
+        context['elo_list'] = ELO.objects.filter(author=user).filter(
+            is_public=1)[:settings.USERS_MAX_ELOS_PER_PAGE]
 
         return context
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
+    """
+    View of user redirect actions.
+
+    * Requires authentication.
+    """
+
     permanent = False
 
     def get_redirect_url(self):
@@ -73,14 +89,32 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    View of user update actions.
+
+    * Requires authentication.
+    """
 
     fields = [
         # Basic user information
-        'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+        'id',
+        'username',
+        'organization',
+        'education',
+        'url',
+        'phone',
+        'address',
+        'language',
+        'area',
+        'about',
         # Social informaion
-        'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
+        'social_facebook',
+        'social_google',
+        'social_linkedin',
+        'social_twitter',
         # Extend user information
-        'teaching_category', 'teaching_subject_area',
+        'teaching_category',
+        'teaching_subject_area',
         # Preferences
         'elo_similarity_threshold']
 
@@ -98,6 +132,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class UserListView(LoginRequiredMixin, ListView):
+    """
+    View of check user list actions.
+
+    * Requires authentication.
+    """
+
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
@@ -106,6 +146,12 @@ class UserListView(LoginRequiredMixin, ListView):
 
 
 class UserFollowerView(LoginRequiredMixin, ListView):
+    """
+    View of check user follower actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'users/user_followers.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
@@ -123,6 +169,12 @@ class UserFollowerView(LoginRequiredMixin, ListView):
 
 
 class UserFollowingView(LoginRequiredMixin, ListView):
+    """
+    View of check user followings actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'users/user_following.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
@@ -140,6 +192,12 @@ class UserFollowingView(LoginRequiredMixin, ListView):
 
 
 class UserELOsListView(LoginRequiredMixin, ListView):
+    """
+    View of check user owns ELOs list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'users/user_elos.html'
     paginate_by = settings.USERS_MAX_USERS_PER_PAGE
 
@@ -166,6 +224,8 @@ class UserELOsListView(LoginRequiredMixin, ListView):
 def follow_user(request, username):
     """
     Creates the follow relationship between ``request.user`` and the ``user``
+
+    * Requires authentication.
     """
     user = get_object_or_404(User, username=username)
 
@@ -186,6 +246,8 @@ def follow_user(request, username):
 def unfollow_user(request, username):
     """
     Deletes the follow relationship between ``request.user`` and the ``user``
+
+    * Requires authentication.
     """
     user = get_object_or_404(User, username=username)
 

@@ -1,4 +1,25 @@
 # -*- coding: utf-8 -*-
+
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: yrchen@ATCity.org
+# Maintained By: yrchen@ATCity.org
+#
+
 """
 Django settings for Common Repository project.
 
@@ -34,8 +55,8 @@ DJANGO_APPS = (
     # 'django.contrib.humanize',
 
     # Admin
-    'grappelli', # django-grappelli
-    'filebrowser', # django-filebrowser
+    'grappelli',  # django-grappelli
+    'filebrowser',  # django-filebrowser
     'django.contrib.admin',
 )
 THIRD_PARTY_APPS = (
@@ -46,37 +67,37 @@ THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google', # Google
+    'allauth.socialaccount.providers.google',  # Google
     # OAuth
-    'oauth2_provider', # Django OAuth Toolkit
+    'oauth2_provider',  # Django OAuth Toolkit
 
     # Django REST Framework
-    'rest_framework', # REST framework
-    'rest_framework.authtoken', # REST framework Token-based authentication
-    'rest_framework_tracking', # DRF tracking
-    'rest_framework_swagger', # Django REST Swagger
-    'djoser', # authentication
+    'rest_framework',  # REST framework
+    'rest_framework.authtoken',  # REST framework Token-based authentication
+    'rest_framework_tracking',  # DRF tracking
+    'rest_framework_swagger',  # Django REST Swagger
+    'djoser',  # authentication
 
     # Comments
-    'fluent_comments', # django-fluent-comments
-    'threadedcomments', # django-threadedcomments
-    'django_comments', # django-contrib-comments
+    'fluent_comments',  # django-fluent-comments
+    'threadedcomments',  # django-threadedcomments
+    'django_comments',  # django-contrib-comments
 
     # Search
-    'haystack', # django-haystack
+    'haystack',  # django-haystack
 
     # Other tools
-    'easy_thumbnails', # easy-thumbnails (required by django-filer)
-    'filer', # django-filer
-    'mptt', # django-mptt
-    'avatar', # django-avatar
-    'annoying', # django-annoying
-    'messages_extends', # django-messages-extends
-    'notifications', # django-notifications-hq
-    'bootstrap_pagination', # django-bootstrap-pagination
-    'reversion', # django-reversion
-    'reversion_compare', # django-reversion-compare
-    'licenses', # django-licenses
+    'easy_thumbnails',  # easy-thumbnails (required by django-filer)
+    'filer',  # django-filer
+    'mptt',  # django-mptt
+    'avatar',  # django-avatar
+    'annoying',  # django-annoying
+    'messages_extends',  # django-messages-extends
+    'notifications',  # django-notifications-hq
+    'bootstrap_pagination',  # django-bootstrap-pagination
+    'reversion',  # django-reversion
+    'reversion_compare',  # django-reversion-compare
+    'licenses',  # django-licenses
 )
 
 # Apps specific for this project go here.
@@ -156,7 +177,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    #'default': env.db("DATABASE_URL", default="postgres:///commonrepo"),
+    # 'default': env.db("DATABASE_URL", default="postgres:///commonrepo")
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db/development.sqlite3',
@@ -164,13 +185,13 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-        #'OPTIONS': {
-        #    'init_command': 'SET storage_engine=InnoDB',
-        #    'charset' : 'utf8',
-        #    'use_unicode' : True,
-        #},
-        #'TEST_CHARSET': 'utf8',
-        #'TEST_COLLATION': 'utf8_general_ci',
+        # 'OPTIONS': {
+        #     'init_command': 'SET storage_engine=InnoDB',
+        #     'charset' : 'utf8',
+        #     'use_unicode' : True,
+        # },
+        # 'TEST_CHARSET': 'utf8',
+        # 'TEST_COLLATION': 'utf8_general_ci',
     },
     'mongodb': {
         'ENGINE': '',
@@ -337,12 +358,12 @@ LOGGING = {
     }
 }
 
-########## CELERY
+# CELERY
 INSTALLED_APPS += ('commonrepo.taskapp.celery.CeleryConfig',)
 # if you are not using the django database broker (e.g. rabbitmq, redis, memcached), you can remove the next line.
 INSTALLED_APPS += ('kombu.transport.django',)
 BROKER_URL = env("CELERY_BROKER_URL", default='django://')
-########## END CELERY
+# END CELERY
 
 # Your common stuff: Below this line define 3rd party library settings
 
@@ -353,8 +374,8 @@ SOCIALACCOUNT_PROVIDERS = {
             # https://developers.google.com/+/web/api/rest/oauth
             'profile', 'email',
             # https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest?fields=auth(oauth2(scopes))
-            'https://www.googleapis.com/auth/plus.login', # Know your basic profile info and list of people in your circles.
-            'https://www.googleapis.com/auth/plus.me', # Know who you are on Google
+            'https://www.googleapis.com/auth/plus.login',  # Know your basic profile info and list of people in your circles.
+            'https://www.googleapis.com/auth/plus.me',  # Know who you are on Google
             ],
         'AUTH_PARAMS': {
             'access_type': 'online'
@@ -397,7 +418,7 @@ COMMENTS_APP = 'fluent_comments'
 
 FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url', 'title')
 AKISMET_API_KEY = "your-api-key"
-#AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
+# AKISMET_BLOG_URL = "http://example.com"         # Optional, to override auto detection
 AKISMET_IS_TEST = False                         # Enable to make test runs
 
 FLUENT_CONTENTS_USE_AKISMET = True              # Enabled by default when AKISMET_API_KEY is set.
@@ -421,39 +442,41 @@ FILER_CANONICAL_URL = 'sharing/'
 
 # Documents (django-rest-swagger)
 SWAGGER_SETTINGS = {
-    #'exclude_namespaces': [],
-    #'api_version': '0.1',
-    #'api_path': '/',
-    #'enabled_methods': [
-        #'get',
-        #'post',
-        #'put',
-        #'patch',
-        #'delete'
-    #],
-    #'api_key': '',
-    #'is_authenticated': True,
-    #'is_superuser': False,
-    #'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
-    #'permission_denied_handler': None,
-    #'resource_access_handler': None,
-    #'base_path':'www.commonrepo.com/api/docs/',
-    #'info': {
-        #'contact': 'apiteam@wordnik.com',
-        #'description': 'This is a sample server Petstore server. '
-                       #'You can find out more about Swagger at '
-                       #'<a href="http://swagger.wordnik.com">'
-                       #'http://swagger.wordnik.com</a> '
-                       #'or on irc.freenode.net, #swagger. '
-                       #'For this sample, you can use the api key '
-                       #'"special-key" to test '
-                       #'the authorization filters',
-        #'license': 'Apache 2.0',
-        #'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
-        #'termsOfServiceUrl': 'http://helloreverb.com/terms/',
-        #'title': 'Swagger Sample App',
-    #},
-    #'doc_expansion': 'none',
+    """
+    'exclude_namespaces': [],
+    'api_version': '0.1',
+    'api_path': '/',
+    'enabled_methods': [
+        'get',
+        'post',
+        'put',
+        'patch',
+        'delete'
+    ],
+    'api_key': '',
+    'is_authenticated': True,
+    'is_superuser': False,
+    'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
+    'permission_denied_handler': None,
+    'resource_access_handler': None,
+    'base_path':'www.commonrepo.com/api/docs/',
+    'info': {
+        'contact': 'apiteam@wordnik.com',
+        'description': 'This is a sample server Petstore server. '
+            'You can find out more about Swagger at '
+            '<a href="http://swagger.wordnik.com">'
+            'http://swagger.wordnik.com</a> '
+            'or on irc.freenode.net, #swagger. '
+            'For this sample, you can use the api key '
+            '"special-key" to test '
+            'the authorization filters',
+        'license': 'Apache 2.0',
+        'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+        'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+        'title': 'Swagger Sample App',
+    },
+    'doc_expansion': 'none',
+    """
 }
 
 # Search (django-haystack)

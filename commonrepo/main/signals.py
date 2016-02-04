@@ -21,6 +21,13 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Signal configurations for Main app in Common Repository project.
+
+The following common functions will been handled in the Main app:
+* comments (ThreadedComment)
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from actstream import action
@@ -31,6 +38,7 @@ from threadedcomments.models import ThreadedComment
 # Comment has been registeded with actstream.registry.register
 
 
+# Handler of comment posted actions
 def comment_was_posted_handler(sender, comment, request, **kwargs):
     action.send(
         request.user,
@@ -39,4 +47,6 @@ def comment_was_posted_handler(sender, comment, request, **kwargs):
         target=comment.content_object)
 
 registry.register(ThreadedComment)
+
+# Registered the handlers of Comments to Activity Streams.
 comment_was_posted.connect(comment_was_posted_handler)

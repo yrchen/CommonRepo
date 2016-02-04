@@ -34,13 +34,22 @@ from commonrepo.users.models import User as User
 
 register = template.Library()
 
-# settings value
+
 @register.simple_tag
 def get_settings_value(name):
+    '''
+    Return settins value in templates.
+    '''
+
     return getattr(settings, name, "")
+
 
 @register.simple_tag
 def get_user_friends_count(username):
+    '''
+    Return friends count of specific user.
+    '''
+
     try:
         user = User.objects.get_by_natural_key(username)
     except DoesNotExist:
@@ -50,8 +59,13 @@ def get_user_friends_count(username):
 
     return friends_count
 
+
 @register.simple_tag
 def get_user_followers_count(username):
+    '''
+    Return followers count of specific user.
+    '''
+
     try:
         user = User.objects.get_by_natural_key(username)
     except DoesNotExist:
@@ -61,8 +75,13 @@ def get_user_followers_count(username):
 
     return followers_count
 
+
 @register.simple_tag
 def get_user_following_count(username):
+    '''
+    Return following count of specific user.
+    '''
+
     try:
         user = User.objects.get_by_natural_key(username)
     except DoesNotExist:
@@ -72,8 +91,13 @@ def get_user_following_count(username):
 
     return following_count
 
+
 @register.simple_tag
 def get_user_elo_count(username):
+    '''
+    Return ELO count of specific user.
+    '''
+
     try:
         user = User.objects.get_by_natural_key(username)
     except DoesNotExist:
@@ -83,8 +107,13 @@ def get_user_elo_count(username):
 
     return elo_count
 
+
 @register.simple_tag
 def get_user_group_count(username):
+    '''
+    Return joined group count of specific user.
+    '''
+
     try:
         user = User.objects.get_by_natural_key(username)
     except DoesNotExist:
@@ -94,8 +123,13 @@ def get_user_group_count(username):
 
     return group_count
 
+
 @register.simple_tag
 def commonrepo_display_action(action_instance):
+    '''
+    Display actions in Common Repo own style.
+    '''
+
     templates = 'misc/action.html'
 
     return render_to_string(templates, {'action': action_instance})

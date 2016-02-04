@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Serializer of user information in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from rest_framework import serializers
@@ -33,6 +37,50 @@ from commonrepo.snippets_api.models import Snippet
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer of user information. (API version 1)
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
+
+    class Meta:
+        model = User
+        fields = (
+            # Basic user information
+            'url',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
+            # Extend user information
+            'teaching_category',
+            'teaching_subject_area',
+            # ELO related information
+            'elo_similarity_threshold',
+            'elos',
+            'elos_published',
+            'elos_forks',
+            'elos_from_others',
+            # Group information
+            'commonrepo_groups',
+            'commonrepo_groups_members',
+            # Misc
+            'snippets', )
+
     # ELOs information
     # elos = ForeignKey relationship from model ELO.author
     elos_published = serializers.SerializerMethodField()
@@ -45,6 +93,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     # Misc
     # snippets = ForeignKey relationship from model snippets.owner
 
+    # Caculate the number of published ELOs of user
     def get_elos_published(self, obj):
         request = self.context.get("request")
 
@@ -56,6 +105,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs of user
     def get_elos_forks(self, obj):
         request = self.context.get("request")
         total_forks = 0
@@ -72,6 +122,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs from other users
     def get_elos_from_others(self, obj):
         request = self.context.get("request")
 
@@ -89,22 +140,62 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         else:
             return -1
 
+
+class UserSerializerV2(serializers.ModelSerializer):
+    """
+    Serializer of user information. (API version 2)
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
+
     class Meta:
         model = User
         fields = (
             # Basic user information
-            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            'url',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
+            # Social informaion
+            'social_facebook',
+            'social_google',
+            'social_linkedin',
+            'social_twitter',
             # Extend user information
-            'teaching_category', 'teaching_subject_area',
+            'teaching_category',
+            'teaching_subject_area',
+            # Social information
+            'friend_with',
+            'followed_by',
             # ELO related information
-            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
+            'elo_similarity_threshold',
+            'elos',
+            'elos_published',
+            'elos_forks',
+            'elos_from_others',
             # Group information
-            'commonrepo_groups', 'commonrepo_groups_members',
+            'commonrepo_groups',
+            'commonrepo_groups_members',
             # Misc
-            'snippets', )
+            'snippets',
+            # Preferences
+            'elo_similarity_threshold',)
 
-
-class UserSerializerV2(serializers.ModelSerializer):
     # ELOs information
     # elos = ForeignKey relationship from model ELO.author
     elos_published = serializers.SerializerMethodField()
@@ -117,6 +208,7 @@ class UserSerializerV2(serializers.ModelSerializer):
     # Misc
     # snippets = ForeignKey relationship from model snippets.owner
 
+    # Caculate the number of published ELOs of user
     def get_elos_published(self, obj):
         request = self.context.get("request")
 
@@ -126,6 +218,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs of user
     def get_elos_forks(self, obj):
         request = self.context.get("request")
         total_forks = 0
@@ -142,6 +235,7 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
+    # Caculate the number of forked ELOs from other users
     def get_elos_from_others(self, obj):
         request = self.context.get("request")
 
@@ -159,35 +253,44 @@ class UserSerializerV2(serializers.ModelSerializer):
         else:
             return -1
 
-    class Meta:
-        model = User
-        fields = (
-            # Basic user information
-            'url', 'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
-            # Social informaion
-            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
-            # Extend user information
-            'teaching_category', 'teaching_subject_area',
-            # Social information
-            'friend_with', 'followed_by',
-            # ELO related information
-            'elo_similarity_threshold', 'elos', 'elos_published', 'elos_forks', 'elos_from_others',
-            # Group information
-            'commonrepo_groups', 'commonrepo_groups_members',
-            # Misc
-            'snippets',
-            # Preferences
-            'elo_similarity_threshold',)
-
 
 class UserLiteSerializer(serializers.ModelSerializer):
+    """
+    Serializer of lite user information. (API version 2)
+
+    This serializer provides fewer information than the previous serializers.
+    Only been used for user list requests.
+
+    A serializer containing all information about a user needed by clients.
+    Because these pieces of information reside in different tables, this is
+    designed to work well with prefetch_related and select_related, which
+    require the use of all() instead of get() or filter(). The following fields
+    should be prefetched on the user objects being serialized:
+     * profile
+     * preferences
+     * elos
+     * groups
+    """
 
     class Meta:
         model = User
         fields = (
             # Basic user information
-            'id', 'username', 'organization', 'education', 'url', 'phone', 'address', 'language', 'area', 'about',
+            'id',
+            'username',
+            'organization',
+            'education',
+            'url',
+            'phone',
+            'address',
+            'language',
+            'area',
+            'about',
             # Social informaion
-            'social_facebook', 'social_google', 'social_linkedin', 'social_twitter',
+            'social_facebook',
+            'social_google',
+            'social_linkedin',
+            'social_twitter',
             # Extend user information
-            'teaching_category', 'teaching_subject_area', )
+            'teaching_category',
+            'teaching_subject_area', )

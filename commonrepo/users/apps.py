@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+App configurations for Users in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.apps import AppConfig

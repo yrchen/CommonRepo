@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Model configurations for ELOs in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from uuid import uuid4
@@ -59,6 +63,10 @@ def elos_get_cover_filename(instance, filename):
 
 @python_2_unicode_compatible
 class ELOMetadata(models.Model):
+    """
+    Model of ELO Metadata
+    """
+
     #
     # 1. General
 
@@ -482,6 +490,10 @@ class ELOMetadata(models.Model):
 
 @python_2_unicode_compatible
 class ELOType(models.Model):
+    """
+    Model of ELO Type
+    """
+
     name = models.CharField(_("Name of ELO type"), blank=False, max_length=255)
     type_id = models.SmallIntegerField(_("ELO Type ID"), unique=True)
 
@@ -494,6 +506,10 @@ class ELOType(models.Model):
 
 @python_2_unicode_compatible
 class ELO(models.Model):
+    """
+    Model of ELO
+    """
+
     # basic infor
     name = models.CharField(_("Name of ELO"), blank=False, max_length=255)
     fullname = models.CharField(
@@ -562,21 +578,25 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
+    # Wrapper function of similarity caculation
     def similarity(
             self,
             obj_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
         return self._similarity(self, obj_target, threshold)
 
+    # Wrapper function of similarity caculation (reverse)
     def similarity_reverse(
             self,
             obj_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
         return self._similarity(obj_target, self, threshold)
 
+    # Similarity caculation fucntion
     def _similarity(self, obj_source, obj_target, threshold):
         # Pass itself
         if not obj_source == obj_target:
+            # Check the metadata of ELO exists
             if obj_source.metadata and obj_target.metadata:
                 counter_total, counter_matched = obj_source.metadata.match(
                     obj_target.metadata)
@@ -595,6 +615,7 @@ class ELO(models.Model):
         else:
             return 1
 
+    # Diversity caculation function
     def diversity(
             self,
             obj_target,
@@ -608,8 +629,8 @@ class ELO(models.Model):
                                    self.similarity(obj_target, threshold)) / 2
 
             if self.similarity_reverse(obj_target, threshold):
-                result += (math.log(1 / \
-                           self.similarity_reverse(obj_target, threshold)) / 2)
+                result += math.log(1 /
+                                   self.similarity_reverse(obj_target, threshold)) / 2
 
         return result
 
@@ -648,7 +669,7 @@ class ELO(models.Model):
 
             if self.reusability_tree_get_elo_similarity_reverse(
                     elo_source, elo_target, threshold):
-                result += math.log(1 / \
+                result += math.log(1 /
                                    self.similarity_reverse(elo_target, threshold)) / 2
 
         return result
@@ -717,6 +738,10 @@ class ELO(models.Model):
 
 @python_2_unicode_compatible
 class ReusabilityTreeNode(MPTTmodels.MPTTModel):
+    """
+    Model of ELO Reusability Tree Node
+    """
+
     name = models.CharField(max_length=260,
                             unique=False)   # ELO.name's max_length=255
     parent = MPTTmodels.TreeForeignKey(
@@ -743,6 +768,10 @@ class ReusabilityTreeNode(MPTTmodels.MPTTModel):
 
 @python_2_unicode_compatible
 class ReusabilityTree(models.Model):
+    """
+    Model of ELO Reusability Tree
+    """
+
     name = models.CharField(max_length=260,
                             unique=False)   # ELO.name's max_length=255
     base_elo = models.OneToOneField(

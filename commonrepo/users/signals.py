@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Signal configurations for Users in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.db.models.signals import pre_delete, post_save
@@ -31,16 +35,18 @@ from .models import User
 
 # User has been registered with actstream.registry.register
 
-
+# Handler of user deleted actions
 def user_deleted_handler(sender, instance, **kwargs):
     action.send(instance, verb='was deleted')
 
 
+# Handler of user saved actions
 def user_saved_handler(sender, instance, created, **kwargs):
     if created:
         action.send(instance, verb='was created')
     else:
         action.send(instance, verb='was updated')
 
+# Registered the handlers of Users to Activity Streams.
 pre_delete.connect(user_deleted_handler, sender=User)
 post_save.connect(user_saved_handler, sender=User)

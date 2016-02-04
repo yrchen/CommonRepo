@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Form configurations for ELOs in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
@@ -38,6 +42,9 @@ from .models import ELO
 
 
 class ELOForm(ModelForm):
+    """
+    Form of ELO
+    """
 
     class Meta:
         model = ELO
@@ -74,6 +81,9 @@ class ELOForm(ModelForm):
 
 
 class ELOForkForm(ModelForm):
+    """
+    Form of ELO Fork
+    """
 
     class Meta:
         model = ELO
@@ -157,6 +167,9 @@ class ELOForkForm(ModelForm):
 
 
 class ELOUpdateForm(ModelForm):
+    """
+    Form of ELO update
+    """
 
     class Meta:
         model = ELO
@@ -172,6 +185,7 @@ class ELOUpdateForm(ModelForm):
 
     def __init__(self, pk=None, *args, **kwargs):
         super(ELOUpdateForm, self).__init__(*args, **kwargs)
+
         self.helper = FormHelper(self)
         self.helper.form_action = "."
         self.helper.layout.append(

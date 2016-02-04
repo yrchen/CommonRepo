@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations of user information for ELOs APIs in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings

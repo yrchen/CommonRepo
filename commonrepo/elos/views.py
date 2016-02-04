@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+View configurations for ELOs in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
@@ -46,6 +50,12 @@ from .forms import ELOForm, ELOForkForm, ELOUpdateForm
 
 
 class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """
+    View of ELO creating actions.
+
+    * Requires authentication.
+    """
+
     model = ELO
     form_class = ELOForm
     template_name = "elos/elos_create.html"
@@ -72,6 +82,12 @@ class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 
 class ELOsDetailView(DetailView):
+    """
+    View of ELO detail.
+
+    * Requires no authentication for basic detail of ELO.
+    """
+
     model = ELO
     query_pk_and_slug = True
     template_name = 'elos/elos_detail.html'
@@ -123,6 +139,12 @@ class ELOsDetailView(DetailView):
 
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
+    """
+    View of ELO forking actions.
+
+    * Requires authentication.
+    """
+
     model = ELO
     form_class = ELOForkForm
     template_name = "elos/elos_fork.html"
@@ -160,6 +182,12 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
 
 class ELOsListView(OrderableListMixin, ListView):
+    """
+    View of ELO list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'elos/elos_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
     orderable_columns = ("id", "create_update", "update_date")
@@ -176,6 +204,12 @@ class ELOsListView(OrderableListMixin, ListView):
 
 
 class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
+    """
+    View of user related ELO list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'elos/elos_my_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
     orderable_columns = ("id", "create_update", "update_date")
@@ -188,6 +222,12 @@ class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
 
 
 class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
+    """
+    View of ELO following list actions.
+
+    * Requires authentication.
+    """
+
     template_name = 'elos/elos_following_list.html'
     paginate_by = settings.ELOS_MAX_ITEMS_PER_PAGE
     orderable_columns = ("id", "create_update", "update_date")
@@ -207,6 +247,12 @@ class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
 
 
 class ELOsNetworkView(LoginRequiredMixin, DetailView):
+    """
+    View of ELO relation network actions.
+
+    * Requires authentication.
+    """
+
     model = ELO
     query_pk_and_slug = True
     template_name = 'elos/elos_network.html'
@@ -256,6 +302,12 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
 
 
 class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    View of ELO updating actions.
+
+    * Requires authentication.
+    """
+
     model = ELO
     form_class = ELOUpdateForm
     query_pk_and_slug = True
@@ -294,6 +346,12 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 class ELOTypesDetailView(LoginRequiredMixin, DetailView):
+    """
+    View of ELO Type detail actions.
+
+    * Requires authentication.
+    """
+
     model = ELOType
     query_pk_and_slug = True
     template_name = 'elos/elotypes_detail.html'

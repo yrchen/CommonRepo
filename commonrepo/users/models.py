@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Model configurations for Users in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
@@ -33,6 +37,9 @@ from annoying.fields import AutoOneToOneField
 
 @python_2_unicode_compatible
 class User(AbstractUser):
+    """
+    Model for users in Common Repository project.
+    """
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
@@ -80,6 +87,10 @@ class User(AbstractUser):
 
 @python_2_unicode_compatible
 class UserProfile(models.Model):
+    """
+    Model for user profile in Common Repository project.
+    """
+
     from commonrepo.elos.models import ELO
     from commonrepo.groups.models import Group
 
