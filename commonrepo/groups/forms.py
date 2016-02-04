@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Form configurations for Groups in Common Repository project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from django.forms import ModelForm, ModelChoiceField
@@ -36,6 +40,9 @@ from .models import Group
 
 
 class GroupForm(ModelForm):
+    """
+    Form of Group.
+    """
 
     class Meta:
         model = Group
@@ -57,6 +64,9 @@ class GroupForm(ModelForm):
 
 
 class GroupAddForm(ModelForm):
+    """
+    Form of Group adding actions.
+    """
 
     class Meta:
         model = Group
@@ -77,6 +87,9 @@ class GroupAddForm(ModelForm):
 
 
 class GroupUpdateForm(ModelForm):
+    """
+    Form of Group updating actions.
+    """
 
     class Meta:
         model = Group
@@ -96,6 +109,9 @@ class GroupUpdateForm(ModelForm):
 
 
 class GroupLeaveForm(ModelForm):
+    """
+    Form of Group leaving actions.
+    """
 
     class Meta:
         model = Group
