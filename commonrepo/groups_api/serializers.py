@@ -21,6 +21,10 @@
 # Maintained By: yrchen@ATCity.org
 #
 
+"""
+Serializer of group information in Common Repo project.
+"""
+
 from __future__ import absolute_import, unicode_literals
 
 from rest_framework import serializers
@@ -30,6 +34,9 @@ from commonrepo.users.models import User as User
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer of group information. (API version 1)
+    """
 
     class Meta:
         model = Group
@@ -46,6 +53,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GroupSerializerV2(serializers.ModelSerializer):
+    """
+    Serializer of group information. (API version 2)
+    """
 
     class Meta:
         model = Group
