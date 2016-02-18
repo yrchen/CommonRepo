@@ -4,7 +4,7 @@ Common Repository
 Common Repository
 
 
-LICENSE: BSD
+LICENSE: Apache License 2.0
 
 Settings
 ------------
