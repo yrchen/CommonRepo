@@ -54,7 +54,7 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
-    View of ELO creating actions.
+    View of ``ELO`` creating actions. Render the "ELOs Create" page.
 
     * Requires authentication.
     """
@@ -86,7 +86,7 @@ class ELOsCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class ELOsDetailView(DetailView):
     """
-    View of ELO detail.
+    View of ``ELO`` detail. Render the "ELOs Detail" page.
 
     * Requires no authentication for basic detail of ELO.
     """
@@ -105,21 +105,11 @@ class ELOsDetailView(DetailView):
                     request, 'Permission denied. The target ELO is private.')
                 return redirect('elos:elos-alllist')
             else:
-                return super(
-                    ELOsDetailView,
-                    self).dispatch(
-                    request,
-                    *
-                    args,
-                    **kwargs)
+                return super(ELOsDetailView, self).dispatch(request,
+                                                            *args, **kwargs)
         else:
-            return super(
-                ELOsDetailView,
-                self).dispatch(
-                request,
-                *
-                args,
-                **kwargs)
+            return super(ELOsDetailView, self).dispatch(request,
+                                                        *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsDetailView, self).get_context_data(**kwargs)
@@ -143,7 +133,7 @@ class ELOsDetailView(DetailView):
 
 class ELOsForkView(LoginRequiredMixin, CreateView):
     """
-    View of ELO forking actions.
+    View of ``ELO`` forking actions. Render the "ELOs Fork" page.
 
     * Requires authentication.
     """
@@ -186,7 +176,7 @@ class ELOsForkView(LoginRequiredMixin, CreateView):
 
 class ELOsListView(OrderableListMixin, ListView):
     """
-    View of ELO list actions.
+    View of ``ELO`` list actions. Render the "All ELOs List" page.
 
     * Requires authentication.
     """
@@ -197,6 +187,10 @@ class ELOsListView(OrderableListMixin, ListView):
     orderable_columns_default = "id"
 
     def get_queryset(self):
+        """
+        Returns the result based on the request.user's permission.
+        Only the staff can check all ELOs even it's unpublic.
+        """
         if self.request.user.is_staff:
             unordered_queryset = ELO.objects.all()
         else:
@@ -208,7 +202,7 @@ class ELOsListView(OrderableListMixin, ListView):
 
 class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
     """
-    View of user related ELO list actions.
+    View of user related ``ELO`` list actions. Render the "My ELOs List" page.
 
     * Requires authentication.
     """
@@ -220,13 +214,17 @@ class ELOsMyListView(OrderableListMixin, LoginRequiredMixin, ListView):
 
     # Use get_ordered_queryset from OrderableListMixin
     def get_queryset(self):
+        """
+        Returns the result based on the request.user.
+        Only list the request.user's own ELOs.
+        """
         unordered_queryset = ELO.objects.filter(author=self.request.user)
         return self.get_ordered_queryset(unordered_queryset)
 
 
 class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
     """
-    View of ELO following list actions.
+    View of ``ELO`` following list actions. Render the "ELOs Following List" page.
 
     * Requires authentication.
     """
@@ -237,6 +235,10 @@ class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
     orderable_columns_default = "id"
 
     def get_queryset(self):
+        """
+        Returns the result based on the request.user's following list.
+        Only list the public ELOs. Staffs can check all ELOs.
+        """
         user = get_object_or_404(User, username=self.request.user.username)
 
         # Staff can access all ELOs
@@ -251,7 +253,7 @@ class ELOsFollowingListView(OrderableListMixin, LoginRequiredMixin, ListView):
 
 class ELOsNetworkView(LoginRequiredMixin, DetailView):
     """
-    View of ELO relation network actions.
+    View of ``ELO`` relation network actions. Render the "ELOs Network" page.
 
     * Requires authentication.
     """
@@ -270,21 +272,11 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
                     request, 'Permission denied. The target ELO is private.')
                 return redirect('elos:elos-alllist')
             else:
-                return super(
-                    ELOsNetworkView,
-                    self).dispatch(
-                    request,
-                    *
-                    args,
-                    **kwargs)
+                return super(ELOsNetworkView, self).dispatch(request,
+                                                             *args, **kwargs)
         else:
-            return super(
-                ELOsNetworkView,
-                self).dispatch(
-                request,
-                *
-                args,
-                **kwargs)
+            return super(ELOsNetworkView, self).dispatch(request,
+                                                         *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ELOsNetworkView, self).get_context_data(**kwargs)
@@ -306,7 +298,7 @@ class ELOsNetworkView(LoginRequiredMixin, DetailView):
 
 class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """
-    View of ELO updating actions.
+    View of ``ELO`` updating actions. Render the "ELO Update" page.
 
     * Requires authentication.
     """
@@ -324,13 +316,8 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             messages.error(request, 'Permission denied.')
             return redirect('elos:elos-alllist')
         else:
-            return super(
-                ELOsUpdateView,
-                self).dispatch(
-                request,
-                *
-                args,
-                **kwargs)
+            return super(ELOsUpdateView, self).dispatch(request,
+                                                        *args, **kwargs)
 
     def form_valid(self, form):
         self.object.version += 1
@@ -350,7 +337,7 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class ELOTypesDetailView(LoginRequiredMixin, DetailView):
     """
-    View of ELO Type detail actions.
+    View of ``ELO`` Type detail actions. Render the "ELO Type Detail" page.
 
     * Requires authentication.
     """
@@ -365,6 +352,9 @@ class ELOTypesDetailView(LoginRequiredMixin, DetailView):
 def publish_elo(request, pk):
     """
     Publish the ``ELO``
+
+    * Requires authentication.
+    * Requires permission of the specific ``ELO``.
     """
     elo = get_object_or_404(ELO, id=pk)
 
@@ -385,6 +375,9 @@ def publish_elo(request, pk):
 def unpublish_elo(request, pk):
     """
     Unpublish the ``ELO``
+
+    * Requires authentication.
+    * Requires permission of the specific ``ELO``.
     """
     elo = get_object_or_404(ELO, id=pk)
 
@@ -404,6 +397,8 @@ def unpublish_elo(request, pk):
 def follow_elo(request, pk):
     """
     Creates the follow relationship between ``request.user`` and the ``ELO``
+
+    * Requires authentication.
     """
     elo = get_object_or_404(ELO, id=pk)
 
@@ -427,6 +422,8 @@ def follow_elo(request, pk):
 def unfollow_elo(request, pk):
     """
     Deletes the follow relationship between ``request.user`` and the ``ELO``
+
+    * Requires authentication.
     """
     elo = get_object_or_404(ELO, id=pk)
 
