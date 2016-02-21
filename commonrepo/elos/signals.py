@@ -22,7 +22,7 @@
 #
 
 """
-Signal configurations for ELOs in Common Repository project.
+Signal configurations for ELOs package in Common Repository project.
 """
 
 from __future__ import absolute_import, unicode_literals

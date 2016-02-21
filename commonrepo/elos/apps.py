@@ -22,7 +22,7 @@
 #
 
 """
-App configurations for ELOs in Common Repository project.
+App configurations for ELOs package in Common Repository project.
 """
 
 from __future__ import absolute_import, unicode_literals
