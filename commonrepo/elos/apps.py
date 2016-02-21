@@ -35,8 +35,13 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 class ELOsAppConfig(AppConfig):
+    """
+    Configs of ELOs packages.
+    """
     name = 'commonrepo.elos'
 
     def ready(self):
+        # Register the ELOs package to Activity Stream system
         registry.register(self.get_model('ELO'))
+        # Load settings of signals
         import commonrepo.elos.signals
