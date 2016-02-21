@@ -47,18 +47,27 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 def get_random_filename(instance, filename):
+    """
+    Construct random filename for ELOs documents.
+    """
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('elo-documents/', filename)
 
 
 def elos_get_random_filename(instance, filename):
+    """
+    Construct random filename for ELOs.
+    """
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('elos/' + str(instance.id), filename)
 
 
 def elos_get_cover_filename(instance, filename):
+    """
+    Construct random filename for cover file of ELOs.
+    """
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (str(uuid4()), ext)
     return os.path.join('elos-covers/' + str(instance.id), filename)
@@ -279,12 +288,39 @@ class ELOMetadata(models.Model):
         _("Classification-keyword"), blank=True, max_length=255)
 
     def compare(self, obj):
+        """
+        Wrapper fuction of ELOs Metadata comparing function.
+
+        Arguments:
+            obj (ELO):
+                Target ELO to compare.
+
+        This wrapper function only needs one argument `obj` for target ELO. The other arguments for
+        comparing function will be passed directly for consistency function calls.
+        """
         fields_excluded = 'id', '_state', '_elo_cache'
         return self._compare(self, obj, fields_excluded)
 
     def _compare(self, obj_source, obj_target, fields_excluded):
+        """
+        ELOs Metadata comparing function.
+
+        Arguments:
+            obj_source (ELO):
+                Source ELO to compare.
+            obj_target (ELO):
+                Traget ELO that will be compared with source ELO.
+            fields_excluded (string):
+                The fields list that will be excluded to been compared.
+
+        Return value:
+            Dictionary `source` and `target` that representing the result.
+            When the obj_source and obj_target have the different attribute of specific field of Metadata,
+            the field name and attribute will been add into the dictionay `source` and `target`.
+        """
         dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
         source, target = {}, {}
+        # Check all fields of Metadata
         for field, attribute in dict_source.items():
             if field in fields_excluded:
                 continue
@@ -298,16 +334,46 @@ class ELOMetadata(models.Model):
         return source, target
 
     def match(self, obj):
+        """
+        Wrapper fuction of ELOs Metadata matching function.
+
+        Arguments:
+            obj (ELO):
+                Target ELO to compare.
+
+        This wrapper function only needs one argument `obj` for target ELO. The other arguments for
+        matching function will be passed directly for consistency function calls.
+        """
         fields_all = self._meta.get_all_field_names()
         fields_included = fields_all
         fields_excluded = 'id', '_state', '_elo_cache'
         return self._match(self, obj, fields_included, fields_excluded)
 
     def _match(self, obj_source, obj_target, fields_included, fields_excluded):
+        """
+        ELOs Metadata matching function.
+
+        Arguments:
+            obj_source (ELO):
+                Source ELO to compare.
+            obj_target (ELO):
+                Traget ELO that will be matched with source ELO.
+            fields_included (string):
+                The fields list that will be included to been matched.
+            fields_excluded (string):
+                The fields list that will be excluded to been matched.
+
+        Return value:
+            Interger `counter_total` and `counter_matched` that representing the result.
+            The value of `counter_total` repsents the total fields that obj_source contains attribute.
+            When the obj_source and obj_target have the same attribute of specific field of Metadata,
+            the value of `counter_matched` will been increased.
+        """
         dict_source, dict_target = obj_source.__dict__, obj_target.__dict__
         counter_total, counter_matched = 0, 0
 
         for field, attribute in dict_source.items():
+            # Check fileds that need to match
             if field in fields_excluded or field not in fields_included:
                 continue
 
@@ -324,6 +390,19 @@ class ELOMetadata(models.Model):
         return counter_total, counter_matched
 
     def match2(self, obj):
+        """
+        Wrapper fuction of ELOs Metadata matching function.
+
+        TODO:
+            Still under construction, it will replace match() in the future.
+
+        Arguments:
+            obj (ELO):
+                Target ELO to compare.
+
+        This wrapper function only needs one argument `obj` for target ELO. The other arguments for
+        matching function will be passed directly for consistency function calls.
+        """
         fields_included = self._meta.get_all_field_names()
         fields_excluded = 'id', '_state', '_elo_cache'
         return self._match2(self, obj, fields_included, fields_excluded)
@@ -334,6 +413,35 @@ class ELOMetadata(models.Model):
             obj_target,
             fields_included,
             fields_excluded):
+        """
+        ELOs Metadata matching function.
+
+        TODO:
+            Still under construction, it will replace _match() in the future.
+            This function use different methods to campare the Metadata.
+            The spec of Metadata of ELOs v1 was based on SCORM. For some technical reasons, the most
+            learning objects on the popular MOOCs platforms (e.g., Open edX and Course Builder) don't
+            follow the same spec of Metadata. The first version of _match() function provides an easy
+            implementation of matching function, but it should been modified to provides more
+            meaningful result in the future.
+
+        Arguments:
+            obj_source (ELO):
+                Source ELO to compare.
+            obj_target (ELO):
+                Traget ELO that will be matched with source ELO.
+            fields_included (string):
+                The fields list that will be included to been matched.
+            fields_excluded (string):
+                The fields list that will be excluded to been matched.
+
+        Return value:
+            Interger `counter_total` and `counter_matched` that representing the result.
+            The value of `counter_total` repsents the total fields that obj_source contains attribute.
+            When the obj_source and obj_target have the same attribute of specific field of Metadata,
+            the value of `counter_matched` will been increased.
+        """
+
         #
         # Precise criteria (mandatory)
         #
@@ -581,22 +689,58 @@ class ELO(models.Model):
     def get_absolute_url(self):
         return reverse('elos:elos-detail', kwargs={'pk': self.pk})
 
-    # Wrapper function of similarity caculation
     def similarity(
             self,
             obj_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        Wrapper fuction of ELOs similarity caculation function.
+
+        Arguments:
+            obj_target (ELO):
+                The target ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+
+        This wrapper function only needs one argument `obj_target` for target ELO. The other arguments for
+        caculation function will be passed directly for consistency function calls.
+        """
         return self._similarity(self, obj_target, threshold)
 
-    # Wrapper function of similarity caculation (reverse)
     def similarity_reverse(
             self,
             obj_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        Wrapper fuction of ELOs reverse similarity caculation function.
+
+        Arguments:
+            obj_target (ELO):
+                The target ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+
+        This wrapper function only needs one argument `obj_target` for target ELO. The other arguments for
+        caculation function will be passed directly for consistency function calls.
+        """
         return self._similarity(obj_target, self, threshold)
 
     # Similarity caculation fucntion
     def _similarity(self, obj_source, obj_target, threshold):
+        """
+        ELOs similarity caculation function.
+
+        Arguments:
+            obj_source (ELO):
+                The source ELO to compare.
+            obj_target (ELO):
+                The target ELO that will be matched with the source ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+
+        Return value:
+            Float value that representing the result.
+        """
         # Pass itself
         if not obj_source == obj_target:
             # Check the metadata of ELO exists
@@ -618,14 +762,26 @@ class ELO(models.Model):
         else:
             return 1
 
-    # Diversity caculation function
     def diversity(
             self,
             obj_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        ELOs diversity caculation function.
+
+        Arguments:
+            obj_target (ELO):
+                Traget ELO that will be matched with source ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+                Default value is the setting of ELO_SIMILARITY_THRESHOLD.
+
+        Return value:
+            Float value that representing the result.
+        """
         result = 0.0
 
-        # Pass itself
+        # Pass itself, there is no meaning to caculate the diversity with itself.
         if not self == obj_target:
             if self.similarity(obj_target, threshold):
                 result += math.log(1 /
@@ -638,9 +794,30 @@ class ELO(models.Model):
         return result
 
     def reusability_tree_find_root(self):
+        """
+        Wrapper fuction to retrieve the root of ELO's reusability tree.
+
+        Arguments:
+            None.
+
+        The self of object will been passed as argument `elo_source` to
+        `_reusability_tree_find_root`.
+        """
         return self._reusability_tree_find_root(self)
 
     def _reusability_tree_find_root(self, elo_source):
+        """
+        Retrieving function of the root of ELO's reusability tree.
+
+        Arguments:
+            elo_source (ELO):
+                The source ELO that will been retrieved.
+
+        Return value:
+            ``ELO`` object that representing the result.
+        """
+        # If the parent ELO of the target ELO is not the Root ELO, use recursive to retrieve
+        # the upper level of relations.
         if elo_source.parent_elo.id != settings.ELO_ROOT_ID:
             return self._reusability_tree_find_root(elo_source.parent_elo)
         else:
@@ -651,10 +828,43 @@ class ELO(models.Model):
             elo_source,
             elo_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        Return the similarity value of the specific source and target ELOs.
+
+        Arguments:
+            elo_source (ELO):
+                The source ELO to compare.
+            elo_target (ELO):
+                The target ELO that will be matched with the source ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+                Default value is the setting of ELO_SIMILARITY_THRESHOLD.
+
+        Return value:
+            Float value that representing the result.
+        """
         return self._similarity(elo_source, elo_target, threshold)
 
     def reusability_tree_get_elo_similarity_reverse(
-            self, elo_source, elo_target, threshold=settings.ELO_SIMILARITY_THRESHOLD):
+            self,
+            elo_source,
+            elo_target,
+            threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        Return the reverse similarity value of the specific source and target ELOs.
+
+        Arguments:
+            elo_source (ELO):
+                The source ELO to compare.
+            elo_target (ELO):
+                The target ELO that will be matched with the source ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+                Default value is the setting of ELO_SIMILARITY_THRESHOLD.
+
+        Return value:
+            Float value that representing the result.
+        """
         return self._similarity(elo_target, elo_source, threshold)
 
     def reusability_tree_get_elo_diversity(
@@ -662,8 +872,24 @@ class ELO(models.Model):
             elo_source,
             elo_target,
             threshold=settings.ELO_SIMILARITY_THRESHOLD):
+        """
+        Return the diversity value of the specific source and target ELOs.
+
+        Arguments:
+            elo_source (ELO):
+                The source ELO to compare.
+            elo_target (ELO):
+                The target ELO that will be matched with the source ELO.
+            threshold (float):
+                The value of threshold that identify the meaningful result.
+                Default value is the setting of ELO_SIMILARITY_THRESHOLD.
+
+        Return value:
+            Float value that representing the result.
+        """
         result = 0.0
 
+        # Pass itself, there is no meaning to caculate the diversity with itself.
         if not elo_source == elo_target:
             if self.reusability_tree_get_elo_similarity(
                     elo_source, elo_target, threshold):
@@ -678,6 +904,15 @@ class ELO(models.Model):
         return result
 
     def reusability_tree_build(self):
+        """
+        Wrapper function of building the reusability tree of the ELO.
+
+        Arguments:
+            None.
+
+        Return value:
+            None.
+        """
         # Don't build RT when meet ELO Root
         if self.id == settings.ELO_ROOT_ID:
             pass
@@ -694,18 +929,33 @@ class ELO(models.Model):
                 # Delete reusability tree
                 self.reusability_tree.delete()
 
+            # Create the object of reusability tree and setup the relationship with
+            # the base ELO.
             reusability_tree = ReusabilityTree.objects.create(
-                name=str(
-                    self.id) + '. ' + self.name,
+                name=str(self.id) + '. ' + self.name,
                 base_elo=self,
                 root_node=self._reusability_tree_build(
                     self.reusability_tree_find_root(),
                     self))
 
     def _reusability_tree_build(self, elo_source, elo_base, node_parent=None):
+        """
+        Build the reusability tree of the ELO.
+
+        Arguments:
+            elo_source (ELO):
+                The source ELO to build the reusability tree.
+            elo_base (ELO):
+                The base ELO of the reusability tree.
+            node_parent: (ReusabilityTreeNode):
+                The parent node of reusability tree.
+                Default value is None.
+
+        Return value:
+            `ReusabilityTreeNode` object that representing the result.
+        """
         reusability_tree_node = ReusabilityTreeNode.objects.create(
-            name=str(
-                elo_source.id) + '. ' + elo_source.name,
+            name=str(elo_source.id) + '. ' + elo_source.name,
             parent=node_parent,
             elo=elo_source,
             elo_similarity=self.reusability_tree_get_elo_similarity(
@@ -725,14 +975,32 @@ class ELO(models.Model):
         return reusability_tree_node
 
     def reusability_tree_update(self):
+        """
+        Update the reusability tree of the ELO.
+
+        Arguments:
+            None.
+
+        Return value:
+            None.
+
+        This function only works for object itself.
+        """
         self.reusability_tree_build()
 
-    # Check request_user have permission to access
     def has_permission(self, request_user):
+        """
+        Check the request_user have permission to access the object.
+
+        Arguments:
+            request_user (User):
+                The User object that representing the specific user.
+        """
+        # Staff always have permission the access
         if request_user.is_staff:
             return True
+        # Only author can access his/her own private ELOs
         else:
-            # Only author can access his own private ELOs
             if self.is_public:
                 return True
             else:
