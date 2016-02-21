@@ -36,6 +36,9 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 class ELOIndex(indexes.SearchIndex, indexes.Indexable):
+    """
+    Index of ELO
+    """
     text = indexes.CharField(document=True, use_template=True)
     author = indexes.CharField(model_attr='author')
     create_date = indexes.DateTimeField(model_attr='create_date')
