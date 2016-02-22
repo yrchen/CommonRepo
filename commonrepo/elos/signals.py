@@ -22,7 +22,7 @@
 #
 
 """
-Signal configurations for ELOs in Common Repository project.
+Signal configurations for ELOs package in Common Repository project.
 """
 
 from __future__ import absolute_import, unicode_literals
@@ -39,13 +39,17 @@ from .models import ELO
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
-# Handler of ELOs deleted actions
 def elo_deleted_handler(sender, instance, **kwargs):
+    """
+    Handler of ELOs deleted actions
+    """
     action.send(instance, verb='was deleted')
 
 
-# Handler of ELOs saved actions
 def elo_saved_handler(sender, instance, created, **kwargs):
+    """
+    Handler of ELOs saved actions
+    """
     if created:
         action.send(instance, verb='was created')
     else:

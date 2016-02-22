@@ -116,6 +116,7 @@ class ELOViewSetV2(LoggingMixin, viewsets.ModelViewSet):
         instance.delete()
 
     def list(self, request):
+        # Check the request.user has the permission to access the ELOs
         if request.user and request.user.is_authenticated():
             if request.user.is_staff:
                 queryset = ELO.objects.all()
@@ -167,17 +168,29 @@ def elos_diversity(request, pk, pk2):
     Caculate the diversity value of specific ELOs in the system. (API version 1)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
+
+    Keyword Arguments:
+        pk (interger):
+            The primary key of the source ELO.
+        pk2 (interger):
+            The primary key of the target ELO
+
+    Returns:
+        `Response` objects that representing the result.
     """
 
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
 
-        # Check user has permission to access the ELOs
+        # Check the user has permission to access the ELOs
         if elo_source.has_permission(
                 request.user) and elo_target.has_permission(
                 request.user):
-            # If user has setting of elo_similarity_threshold
+            # If user has the setting of elo_similarity_threshold
             if request.user.elo_similarity_threshold:
                 elo_diversity = elo_source.diversity(
                     elo_target, request.user.elo_similarity_threshold)
@@ -207,17 +220,37 @@ class ELODiversity(LoggingMixin, APIView):
     Caculate the diversity value of specific ELOs in the system. (API version 2)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
     """
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk, pk2):
+        """
+        Caculate the diversity value of specific ELOs in the system. (API version 2)
+
+        * Requires token authentication.
+
+        Methods:
+            GET.
+
+        Keyword Arguments:
+            pk (interger):
+                The primary key of the source ELO.
+            pk2 (interger):
+                The primary key of the target ELO
+
+        Returns:
+            `Response` objects that representing the result.
+        """
         if request.method == 'GET':
             elo_source = get_object_or_404(ELO, pk=pk)
             elo_target = get_object_or_404(ELO, pk=pk2)
 
-            # Check user has permission to access the ELOs
+            # Check the request.user has permission to access the ELOs
             if elo_source.has_permission(
                     request.user) and elo_target.has_permission(
                     request.user):
@@ -253,6 +286,16 @@ def elos_diversity_all(request, pk):
     Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 1)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
+
+    Keyword Arguments:
+        pk (interger):
+            The primary key of the ELO.
+
+    Returns:
+        `Response` objects that representing the result.
     """
 
     if request.method == 'GET':
@@ -260,7 +303,7 @@ def elos_diversity_all(request, pk):
         elos_public = ELO.objects.filter(is_public=1)
         elos_result = {}
 
-        # Check user has permission to access the ELOs
+        # Check the request.user has permission to access the ELOs
         if elo_source.has_permission(request.user):
             # Check user has setting of elo_similarity_threshold
             if request.user.elo_similarity_threshold:
@@ -294,18 +337,34 @@ class ELODiversityAll(LoggingMixin, APIView):
     Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 2)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
     """
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk):
+        """
+        Caculate the diversity value of specific ELOs with all ELOs in the system. (API version 1)
+
+        Methods:
+            GET.
+
+        Keyword Arguments:
+            pk (interger):
+                The primary key of the ELO.
+
+        Returns:
+            `Response` objects that representing the result.
+        """
         if request.method == 'GET':
             elo_source = get_object_or_404(ELO, id=pk)
             elos_public = ELO.objects.filter(is_public=1)
             elos_result = {}
 
-            # Check user has permission to access the ELOs
+            # Check the request.user has permission to access the ELOs
             if elo_source.has_permission(request.user):
                 # Check user has setting of elo_similarity_threshold
                 if request.user.elo_similarity_threshold:
@@ -341,12 +400,25 @@ def elos_similarity(request, pk, pk2):
     Caculate the similarity value of specific ELOs in the system. (API version 1)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
+
+    Keyword Arguments:
+        pk (interger):
+            The primary key of the source ELO.
+        pk2 (interger):
+            The primart key of the target ELO.
+
+    Returns:
+        `Response` objects that representing the result.
     """
 
     if request.method == 'GET':
         elo_source = get_object_or_404(ELO, id=pk)
         elo_target = get_object_or_404(ELO, id=pk2)
 
+        # Check the request.user has permission to access the ELOs
         if elo_source.has_permission(
                 request.user) and elo_target.has_permission(
                 request.user):
@@ -380,16 +452,35 @@ class ELOSimilarity(LoggingMixin, APIView):
     Caculate the similarity value of specific ELOs in the system. (API version 2)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
     """
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk, pk2):
+        """
+        Caculate the similarity value of specific ELOs in the system. (API version 1)
+
+        Methods:
+            GET.
+
+        Keyword Arguments:
+            pk (interger):
+                The primary key of the source ELO.
+            pk2 (interger):
+                The primart key of the target ELO.
+
+        Returns:
+            `Response` objects that representing the result.
+        """
         if request.method == 'GET':
             elo_source = get_object_or_404(ELO, id=pk)
             elo_target = get_object_or_404(ELO, id=pk2)
 
+            # Check the request.user has permission to access the ELOs
             if elo_source.has_permission(
                     request.user) and elo_target.has_permission(
                     request.user):
@@ -425,6 +516,16 @@ def elos_similarity_all(request, pk):
     Caculate the similarity value of specific ELOs with all ELOs in the system. (API version 1)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
+
+    Keyword Arguments:
+        pk (interger):
+            The primary key of the source ELO.
+
+    Returns:
+        `Response` objects that representing the result.
     """
 
     if request.method == 'GET':
@@ -463,15 +564,31 @@ def elos_similarity_all(request, pk):
 
 class ELOSimilarityAll(LoggingMixin, APIView):
     """
-    Caculate the similarity value of specific ELOs with all ELOs in the system. (API version 2)
+    Caculate the similarity value of the specific ELOs with all ELOs in the system. (API version 2)
 
     * Requires token authentication.
+
+    Allow Methods:
+        GET.
     """
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk):
+        """
+        Caculate the similarity value of the specific ELOs with all ELOs in the system. (API version 2)
+
+        Methods:
+            GET.
+
+        Keyword Arguments:
+            pk (interger):
+                The primary key of the source ELO.
+
+        Returns:
+            `Response` objects that representing the result.
+        """
         if request.method == 'GET':
             elo_source = get_object_or_404(ELO, id=pk)
             elos_public = ELO.objects.filter(is_public=1)
@@ -513,6 +630,16 @@ def elos_fork(request, pk):
     This API used to fork the ELOs in the system. (API version 1)
 
     * Requires token authentication.
+
+    Allow Methods:
+        POST.
+
+    Keyword Arguments:
+        pk (interger):
+            The primary key of the source ELO.
+
+    Returns:
+        `Response` objects that representing the result.
     """
 
     if request.method == 'POST':
@@ -570,11 +697,29 @@ class ELOFork(LoggingMixin, APIView):
     This API used to fork the ELOs in the system. (API version 2)
 
     * Requires token authentication.
+
+    Allow Methods:
+        POST.
     """
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, pk):
+        """
+        This API used to fork the ELOs in the system. (API version 2)
+
+        * Requires token authentication.
+
+        Methods:
+            POST.
+
+        Keyword Arguments:
+            pk (interger):
+                The primary key of the source ELO.
+
+        Returns:
+            `Response` objects that representing the result.
+        """        
         if request.method == 'POST':
             elo_original = get_object_or_404(ELO, id=pk)
 

@@ -43,6 +43,9 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
+    """
+    Serializer of ReusabilityTreeNode
+    """
 
     class Meta:
         model = ReusabilityTreeNode
@@ -50,6 +53,9 @@ class ReusabilityTreeNodeSerializer(serializers.ModelSerializer):
 
 
 class ReusabilityTreeSerializer(serializers.Serializer):
+    """
+    Serializer of ReusabilityTree
+    """
     tree = serializers.SerializerMethodField()
 
     def recursive_node_to_dict(self, node):
@@ -77,6 +83,9 @@ class ReusabilityTreeSerializer(serializers.Serializer):
 
 
 class ELOLicenseSerializer(serializers.ModelSerializer):
+    """
+    Serializer of ELO License
+    """
 
     class Meta:
         model = License
@@ -84,6 +93,9 @@ class ELOLicenseSerializer(serializers.ModelSerializer):
 
 
 class ELOMetadataSerializer(serializers.ModelSerializer):
+    """
+    Serializer of ELO Metadata
+    """
 
     class Meta:
         model = ELOMetadata
@@ -91,6 +103,9 @@ class ELOMetadataSerializer(serializers.ModelSerializer):
 
 
 class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer of ELOType
+    """
 
     class Meta:
         model = ELOType
@@ -98,6 +113,9 @@ class ELOTypeSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ELOSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer of ELO
+    """
 
     class Meta:
         model = ELO
@@ -111,6 +129,10 @@ class ELOSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ELOSerializerV2(serializers.ModelSerializer):
+    """
+    Serializer of ELO (version 2)
+    """
+
     license = ELOLicenseSerializer(many=False, read_only=True)
     metadata = ELOMetadataSerializer(many=False, read_only=True)
     original_type = ELOTypeSerializer(many=False, read_only=True)
@@ -128,6 +150,11 @@ class ELOSerializerV2(serializers.ModelSerializer):
 
 
 class ELOLiteSerializer(serializers.ModelSerializer):
+    """
+    Serializer of ELO (lite version)
+
+    This serializer provides fewer information than the `ELOSerializerV2`.
+    """
 
     class Meta:
         model = ELO

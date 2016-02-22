@@ -22,7 +22,7 @@
 #
 
 """
-Search configurations for ELOs in Common Repository project.
+Search configurations for ELOs package in Common Repository project.
 """
 
 from __future__ import absolute_import, unicode_literals
@@ -36,6 +36,9 @@ __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
 
 
 class ELOIndex(indexes.SearchIndex, indexes.Indexable):
+    """
+    Index of ELO
+    """
     text = indexes.CharField(document=True, use_template=True)
     author = indexes.CharField(model_attr='author')
     create_date = indexes.DateTimeField(model_attr='create_date')
