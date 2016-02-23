@@ -38,10 +38,176 @@ from crispy_forms.bootstrap import FormActions
 
 from commonrepo.users.models import User as User
 
-from .models import ELO
+from .models import ELO, ELOMetadata
 
 
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
+
+
+class ELOMetadataForm(ModelForm):
+    """
+    Form of ELO Metadata
+    """
+
+    class Meta:
+        model = ELOMetadata
+        fields = [
+            #
+            # 1. General
+
+            # 1.1 identifier
+            General_identifier,
+            # 1.2 title
+            General_title,
+            # 1.3 language
+            General_language,
+            # 1.4 description
+            General_description,
+            # 1.5 keyword
+            General_keyword,
+            # 1.6 coverage
+            General_coverage,
+            # 1.7 structure
+            General_structure,
+            # 1.8 aggregationLevel
+            General_aggregationLevel,
+
+            #
+            # 2. LifeCycle
+
+            # 2.1 version
+            LifeCycle_version,
+            # 2.2 status
+            LifeCycle_status,
+            # 2.3 contribute
+            LifeCycle_contribute_role,
+            LifeCycle_contribute_entity,
+            LifeCycle_contribute_date_dateTime,
+            LifeCycle_contribute_date_description,
+
+            #
+            # 3. Meta-metadata
+
+            # 3.1 Meta_metadata-identifier
+            Meta_metadata_identifier_catalog,
+            Meta_metadata_identifier_entry,
+            # 3.2 Meta_metadata-contribute
+            Meta_metadata_contribute_role,
+            Meta_metadata_contribute_entity,
+            Meta_metadata_contribute_date_dateTime,
+            Meta_metadata_contribute_date_description,
+            # 3.3 Meta_metadata-metadataSchema
+            Meta_metadata_metadataSchema,
+            # 3.4 Meta_metadata-language
+            Meta_metadata_language,
+
+            #
+            # 4. Technical
+
+            # 4.1 format
+            Technical_format,
+            # 4.2 size
+            Technical_size,
+            # 4.3 location
+            Technical_location,
+            # 4.4 requirement
+            Technical_requirement_orComposite_type,
+            Technical_requirement_orComposite_name,
+            Technical_requirement_orComposite_minimumVersion,
+            Technical_requirement_orComposite_maximumVersion,
+            # 4.5 installationRemarks
+            Technical_installationRemarks,
+            # 4.6 otherPlatformRequirements
+            Technical_otherPlatformRequirements,
+            # 4.7 duration
+            Technical_duration_duration,
+            Technical_duration_description,
+
+            #
+            # 5. Educational
+
+            # 5.1 interactivityTyp
+            Educational_interactivityType,
+            # 5.2 learningResourceType
+            Educational_learningResourceType,
+            # 5.3 interactivityLevel
+            Educational_interactivityLevel,
+            # 5.4 semanticDensity
+            Educational_semanticDensity,
+            # 5.5 intendedEndUserRole
+            Educational_intendedEndUserRole,
+            # 5.6 context
+            Educational_context,
+            # 5.7 typicalAgeRange
+            Educational_typicalAgeRange,
+            # 5.8 difficulty
+            Educational_difficulty,
+            # 5.9 typicalLearningTime
+            Educational_typicalLearningTime_duration,
+            Educational_typicalLearningTime_description,
+            # 5.10 description
+            Educational_description,
+            # 5.11 language
+            Educational_language,
+
+            #
+            # 6. Rights
+
+            # 6.1 cost
+            Rights_cost,
+            # 6.2 copyrightAndOtherRestrictions
+            Rights_copyrightAndOtherRestrictions,
+            # 6.3 description
+            Rights_description,
+
+            #
+            # 7. Relation
+
+            # 7.1 Kind
+            Relation_kind,
+            # 7.2 Resource
+            Relation_resource_identifier_catalog,
+            Relation_resource_identifier_entry,
+            Relation_resource_description,
+
+            #
+            # 8. Annotation
+
+            # 8.1 entity
+            Annotation_entity,
+            # 8.2 date
+            Annotation_date_dateTime,
+            Annotation_date_description,
+            # 8.3 description
+            Annotation_description,
+
+            #
+            # 9. Classification
+
+            # 9.1 purpose
+            Classification_purpose,
+            # 9.2 taxonPath
+            Classification_taxonPath_source,
+            # 9.2.2 Classification-taxonPath-taxon
+            Classification_taxonPath_taxon,
+            Classification_taxonPath_taxon_id,
+            Classification_taxonPath_taxon_entry,
+            # 9.3 description
+            Classification_description,
+            # 9.4 keyword
+            Classification_keyword, ]
+
+    def __init__(self, *args, **kwargs):
+        super(ELOMetadataForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_action = "."
+        self.helper.layout.append(
+            FormActions(
+                HTML("""<a role="button" class="btn btn-default"
+                        href="{% url 'elos:elos-mylist' %}">Cancel</a>"""),
+                Submit('save', 'Submit'),
+            ))
 
 
 class ELOForm(ModelForm):
