@@ -37,6 +37,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from annoying.fields import AutoOneToOneField
 from licenses.models import License
 from mptt import models as MPTTmodels
 
@@ -641,7 +642,7 @@ class ELO(models.Model):
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
     update_date = models.DateTimeField('date updated', auto_now=True)
-    metadata = models.OneToOneField(ELOMetadata, blank=True, null=True)
+    metadata = AutoOneToOneField(ELOMetadata, null=True)
     license = models.ForeignKey(
         License,
         related_name='elos',

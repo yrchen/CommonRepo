@@ -56,6 +56,7 @@
         {% endif %}
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update Metadata</a>
         {% endif %}
         {% if object.author == request.user or user.is_staff %}
           {% if object.is_public %}
@@ -615,7 +616,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata -->
@@ -721,7 +722,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata - Precise criteria (mandatory) -->
@@ -811,7 +812,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata - Incremental criteria (rewritable) -->
@@ -866,7 +867,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata Precedence criteria (rewritable) -->
@@ -946,7 +947,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata Time/duration criteria (rewritable) -->
@@ -1056,7 +1057,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata - Single-choice criteria (rewritable) -->
@@ -1111,7 +1112,7 @@
         </div><!-- /.table-responsive -->
       </div><!-- /.box-body -->
       <div class="box-footer clearfix">
-        <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">Reload</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-right">Update Metadata</a>
       </div><!-- /.box-footer -->
     </div><!-- /.box -->
     <!-- /.Metadata - Many-choice criteria (rewritable)-->
@@ -1185,6 +1186,7 @@
         {% endif %}
         {% if object.author == request.user or user.is_staff %}
         <a href="{% url 'elos:elos-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update this ELO</a>
+        <a href="{% url 'elos:elos-metadata-update' object.id %}" class="btn btn-sm btn-primary btn-flat pull-left">Update Metadata</a>
         {% endif %}
         {% if object.author == request.user or user.is_staff %}
           {% if object.is_public %}
