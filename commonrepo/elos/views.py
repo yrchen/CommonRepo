@@ -372,7 +372,20 @@ class ELOsMetadataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
     def get_object(self):
         # Only get the Metadata record from the specific exist ELO
         elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
-        return elo.metadata
+
+        # If the Metadata of the ELO is not exist, create it and
+        # set the relationship between the ELO and Metadata
+        try:
+            if not elo.metadata:
+                raise ELOMetadata.DoesNotExist
+            else:
+                metadata = elo.metadata
+        except ELOMetadata.DoesNotExist:
+            metadata = ELOMetadata.objects.create()
+            elo.metadata = metadata
+            elo.save()
+
+        return metadata
 
     def get_form_kwargs(self):
         kwargs = super(ELOsMetadataUpdateView, self).get_form_kwargs()
