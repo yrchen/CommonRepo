@@ -84,6 +84,12 @@ urlpatterns = [
         view=views.ELOsUpdateView.as_view(),
         name='elos-update'
     ),
+    # URL pattern for the ELOsMetadataUpdateView
+    url(
+        regex=r'^metadata/update/(?P<pk>[0-9]+)/$',
+        view=views.ELOsMetadataUpdateView.as_view(),
+        name='elos-metadata-update'
+    ),
     # URL pattern for the ELOTypesDetailView
     url(
         regex=r'^type/(?P<pk>[0-9]+)/$',

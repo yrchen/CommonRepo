@@ -45,8 +45,8 @@ from rest_framework import status
 
 from commonrepo.users.models import User as User
 
-from .models import ELO, ELOType, ReusabilityTree, ReusabilityTreeNode
-from .forms import ELOForm, ELOForkForm, ELOUpdateForm
+from .models import ELO, ELOMetadata, ELOType, ReusabilityTree, ReusabilityTreeNode
+from .forms import ELOForm, ELOForkForm, ELOUpdateForm, ELOMetadataUpdateForm
 
 
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
@@ -331,6 +331,54 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         # send action to action stream
         action.send(self.request.user, verb='updated', target=self.object)
+        return reverse("elos:elos-detail",
+                       kwargs={'pk': self.kwargs['pk']})
+
+
+class ELOsMetadataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    View of ``ELO Metadata`` updating actions. Render the "ELO Metadata Update" page.
+
+    * Requires authentication.
+    * Requires permission of the specific ``ELO``.
+    """
+
+    model = ELOMetadata
+    form_class = ELOMetadataUpdateForm
+    query_pk_and_slug = False
+    template_name = 'elos/elos_metadata_update.html'
+    success_message = "The Metadata was updated successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        # Check the request.user has permission to update the specific ELO
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+
+        if not elo.author == request.user and not request.user.is_staff:
+            messages.error(request, 'Permission denied.')
+            return redirect('elos:elos-alllist')
+        else:
+            return super(ELOsMetadataUpdateView, self).dispatch(request,
+                                                        *args, **kwargs)
+
+    def form_valid(self, form):
+        # Bumped the version of the related ELO
+        self.object.elo.version += 1
+        self.object.elo.save()
+        return super(ELOsMetadataUpdateView, self).form_valid(form)
+
+    def get_object(self):
+        # Only get the Metadata record from the specific exist ELO
+        elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
+        return elo.metadata
+
+    def get_form_kwargs(self):
+        kwargs = super(ELOsMetadataUpdateView, self).get_form_kwargs()
+        kwargs.update(self.kwargs)  # self.kwargs contains all url conf params
+        return kwargs
+
+    def get_success_url(self):
+        # send action to action stream
+        action.send(self.request.user, verb='updated', target=self.object.elo)
         return reverse("elos:elos-detail",
                        kwargs={'pk': self.kwargs['pk']})
 
