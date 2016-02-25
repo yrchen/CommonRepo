@@ -301,6 +301,7 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     View of ``ELO`` updating actions. Render the "ELO Update" page.
 
     * Requires authentication.
+    * Requires permission of the specific ``ELO``.
     """
 
     model = ELO
