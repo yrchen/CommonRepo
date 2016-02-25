@@ -310,6 +310,7 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "%(name)s was updated successfully"
 
     def dispatch(self, request, *args, **kwargs):
+        # Check the request.user has permission to update the specific ELO
         elo = get_object_or_404(ELO, pk=self.kwargs['pk'])
 
         if not elo.author == request.user and not request.user.is_staff:
@@ -320,6 +321,7 @@ class ELOsUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
                                                         *args, **kwargs)
 
     def form_valid(self, form):
+        # Bumped the version of the related ELO
         self.object.version += 1
         return super(ELOsUpdateView, self).form_valid(form)
 
