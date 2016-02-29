@@ -64,3 +64,6 @@ db/*.sqlite3
 
 # media files
 /media/*
+
+# version information
+RELEASE-VERSION
