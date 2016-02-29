@@ -38,7 +38,7 @@ from filebrowser.sites import site
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from commonrepo.api.routers import DefaultRouter
+from commonrepo.common.routers import DefaultRouter
 from commonrepo.elos_api.views import ELOViewSet, ELOViewSetV2, ELOTypeViewSet, ELOFileUploadViewSet
 from commonrepo.elos_api.views import ELODiversity, ELODiversityAll, ELOSimilarity, ELOSimilarityAll, ELOFork
 from commonrepo.infor_api.views import InforELOTotalCount, InforUsersTotalCount
