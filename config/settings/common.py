@@ -35,8 +35,13 @@ import environ
 
 from urlparse import urlparse
 
+from commonrepo.common.version import get_git_version
+
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('commonrepo')
+
+# Get version information from Git
+VERSION = get_git_version()
 
 env = environ.Env()
 
@@ -500,8 +505,6 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # System config variables
 GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
 GOOGLE_SITE_VERIFICATION = "cPWx6iSeojj6XLRGYhqDk8DCIFXCwlR7qPn-gIGBHLA"
-
-VERSION = "v0.3.1"
 
 DASHBOARD_MAX_ELOS_MY_PER_PAGE = 8
 DASHBOARD_MAX_ELOS_ALL_PER_PAGE = 8
