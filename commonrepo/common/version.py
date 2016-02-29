@@ -133,7 +133,9 @@ def get_git_version(abbrev=4):
     # If we still don't have anything, that's an error.
     #
     # yrchen: In CommonRepo, we still have another __version__ variable
-    #         stored in package. Use the variable to avoid raise exception
+    #         stored in the package.
+    #         On production environment, use the variable to avoid raise
+    #         the exception
     if version is None:
         #raise ValueError("Cannot find the version number!")
         version = __version__
