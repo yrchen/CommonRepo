@@ -35,9 +35,13 @@ import environ
 
 from urlparse import urlparse
 
+from commonrepo.common.version import get_git_version
+
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('commonrepo')
-VERSION = "v1.0.0"
+
+# Get version information from Git
+VERSION = get_git_version()
 
 env = environ.Env()
 
