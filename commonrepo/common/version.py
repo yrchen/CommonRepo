@@ -27,6 +27,8 @@ Utilities of version in Common Repository project.
 
 from subprocess import Popen, PIPE
 
+from commonrepo import __version__
+
 
 def get_git_version2():
     """
@@ -129,9 +131,12 @@ def get_git_version(abbrev=4):
         version = release_version
 
     # If we still don't have anything, that's an error.
-
+    #
+    # yrchen: In CommonRepo, we still have another __version__ variable
+    #         stored in package. Use the variable to avoid raise exception
     if version is None:
-        raise ValueError("Cannot find the version number!")
+        #raise ValueError("Cannot find the version number!")
+        version = __version__
 
     # If the current version is different from what's in the
     # RELEASE-VERSION file, update the file to be current.
