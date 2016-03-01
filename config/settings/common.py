@@ -103,6 +103,7 @@ THIRD_PARTY_APPS = (
     'reversion',  # django-reversion
     'reversion_compare',  # django-reversion-compare
     'licenses',  # django-licenses
+    'gargoyle',  # gargoyle-yplan
 )
 
 # Apps specific for this project go here.
