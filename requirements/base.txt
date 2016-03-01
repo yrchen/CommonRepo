@@ -63,6 +63,7 @@ django-grappelli==2.7.2
 django-filebrowser==3.6.1
 django-filer==1.1.0
 django-rest-swagger==0.3.5
+gargoyle-yplan==1.2.1
 
 # Authentication
 djoser==0.4.0
