@@ -63,6 +63,7 @@ DJANGO_APPS = (
     'grappelli',  # django-grappelli
     'filebrowser',  # django-filebrowser
     'django.contrib.admin',
+    'nexus',  # nexus
 )
 THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
