@@ -2,6 +2,7 @@ Common Repository
 ==============================
 
 Common Repository
+[![Build Status](https://api.travis-ci.org/yrchen/CommonRepo.svg?branch=develop)](https://travis-ci.org/yrchen/CommonRepo)
 
 
 LICENSE: Apache License 2.0
