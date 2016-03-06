@@ -719,7 +719,7 @@ class ELOFork(LoggingMixin, APIView):
 
         Returns:
             `Response` objects that representing the result.
-        """        
+        """
         if request.method == 'POST':
             elo_original = get_object_or_404(ELO, id=pk)
 
