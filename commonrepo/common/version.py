@@ -137,7 +137,6 @@ def get_git_version(abbrev=4):
     #         On production environment, use the variable to avoid raise
     #         the exception
     if version is None:
-        #raise ValueError("Cannot find the version number!")
         version = __version__
 
     # If the current version is different from what's in the
@@ -147,5 +146,4 @@ def get_git_version(abbrev=4):
         write_release_version(version)
 
     # Finally, return the current version.
-
     return version
