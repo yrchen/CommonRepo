@@ -361,7 +361,7 @@ class ELOsMetadataUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
             return redirect('elos:elos-alllist')
         else:
             return super(ELOsMetadataUpdateView, self).dispatch(request,
-                                                        *args, **kwargs)
+                                                                *args, **kwargs)
 
     def form_valid(self, form):
         # Bumped the version of the related ELO
