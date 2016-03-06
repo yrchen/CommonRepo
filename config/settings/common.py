@@ -63,6 +63,7 @@ DJANGO_APPS = (
     'grappelli',  # django-grappelli
     'filebrowser',  # django-filebrowser
     'django.contrib.admin',
+    'nexus',  # nexus
 )
 THIRD_PARTY_APPS = (
     'crispy_forms',  # Form layouts
@@ -103,6 +104,7 @@ THIRD_PARTY_APPS = (
     'reversion',  # django-reversion
     'reversion_compare',  # django-reversion-compare
     'licenses',  # django-licenses
+    'gargoyle',  # gargoyle-yplan
 )
 
 # Apps specific for this project go here.

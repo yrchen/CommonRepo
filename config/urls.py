@@ -34,6 +34,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from filebrowser.sites import site
+import nexus
 
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -75,7 +76,8 @@ urlpatterns = [
 
     # Django Admin
     url(r'^admin/filebrowser/', include(site.urls)),  # django-filebrowser
-    url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
+    url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLs
+    url(r'^nexus/', include(nexus.site.urls)),  # Nexus URLs
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
