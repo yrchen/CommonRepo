@@ -47,6 +47,12 @@ def groups_get_random_filename(instance, filename):
     return os.path.join('groups/' + str(instance.id), filename)
 
 
+def groups_get_logo_filename(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (str(uuid4()), ext)
+    return os.path.join('groups-logos/' + str(instance.id), filename)
+
+
 @python_2_unicode_compatible
 class Group(models.Model):
     # basic infor
@@ -65,7 +71,7 @@ class Group(models.Model):
     logo = models.ImageField(
         _("Logo of Group"),
         blank=True,
-        upload_to=groups_get_random_filename)
+        upload_to=groups_get_logo_filename)
 
     # metadata
     create_date = models.DateTimeField('date created', auto_now_add=True)
