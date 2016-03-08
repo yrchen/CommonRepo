@@ -32,6 +32,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from __future__ import absolute_import, unicode_literals
 
 import environ
+import os
+import raven
 
 from urlparse import urlparse
 
@@ -105,6 +107,7 @@ THIRD_PARTY_APPS = (
     'reversion_compare',  # django-reversion-compare
     'licenses',  # django-licenses
     'gargoyle',  # gargoyle-yplan
+    'raven.contrib.django.raven_compat',  # Raven
 )
 
 # Apps specific for this project go here.
@@ -502,6 +505,14 @@ if es.username:
     HAYSTACK_CONNECTIONS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# Raven (for Sentry)
+RAVEN_CONFIG = {
+    'dsn': env('SENTRY_DSN', default="https://app.getsentry.com/"),
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(__file__) + "/../../"),
+}
 
 #
 # System config variables
