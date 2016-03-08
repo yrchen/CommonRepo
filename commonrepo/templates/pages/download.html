@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load commonrepo_tags %}
+
 {% block title %}Downloads{% endblock %}
 {% block page_title %}Downloads{% endblock %}
 {% block page_description %}Everying you can download from CommonRepo{% endblock %}
@@ -29,13 +31,13 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="img-holder">
-            <img class="img-responsive" src="{% static 'images/editor/elo-editor-preview-v1.0.0.png' %}"
+            <img class="img-responsive" src="{% static 'images/editor/elo-editor-preview.png' %}"
                  alt="ELO Editor"/>
         </div>
         <div class="download-description">
           <div class="text-center"
               style="margin-top: 20px; font-weight: 400;">
-             Currently v1.0.0
+             Currently v{% get_settings_value "ELO_EDITOR_VERSION" %}
          </div>
          <a href="https://commonrepo.s3.amazonaws.com/elo-editor/ELOEditor-osx64-latest.app.zip"
             class="btn btn-block btn-primary no-shaddow margin-b-sm text-uppercase">
