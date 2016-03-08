@@ -86,3 +86,6 @@ httplib2==0.9.1
 # Search
 django-haystack==2.4.1
 elasticsearch==2.2.0
+
+# Sentry
+raven==5.11.1
