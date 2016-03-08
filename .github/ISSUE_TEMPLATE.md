@@ -1,7 +1,7 @@
 ### Expected behavior
 
 
-### Actural behavior
+### Actual behavior
 
 
 ### Steps to reproduce the behavior
