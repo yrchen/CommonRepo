@@ -418,7 +418,7 @@ ACTSTREAM_SETTINGS = {
 }
 
 # Avatar
-AVATAR_STORAGE_DIR = 'avatar'
+AVATAR_STORAGE_DIR = 'users-avatars'
 
 # Comments
 COMMENTS_APP = 'fluent_comments'
