@@ -4,4 +4,8 @@ python:
 sudo: false
 install:
   - pip install -r requirements.txt
-script: nosetests
+  - pip install flake8
+before_script:
+  - flake8 commonrepo
+script:
+  - python manage.py test
