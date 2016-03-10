@@ -95,7 +95,7 @@ THIRD_PARTY_APPS = (
 
     # Other tools
     'easy_thumbnails',  # easy-thumbnails (required by django-filer)
-    'filer',  # django-filer
+    #'filer',  # django-filer
     'mptt',  # django-mptt
     'avatar',  # django-avatar
     'annoying',  # django-annoying
