@@ -188,36 +188,36 @@ LOGGING = {
         'sentry': {
             'level': 'ERROR',
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-            },
+        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-            }
-        },
+        }
+    },
     'loggers': {
         'django.db.backends': {
             'level': 'ERROR',
             'handlers': ['console'],
             'propagate': False,
-            },
+        },
         'raven': {
             'level': 'DEBUG',
             'handlers': ['console'],
             'propagate': False,
-            },
+        },
         'sentry.errors': {
             'level': 'DEBUG',
             'handlers': ['console'],
             'propagate': False,
-            },
         },
+    },
 }
-SENTRY_CELERY_LOGLEVEL = env('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
+SENTRY_CELERY_LOGLEVEL = env('DJANGO_SENTRY_LOG_LEVEL', default=logging.INFO)
 RAVEN_CONFIG = {
     'dsn': env('DJANGO_SENTRY_DSN', default="https://app.getsentry.com/"),
     'release': get_git_version(),
-    'CELERY_LOGLEVEL': env('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
+    'CELERY_LOGLEVEL': env('DJANGO_SENTRY_LOG_LEVEL', default=logging.INFO)
 }
 
 # Your production stuff: Below this line define 3rd party library settings
