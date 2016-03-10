@@ -19,3 +19,7 @@ psycopg2==2.6.1
 # Mailgun Support
 # ---------------
 django-mailgun==0.2.2
+
+# Raven is the Sentry client
+# --------------------------
+raven
