@@ -29,7 +29,6 @@ This command will build the metadata with specefic ELOs.
 
 from __future__ import absolute_import, unicode_literals
 
-from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from commonrepo.elos.models import ELO, ELOMetadata
@@ -57,7 +56,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['id']:
-            self.stdout.write('Building Metadata of ELO "%s"...' % elo_id)
+            self.stdout.write('Building Metadata of ELO "%s"...' % options['id'])
             for elo_id in options['id']:
                 try:
                     elo = ELO.objects.get(pk=elo_id)
