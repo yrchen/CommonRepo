@@ -2,6 +2,7 @@ Common Repository
 ==============================
 
 .. image:: https://api.travis-ci.org/yrchen/CommonRepo.svg?branch=develop
+.. image:: https://coveralls.io/repos/github/yrchen/CommonRepo/badge.svg?branch=develop :target: https://coveralls.io/github/yrchen/CommonRepo?branch=develop
 
 
 LICENSE: Apache License 2.0
