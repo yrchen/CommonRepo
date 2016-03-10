@@ -4,11 +4,13 @@ python:
 sudo: false
 install:
 - pip install -r requirements.txt
-- pip install flake8
+- pip install coveralls
 before_script:
 - flake8 commonrepo
 script:
-- python manage.py test
+- coverage run --source=commonrepo manage.py test
+after_success:
+  coveralls
 notifications:
   slack:
     secure: XeMF2GtYTt9/jNSFWLN3wXrMvDgGYJaGcxkDpZaewksbNcE8nS46jUAHuIF3b/Q4bLFb/yFIVX7WiaNBN92LwfpSpTlhJt9kQJ08QlK6TMVENtipRxmpXHp5NS+ToOVJBTQXqv8ibyDkW4kmisHijPh2cdl3s0csGN1HkRTcA8n9g5QWvanPrUgVILGUU2jLrNJt4c0uK0yw4PGrZDh+hfAAizrmDg5AfChikd057v73mV7PeYiiv+PN5OZB8TrEMsDN928O6jA3UFDkhIyRI9qm/EcjNYcJAOjvo5k3uahRDAMWIZ6qR4rZfB33xRrxvpM0J9yG33xL/r6yEEPKjWsXXS8E6DPY4RfjfBKrsI6bNLCq0YACwiCCebKkFNDrTjButVF56yA2otLcXKEbSPjjuc942W2COLKfDPv0TyPXMelN8BInS9fl0vfDkB5kxjW8ZLE7zVXWvhT/JCzuygKMy3GsKYMuscAJtoL5G0h8DBjiAafIcqD37Yq5k+V+Ir9aK4wk4uh/2sVxDU10N8LgW6htaIj9aF8VHkK3gwtYAHVWr58I3v4Dta1/HpyZtcTFE6gqUQ4rSSMknY+U6cxZs9rINw+fbfWZIaD1uLDIvuleKk6P6njTys+LCdPayttFWRzJDvrdMjm74JUVWPPaPL1oYr97mT2g1a67+iQ=
