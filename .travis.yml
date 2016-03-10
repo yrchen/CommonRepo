@@ -4,6 +4,7 @@ python:
 sudo: false
 install:
 - pip install -r requirements/local.txt
+- pip install -U setuptools
 - pip install coveralls
 script:
 - coverage run --source=commonrepo manage.py test
