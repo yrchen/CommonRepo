@@ -94,8 +94,6 @@ THIRD_PARTY_APPS = (
     'haystack',  # django-haystack
 
     # Other tools
-    'easy_thumbnails',  # easy-thumbnails (required by django-filer)
-    #'filer',  # django-filer
     'mptt',  # django-mptt
     'avatar',  # django-avatar
     'annoying',  # django-annoying
