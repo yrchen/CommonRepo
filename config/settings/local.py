@@ -103,3 +103,6 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_CLIENT_ID_GOOGLE = "205004874679-sce0aiev2rgvu41sjve3fpeqqb85cfeq.apps.googleusercontent.com"
+
+# sorl-thumbnail
+THUMBNAIL_DEBUG = True
