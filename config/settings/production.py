@@ -168,6 +168,9 @@ CACHES = {
     }
 }
 
+# See:
+# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-USE_X_FORWARDED_HOST
+USE_X_FORWARDED_HOST = True
 
 # Sentry Configuration
 SENTRY_DSN = env('DJANGO_SENTRY_DSN')
