@@ -105,6 +105,7 @@ THIRD_PARTY_APPS = (
     'licenses',  # django-licenses
     'gargoyle',  # gargoyle-yplan
     'robots',  # django-rebots
+    'sorl.thumbnail', # sorl-thumbnail
 )
 
 # Apps specific for this project go here.
