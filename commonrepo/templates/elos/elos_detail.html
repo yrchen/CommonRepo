@@ -82,8 +82,10 @@
     <!-- ELO Cover Box -->
     <div class="box box-primary">
       <div class="box-body box-profile">
-        {% if object.logo %}
-          <img class="img-responsive center-block" src="{% thumbnail object.logo 250x250 crop %}" alt="Group {{ object.name }} logo"/>
+        {% if object.cover %}
+          {% thumbnail object.cover "250x250" format="PNG" as cover %}
+            <img class="img-responsive center-block" src="{{ cover.url }}" alt="Group {{ object.name }} logo"/>
+          {% endthumbnail %}
         {% else %}
           <div class="text-center">
             <i class="fa fa-users fa-5x"></i>
