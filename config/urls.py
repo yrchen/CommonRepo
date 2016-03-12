@@ -68,6 +68,10 @@ router_api_v2.register(r'api/v2/groups', GroupViewSetV2)
 router_api_v2.register(r'api/v2/users', UserViewSetV2)
 
 urlpatterns = [
+    # Misc
+    url(r'^robots\.txt$', include('robots.urls')),
+
+    # Static Templates
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
     url(r'^download/$', TemplateView.as_view(template_name='pages/download.html'), name="download"),
@@ -99,9 +103,6 @@ urlpatterns = [
 
     # Documents
     url(r'^api/docs/', include('rest_framework_swagger.urls')),  # django-rest-swagger
-
-    # Files
-    #url(r'^files/', include('filer.urls')),
 
     # Search
     url(r'^search/', include('haystack.urls'), name="search"),  # django-haystack

@@ -168,6 +168,9 @@ CACHES = {
     }
 }
 
+# See:
+# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-USE_X_FORWARDED_HOST
+USE_X_FORWARDED_HOST = True
 
 # Sentry Configuration
 SENTRY_DSN = env('DJANGO_SENTRY_DSN')
@@ -229,3 +232,7 @@ RAVEN_CONFIG = {
 # Your production stuff: Below this line define 3rd party library settings
 
 OAUTH2_CLIENT_ID_GOOGLE = env('OAUTH2_CLIENT_ID_GOOGLE')
+
+# sorl-thumbnail workaround for S3 performance issue
+# See: https://github.com/mariocesar/sorl-thumbnail/issues/351
+THUMBNAIL_FORCE_OVERWRITE = True
