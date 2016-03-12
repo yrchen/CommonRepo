@@ -36,6 +36,7 @@ import os
 
 from urlparse import urlparse
 
+from commonrepo import __version__
 from commonrepo.common.version import get_git_version
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
@@ -516,3 +517,7 @@ ELO_SIMILARITY_THRESHOLD = 0.5
 
 # ELO Editor
 ELO_EDITOR_VERSION = "1.1.0"
+
+# CommonRepo repository URL
+COMMONREPO_REPO = "https://github.com/yrchen/CommonRepo"
+COMMONREPO_RELEASE = COMMONREPO_REPO + "/releases/tag/" + __version__
