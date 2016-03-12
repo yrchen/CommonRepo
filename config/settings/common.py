@@ -106,6 +106,7 @@ THIRD_PARTY_APPS = (
     'reversion_compare',  # django-reversion-compare
     'licenses',  # django-licenses
     'gargoyle',  # gargoyle-yplan
+    'robots',  # django-rebots
 )
 
 # Apps specific for this project go here.
@@ -240,6 +241,8 @@ TEMPLATES = [
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                # django-rebots
                 'django.template.loaders.app_directories.Loader',
             ],
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
@@ -491,6 +494,10 @@ if es.username:
     HAYSTACK_CONNECTIONS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# Robots
+ROBOTS_USE_SITEMAP = True
+ROBOTS_CACHE_TIMEOUT = 60 * 60 * 24
 
 #
 # System config variables
