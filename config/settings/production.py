@@ -232,3 +232,7 @@ RAVEN_CONFIG = {
 # Your production stuff: Below this line define 3rd party library settings
 
 OAUTH2_CLIENT_ID_GOOGLE = env('OAUTH2_CLIENT_ID_GOOGLE')
+
+# sorl-thumbnail workaround for S3 performance issue
+# See: https://github.com/mariocesar/sorl-thumbnail/issues/351
+THUMBNAIL_FORCE_OVERWRITE = True
