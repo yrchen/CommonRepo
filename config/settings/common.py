@@ -495,6 +495,10 @@ if es.username:
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+# Robots
+ROBOTS_USE_SITEMAP = True
+ROBOTS_CACHE_TIMEOUT = 60 * 60 * 24
+
 #
 # System config variables
 GOOGLE_ANALYTICS_CODE = "UA-71965843-1"
