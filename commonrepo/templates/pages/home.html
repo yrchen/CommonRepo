@@ -1,9 +1,15 @@
 {% extends "page.html" %}
 
+{% load static %}
+
+{% load commonrepo_tags %}
+
 {% block title %}Welcome to Common Repository{% endblock %}
+{% block page_breadcrumb %}Welcome{% endblock %}
+
 
 {% block content %}
-<div class="">
+<div class="row">
     <div class="container">
         <h1>Welcome to Common Repository</h1>
 
@@ -11,4 +17,20 @@
         <p>To get start, please <a class="btn btn-primary btn-lg" href="{% url 'account_login' %}" role="button">Log in</a> or <a class="btn btn-primary btn-lg" href="{% url 'account_signup' %}" role="button">Sign up</a></p>
     </div>
 </div>
+
+<div class="row">
+  <!-- col -->
+  <div class="col-md-12" id="intro">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Introduction</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="text-center">
+          <iframe width="960" height="720" src="https://www.youtube.com/embed/KXno5KiUIMw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
 {% endblock %}
