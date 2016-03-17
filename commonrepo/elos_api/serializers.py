@@ -31,10 +31,8 @@ from licenses.models import License
 from mptt.templatetags import mptt_tags
 
 from rest_framework import serializers
-from rest_framework_recursive.fields import RecursiveField
 
-from commonrepo.elos.models import ELO, ELOType, ELOMetadata, ReusabilityTree, ReusabilityTreeNode
-from commonrepo.users.models import User as User
+from commonrepo.elos.models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode
 
 from .models import ELOFileUpload
 
