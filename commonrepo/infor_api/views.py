@@ -23,26 +23,17 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-
 from rest_framework import authentication
 from rest_framework import permissions
-from rest_framework import renderers
 from rest_framework import status
-from rest_framework import viewsets
-from rest_framework.decorators import api_view, detail_route
-from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
 
 from commonrepo.elos.models import ELO
 from commonrepo.users.models import User as User
-
-from .permissions import IsOwnerOrReadOnly
 
 
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'
