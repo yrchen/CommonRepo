@@ -27,14 +27,11 @@ Form configurations for Groups in Common Repository project.
 
 from __future__ import absolute_import, unicode_literals
 
-from django.forms import ModelForm, ModelChoiceField
-from django.utils import timezone
+from django.forms import ModelForm
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, HTML
 from crispy_forms.bootstrap import FormActions
-
-from commonrepo.users.models import User as User
 
 from .models import Group
 
