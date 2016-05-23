@@ -386,7 +386,7 @@ class ELOMetadata(models.Model):
                         counter_matched += 1
 
             except KeyError:
-                old.update({field: attribute})
+                pass
 
         return counter_total, counter_matched
 
@@ -589,7 +589,7 @@ class ELOMetadata(models.Model):
                             counter_matched += 1
 
             except KeyError:
-                old.update({field: attribute})
+                pass
 
         return counter_total, counter_matched
 

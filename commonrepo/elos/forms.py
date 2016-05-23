@@ -28,9 +28,8 @@ Form configurations for ELOs package in Common Repository project.
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
-from django.forms import ModelForm, ModelChoiceField
-from django.shortcuts import get_object_or_404, redirect
-from django.utils import timezone
+from django.forms import ModelForm
+from django.shortcuts import get_object_or_404
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, HTML

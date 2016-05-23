@@ -33,19 +33,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView, View
-from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.shortcuts import redirect, get_object_or_404
 
 from actstream import action
 from actstream import actions
-from actstream.views import respond
 from braces.views import LoginRequiredMixin, OrderableListMixin
 from notifications.signals import notify
-from rest_framework import status
 
 from commonrepo.users.models import User as User
 
-from .models import ELO, ELOMetadata, ELOType, ReusabilityTree, ReusabilityTreeNode
+from .models import ELO, ELOMetadata, ELOType, ReusabilityTreeNode
 from .forms import ELOForm, ELOForkForm, ELOUpdateForm, ELOMetadataUpdateForm
 
 

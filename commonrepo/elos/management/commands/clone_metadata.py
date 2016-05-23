@@ -29,10 +29,9 @@ This command will clone the metadata related with specefic ELOs.
 
 from __future__ import absolute_import, unicode_literals
 
-from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from commonrepo.elos.models import ELO, ELOMetadata
+from commonrepo.elos.models import ELO
 
 
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'

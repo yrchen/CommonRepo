@@ -32,10 +32,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, DetailView, ListView, RedirectView, UpdateView
-from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.shortcuts import redirect, get_object_or_404
 
 from actstream import action
 from actstream import actions

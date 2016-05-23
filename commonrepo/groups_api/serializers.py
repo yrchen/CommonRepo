@@ -30,7 +30,6 @@ from __future__ import absolute_import, unicode_literals
 from rest_framework import serializers
 
 from commonrepo.groups.models import Group
-from commonrepo.users.models import User as User
 
 
 __author__ = 'yrchen@ATCity.org (Xaver Y.R. Chen)'

@@ -28,20 +28,15 @@ View configurations of user information for ELOs APIs in Common Repo project.
 from __future__ import absolute_import, unicode_literals
 
 from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import authentication
 from rest_framework import permissions
-from rest_framework import renderers
 from rest_framework import status
-from rest_framework import views
 from rest_framework import viewsets
-from rest_framework.decorators import api_view, detail_route, permission_classes
-from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
@@ -50,8 +45,7 @@ from rest_framework_tracking.mixins import LoggingMixin
 from actstream import action
 from notifications.signals import notify
 
-from commonrepo.users.models import User as User
-from commonrepo.elos.models import ELO, ELOType, ELOMetadata
+from commonrepo.elos.models import ELO, ELOType
 
 from .models import ELOFileUpload
 from .permissions import IsOwnerOrReadOnly

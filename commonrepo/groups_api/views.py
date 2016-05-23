@@ -26,20 +26,14 @@ View configurations of user information for Groups APIs in Common Repo project.
 """
 
 from __future__ import absolute_import, unicode_literals
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import authentication
 from rest_framework import permissions
-from rest_framework import renderers
 from rest_framework import status
-from rest_framework import views
 from rest_framework import viewsets
-from rest_framework.decorators import api_view, detail_route
-from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser, FileUploadParser, FormParser, MultiPartParser
 from rest_framework.views import APIView
 
 from rest_framework_tracking.mixins import LoggingMixin
@@ -47,7 +41,6 @@ from rest_framework_tracking.mixins import LoggingMixin
 from actstream import action
 from notifications.signals import notify
 
-from commonrepo.users.models import User as User
 from commonrepo.groups.models import Group
 
 from .permissions import IsOwnerOrReadOnly

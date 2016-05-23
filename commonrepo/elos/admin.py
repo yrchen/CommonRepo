@@ -30,7 +30,6 @@ from __future__ import absolute_import, unicode_literals
 from django.contrib import admin
 
 from mptt.admin import MPTTModelAdmin
-from reversion.admin import VersionAdmin
 from reversion_compare.admin import CompareVersionAdmin
 
 from .models import ELO, ELOType, ELOMetadata, ReusabilityTreeNode, ReusabilityTree
