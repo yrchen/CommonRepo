@@ -1,1 +1,4 @@
 * text=auto
+
+docs/* linguist-documentation
+commonrepo/static/* linguist-vendored
